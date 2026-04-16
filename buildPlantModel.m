@@ -1,10 +1,10 @@
-function plantModel = buildPlantModel(config)
+function plantModel = buildPlantModel(simulationPlan)
     % BUILDPLANTMODEL Constructs plantModel encoding system physics.
     % 
     % AUTHOR: Cole H. Shaigec
     %
     % INPUTS
-    %  config struct with fields
+    %  simulationPlan struct with fields
     %
     % OUTPUTS
     %  plantModel struct with fields

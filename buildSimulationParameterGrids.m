@@ -1,0 +1,37 @@
+function allSimulationParameters = buildSimulationParameterGrids()
+    % BUILDSIMULATIONPARAMETERGRIDS Builds parameter grids for use in simulation planning.
+    %
+    % AUTHOR: Cole H. Shaigec
+    %
+    % OUTPUT
+    %  allSimulationParameters struct with fields
+    %      .plantGeometry struct with fields
+    %          .moldCrossSectionWidth      (double)
+    %          .moldCrossSectionLength     (double)
+    %          .moldCrossSectionalArea     (double)
+    %          .moldAxialLength            (double)
+    %          .nozzleCrossSectionalArea   (double)
+    %          .tundishCrossSectionalArea  (double)
+    %
+    %      .physicalConstants struct with fields
+    %          .g                          (double) - gravity
+    %
+    %      .Kvalues                        (numKValues x 1 double)
+    %       
+    %      .safetyRequirements struct with fields
+    %          .safeSolidificationFront    (double)
+    %          .safetyFactor               (double in [0,1])
+    % 
+    %      .baselineDisturbances struct with fields
+    %          .dlStar                     (double) 
+    %          .dmStar                     (double in [0,1])
+    %          .dwStar                     (double)
+    %      
+    %      .disturbanceScenarios array of structs with fields
+    %          .
+    %     
+
+    % SEPARATION OF CONCERNS -- IS THIS UTILITY DOING TOO MUCH?
+
+
+end

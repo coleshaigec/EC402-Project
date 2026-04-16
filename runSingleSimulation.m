@@ -1,10 +1,13 @@
-function runPipeline(simulationPlan)
-    % RUNPIPELINE Top-level module that executes full simulation workflow for a single set of parameters.
+function simulationResult = runSingleSimulation(simulationPlan)
+    % RUNSINGLESIMULATION Top-level module that executes full simulation workflow for a single set of parameters.
     %
     % AUTHOR: Cole H. Shaigec
     %
     % INPUT
     %  simulationPlan struct with fields
+
+    % NOTE TO SELF: simulationPlan must provide plant geometry, K, and all
+    % other numbers
 
 
     %%%%%%%%%%%%%%%%%%%%
@@ -14,8 +17,8 @@ function runPipeline(simulationPlan)
     % function calls outside your task's work sequence in this file
 
 
-    % -- Instantiate config struct --
-    config = buildPipelineConfig();
+    % --  --
+    
 
     % -- 
 
