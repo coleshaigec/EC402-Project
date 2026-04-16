@@ -1,4 +1,4 @@
-function operatingPoint = buildOperatingPoint(plantGeometry, safetyRequirements, k, physicalConstants)
+function operatingPoint = buildOperatingPoint(plantGeometry, safetyRequirements, K, physicalConstants)
     % BUILDOPERATINGPOINT Defines operating point for simulation using plant attributes.
     %
     % AUTHOR: Cole H. Shaigec
@@ -16,11 +16,11 @@ function operatingPoint = buildOperatingPoint(plantGeometry, safetyRequirements,
     %      .safeSolidificationFront    (double)
     %      .safetyFactor               (double in [0,1])
     %
-    %  k (double)
+    %  K (double)
     %
     % OUTPUT
     %  operatingPoint struct with fields
-    %      .k        (double)    - plant-specific proportionality constant
+    %      .K        (double)    - plant-specific proportionality constant
     %      .vW       (double)    - computed withdrawal speed at operating point
     %      .hT       (double)    - computed tundish height
     %      .hM       (double)    - prescribed mold height at operating point
@@ -57,7 +57,7 @@ function operatingPoint = buildOperatingPoint(plantGeometry, safetyRequirements,
 
     % -- Populate output struct --
     operatingPoint = struct();
-    operatingPoint.k = k;
+    operatingPoint.K = K;
     operatingPoint.vW = vW;
     operatingPoint.hT = hT;
     operatingPoint.hM = hM;

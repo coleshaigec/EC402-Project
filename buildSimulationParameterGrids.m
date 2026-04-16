@@ -24,7 +24,7 @@ function allSimulationParameters = buildSimulationParameterGrids()
     % 
     %      .baselineDisturbances struct with fields
     %          .dlStar                     (double) 
-    %          .dmStar                     (double in [0,1])
+    %          .dnStar                     (double in [0,1])
     %          .dwStar                     (double)
     %      
     %      .disturbanceScenarios array of structs with fields
@@ -37,7 +37,7 @@ function allSimulationParameters = buildSimulationParameterGrids()
     %                  .isActive           (boolean)
     %                  .functionalForm     (string)
     %                  .parameters struct with scenario-specific fields
-    %              .dm struct with fields
+    %              .dn struct with fields
     %                  .isActive           (boolean)
     %                  .functionalForm     (string)
     %                  .parameters struct with scenario-specific fields
@@ -47,7 +47,7 @@ function allSimulationParameters = buildSimulationParameterGrids()
     %                  .parameters struct with scenario-specific fields
     %
     %      .operatingPoints array of structs, each with fields
-    %          .k        (double)    - plant-specific proportionality constant
+    %          .K        (double)    - plant-specific proportionality constant
     %          .vW       (double)    - computed withdrawal speed at operating point
     %          .hT       (double)    - computed tundish height
     %          .hM       (double)    - prescribed mold height at operating point
@@ -55,12 +55,19 @@ function allSimulationParameters = buildSimulationParameterGrids()
     %          .uM       (double)    - prescribed tundish -> mold flow regulation setting
     %
     % NOTES
-    % - Per Thomas (2002), k is a plant-specific constant that is usually
+    % - Per Thomas (2002), K is a plant-specific constant that is usually
     % estimated from empirical data. 
     % - Since we do not have a concrete physical plant to work with, our
-    % approach is to define k as a parameter grid and use simulation to perform
-    % a sensitivity analysis across candidate values of k.
-    % - A plausible parameter grid in k is 
+    % approach is to define K as a parameter grid and use simulation to perform
+    % a sensitivity analysis across candidate values of K.
+    % - A parameter grid in K is defined by centering a sensitivity grid on
+    % the value 0.030 m/min. This value is an approximation to the one used
+    % in Petrus et al. (2020), whose plant has some geometric similarities
+    % to ours. 
+    % - Since K is a metallurgical constant influenced by many factors beyond 
+    % plant geometry (factors which are beyond the scope of this study), we
+    % note that our K-values are meant only to be a plausible first
+    % approximation.
 
     % -- Define plant geometry -- 
     plantGeometry = buildPlantGeometry();
@@ -74,9 +81,33 @@ function allSimulationParameters = buildSimulationParameterGrids()
     % -- Define baseline disturbances -- 
     baselineDisturbances = buildBaselineDisturbances();
 
+    % -- Define search grid in K --
+    Kvalues = [0.0290; 0.0300; 0.0310];
 
+    % -- Build disturbance scenarios --
+    disturbanceScenarios = buildDisturbanceScenarios();
 
+    % -- Build an operating point for each K-value --
+    templateOperatingPoint = buildTemplateOperatingPointStruct();
+    operatingPoints = repmat(templateOperatingPoint, numel(Kvalues), 1);
 
+    for i = 1 : numel(Kvalues)
+        operatingPoints(i) = buildOperatingPoint( ...
+            plantGeometry, ...
+            safetyRequirements, ...
+            Kvalues(i), ...
+            physicalConstants ...
+        );
+    end
 
+    % -- Populate output struct -- 
+    allSimulationParameters = struct();
+    allSimulationParameters.plantGeometry = plantGeometry;
+    allSimulationParameters.physicalConstants = physicalConstants;
+    allSimulationParameters.Kvalues = Kvalues;
+    allSimulationParameters.safetyRequirements = safetyRequirements;
+    allSimulationParameters.baselineDisturbances = baselineDisturbances;
+    allSimulationParameters.disturbanceScenarios = disturbanceScenarios;
+    allSimulationParameters.operatingPoints = operatingPoints;
 
 end

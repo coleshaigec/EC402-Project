@@ -7,7 +7,7 @@ function baselineDisturbances = buildBaselineDisturbances()
     %  baselineDisturbances struct with fields
     %      .baselineDisturbances struct with fields
     %          .dlStar                     (double) 
-    %          .dmStar                     (double in [0,1])
+    %          .dnStar                     (double in [0,1])
     %          .dwStar                     (double)
     %
     % NOTES
@@ -18,6 +18,6 @@ function baselineDisturbances = buildBaselineDisturbances()
 
     baselineDisturbances = struct();
     baselineDisturbances.dlStar = 0;
-    baselineDisturbances.dmStar = 0;
+    baselineDisturbances.dnStar = 0;
     baselineDisturbances.dwStar = 0;
 end
