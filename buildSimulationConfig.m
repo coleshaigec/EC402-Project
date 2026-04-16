@@ -5,8 +5,10 @@ function simulationConfig = buildSimulationConfig()
     %
     % OUTPUT
     %  simulationConfig struct with fields
-    %      .duration
+    %      .duration (double)
+    %      .chosenDisturbanceScenarios (1 x N cell array of char vectors or strings)
 
     simulationConfig = struct();
     simulationConfig.duration = 1000;
+    simulationConfig.chosenDisturbanceScenarios = {"nozzlePulse", "withdrawalStep"};
 end

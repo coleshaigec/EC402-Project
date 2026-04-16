@@ -4,7 +4,9 @@ function allSimulationParameters = buildSimulationParameterGrids(chosenDisturban
     % AUTHOR: Cole H. Shaigec
     %
     % INPUT
-    %  chosenDisturbanceScenarios (cell array of string scenario identifiers)
+    %  simulationConfig struct with fields
+    %      .duration (double)
+    %      .chosenDisturbanceScenarios (1 x N cell array of char vectors or strings)
     %
     % OUTPUT
     %  allSimulationParameters struct with fields
@@ -88,7 +90,7 @@ function allSimulationParameters = buildSimulationParameterGrids(chosenDisturban
     Kvalues = [0.0290; 0.0300; 0.0310];
 
     % -- Build disturbance scenarios --
-    disturbanceScenarios = buildDisturbanceScenarios(chosenDisturbanceScenarios);
+    disturbanceScenarios = buildDisturbanceScenarios(simulationConfig.chosenDisturbanceScenarios);
 
     % -- Build an operating point for each K-value --
     templateOperatingPoint = buildTemplateOperatingPointStruct();
