@@ -34,22 +34,18 @@ function allSimulationParameters = buildSimulationParameterGrids()
     %          .shouldApplyToNonlinearPlant
     %          .channels struct with fields
     %              .dl struct with fields
-    %                  .isActive           (boolean)
-    %                  .functionalForm     (string)
-    %                  .parameters struct with scenario-specific fields
-    %              .dm struct with fields
-    %                  .isActive           (boolean)
-    %                  .functionalForm     (string)
-    %                  .parameters struct with scenario-specific fields
-    %              .dw struct with fields
-    %                  .isActive           (boolean)
-    %                  .functionalForm     (string)
-    %                  .parameters struct with scenario-specific fields
-    %
-    %      .operatingPoints array of structs, each with fields
-    %          .kValue
-    %
+    %                  .isActive
+    %                  .functionalForm
+    %                  .parameters struct with fields
+    %                      .startTime
+    %                      .endTime
+    %                      .startValue
+    %                  
+    %              .dm
+    %              .dw
+    %     
 
+    % SEPARATION OF CONCERNS -- IS THIS UTILITY DOING TOO MUCH?
 
 
 end
