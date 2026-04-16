@@ -47,8 +47,12 @@ function allSimulationParameters = buildSimulationParameterGrids()
     %                  .parameters struct with scenario-specific fields
     %
     %      .operatingPoints array of structs, each with fields
-    %          .kValue
-    %
+    %          .k        (double)    - plant-specific proportionality constant
+    %          .vW       (double)    - computed withdrawal speed at operating point
+    %          .hT       (double)    - computed tundish height
+    %          .hM       (double)    - prescribed mold height at operating point
+    %          .Qladle   (double)    - computed ladle -> tundish flow rate
+    %          .uM       (double)    - prescribed tundish -> mold flow regulation setting
 
 
 
