@@ -53,6 +53,29 @@ function allSimulationParameters = buildSimulationParameterGrids()
     %          .hM       (double)    - prescribed mold height at operating point
     %          .Qladle   (double)    - computed ladle -> tundish flow rate
     %          .uM       (double)    - prescribed tundish -> mold flow regulation setting
+    %
+    % NOTES
+    % - Per Thomas (2002), k is a plant-specific constant that is usually
+    % estimated from empirical data. 
+    % - Since we do not have a concrete physical plant to work with, our
+    % approach is to define k as a parameter grid and use simulation to perform
+    % a sensitivity analysis across candidate values of k.
+    % - A plausible parameter grid in k is 
+
+    % -- Define plant geometry -- 
+    plantGeometry = buildPlantGeometry();
+
+    % -- Define safety requirements --
+    safetyRequirements = buildSafetyRequirements();
+
+    % -- Define physical constants --
+    physicalConstants = buildPhysicalConstants();
+
+    % -- Define baseline disturbances -- 
+    baselineDisturbances = buildBaselineDisturbances();
+
+
+
 
 
 
