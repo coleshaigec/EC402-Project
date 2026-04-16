@@ -4,7 +4,8 @@ function startup()
     % AUTHOR: Cole H. Shaigec
     
     % -- Define simulation plans --
-    allSimulationParameters = defineParametersForSweeps();
+    chosenDisturbanceScenarios = {"nozzleDegradationStep", "withdrawalPulse", "ladleFlowStep"};
+    allSimulationParameters = buildSimulationParameterGrids(chosenDisturbanceScenarios);
     simulationPlans = buildSimulationPlans(allSimulationParameters);
 
     % -- Run all simulations --

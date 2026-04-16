@@ -60,11 +60,9 @@ function simulationPlans = buildSimulationPlans(allSimulationParameters)
     %      
     %
     % NOTES
-    % - This utility assigns exactly one K-value to each simulationPlan. 
+    % - This utility assigns exactly one K-value to each scenario. 
     % - If any non-baseline disturbance scenarios are provided, exactly one
-    % disturbance scenario is assigned to each simulationPlan. 
-    % - simulationPlans are produced as the Cartesian product of the
-    % disturbanceScenarios and 
+    % disturbance scenario is assigned to 
 
 
 

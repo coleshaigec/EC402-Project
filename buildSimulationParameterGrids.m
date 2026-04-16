@@ -1,7 +1,10 @@
-function allSimulationParameters = buildSimulationParameterGrids()
+function allSimulationParameters = buildSimulationParameterGrids(chosenDisturbanceScenarios)
     % BUILDSIMULATIONPARAMETERGRIDS Builds parameter grids for use in simulation planning.
     %
     % AUTHOR: Cole H. Shaigec
+    %
+    % INPUT
+    %  chosenDisturbanceScenarios (cell array of string scenario identifiers)
     %
     % OUTPUT
     %  allSimulationParameters struct with fields
@@ -61,9 +64,9 @@ function allSimulationParameters = buildSimulationParameterGrids()
     % approach is to define K as a parameter grid and use simulation to perform
     % a sensitivity analysis across candidate values of K.
     % - A parameter grid in K is defined by centering a sensitivity grid on
-    % the value 0.030 m/min. This value is an approximation to the one used
-    % in Petrus et al. (2020), whose plant has some geometric similarities
-    % to ours. 
+    % the value 0.030 m/sqrt(min). This value is an approximation to the one used
+    % in Petrus et al. (2020), whose reported thick-slab caster values are of similar order
+    % to the representative slab geometry used here.
     % - Since K is a metallurgical constant influenced by many factors beyond 
     % plant geometry (factors which are beyond the scope of this study), we
     % note that our K-values are meant only to be a plausible first
@@ -85,7 +88,7 @@ function allSimulationParameters = buildSimulationParameterGrids()
     Kvalues = [0.0290; 0.0300; 0.0310];
 
     % -- Build disturbance scenarios --
-    disturbanceScenarios = buildDisturbanceScenarios();
+    disturbanceScenarios = buildDisturbanceScenarios(chosenDisturbanceScenarios);
 
     % -- Build an operating point for each K-value --
     templateOperatingPoint = buildTemplateOperatingPointStruct();
@@ -109,5 +112,4 @@ function allSimulationParameters = buildSimulationParameterGrids()
     allSimulationParameters.baselineDisturbances = baselineDisturbances;
     allSimulationParameters.disturbanceScenarios = disturbanceScenarios;
     allSimulationParameters.operatingPoints = operatingPoints;
-
 end
