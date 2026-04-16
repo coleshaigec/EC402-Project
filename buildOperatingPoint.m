@@ -44,7 +44,7 @@ function operatingPoint = buildOperatingPoint(plantGeometry, safetyRequirements,
     %  applied downstream during simulation. 
 
     % -- Compute allowable withdrawal speed --
-    maxAllowableWithdrawalSpeed = k^2 * plantGeometry.moldAxialLength / safetyRequirements.safeSolidificationFront ^ 2; 
+    maxAllowableWithdrawalSpeed = k^2 * plantGeometry.moldAxialLength / safetyRequirements.safeShellThickness ^ 2; 
     vW = safetyRequirements.safetyFactor * maxAllowableWithdrawalSpeed;
 
     % -- Apply setpoints for nominal mold height and uM setting --

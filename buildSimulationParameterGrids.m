@@ -19,7 +19,7 @@ function allSimulationParameters = buildSimulationParameterGrids()
     %      .Kvalues                        (numKValues x 1 double)
     %       
     %      .safetyRequirements struct with fields
-    %          .safeSolidificationFront    (double)
+    %          .safeShellThickness         (double)
     %          .safetyFactor               (double in [0,1])
     % 
     %      .baselineDisturbances struct with fields

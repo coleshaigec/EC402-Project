@@ -38,5 +38,4 @@ function plantGeometry = buildPlantGeometry()
 
     % -- Define tundish geometry --
     plantGeometry.tundishCrossSectionalArea = 2.0;
-
 end
