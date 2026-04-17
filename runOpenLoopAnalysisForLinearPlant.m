@@ -43,6 +43,10 @@ function openLoopResult = runOpenLoopAnalysisForLinearPlant(linearPlant, measure
     eigenstructure = analyzeLinearPlantEigenstructure(linearPlant);
 
     % -- Analyze controllability -- 
+    controllability = analyzeLinearPlantControllability(linearPlant);
+
+    % -- Analyze observability --
+    observability = analyzeLinearPlantObservability(linearPlant);
 
     
     
