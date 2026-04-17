@@ -1,7 +1,7 @@
-function nonlinearPlant = buildNonlinearPlant(simulationPlan)
+function nonlinearPlant = buildNoninearPlant(simulationPlan)
     % BUILDNONLINEARPLANT Uses simulation plan to encode full nonlinear plant model for pipeline run.
     %
-    % AUTHOR: Cole H. Shaigec
+    % AUTHOR: Richie Kim/Dani Schwartz
     %
     % INPUT
     %  simulationPlan struct with fields
@@ -43,19 +43,26 @@ function nonlinearPlant = buildNonlinearPlant(simulationPlan)
     %          .physicalConstants struct with fields
     %              .g (double)    - acceleration due to gravity
     
+    %%%%%%%%%%%%%%%%%%%%%%%%
+    % IMPLEMENTATION NOTES %
+    %%%%%%%%%%%%%%%%%%%%%%%%
+    % Please don't delete the docstring above. 
+    %
+    % This function builds a nonlinear plant object that packages the
+    % nonlinear dynamics as a computable function usable by the simulator. 
+    % 
+    % The nonlinear plant object will also carry relevant metadata. 
+    % This skeleton packages the anonymous function for evaluating
+    % nonlinear dynamics already, so your task here is to add the metadata
+    % and to implement evaluateNonlinearDynamics in a separa
     
-    % -- Build nonlinear plant --
+    % Please don't change these two lines
     nonlinearPlant = struct();
-    nonlinearPlant.f = @(x,u,d) evaluateNonlinearDynamics(x, u, d, ...
-        simulationPlan.plantGeometry, ...
-        simulationPlan.physicalConstants ...
-     ); 
+    nonlinearPlant.f = @(x,u,d) evaluateNonlinearDynamics(x, u, d, plantGeometry, physicalConstants); 
 
+    % -- YOUR IMPLEMENTATION HERE -- 
     nonlinearPlant.metadata = struct(); 
-    nonlinearPlant.metadata.plantGeometry = simulationPlan.plantGeometry; 
-    nonlinearPlant.metadata.operatingPoint = simulationPlan.operatingPoint;
-    nonlinearPlant.metadata.physicalConstants = simulationPlan.physicalConstants;
 
-    % -- Output validation --
-    validateNonlinearPlant(nonlinearPlant, simulationPlan);
+    % Output validation - please do not remove!
+    validateNoninearPlant(nonlinearPlant, simulationPlan);
 end
