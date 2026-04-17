@@ -8,5 +8,45 @@ function measurementModel = buildMeasurementModel(simulationPlan)
     %
     %
     % OUTPUT
-    %  
+    %  measurementModel struct with fields
+    %      .observabilityCase (string) - 'full' or 'moldOnly'
+    %      .C (matrix of doubles, size depends on observability case)
+    %      .D (2 x 2 double) - zeros here
+    %
+    % NOTES
+    % - Given that two observability scenarios are tested, this function
+    % builds the output separately from the plant model. 
+    %
+
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    % NOTES FOR IMPLEMENTATION %
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    % Please do not delete the docstring at the top of this file.
+    %
+    % This function builds the measurement model. It computes C and D for y
+    % = Cx + Du. In our model, inputs don't affect observed state, so D is
+    % a matrix of zeroes. 
+    %
+    % We are testing two observability cases. In the full observability case,
+    % we can measure both states (mold height and tundish height)
+    % perfectly. In the partial observability case, we can only observe the
+    % mold height. This function must build the matrices C and D according
+    % to the observability case specified in the simulationPlan struct
+    % passed as an input.
+    %
+    % In the full observability case, C is the 2x2 identity matrix. In the
+    % partial observability case, C is [1, 0] to extract the mold height
+    % only and output a scalar y.
+    %
+    % See the state space model in the project plan for more details if
+    % needed.
+
+    % -- YOUR IMPLEMENTATION HERE -- 
+    measurementModel = struct();
+    measurementModel.C = []; 
+    measurementModel.D = []; 
+    measurementModel.observabilityCase = ""; 
+
+    % Output validation - please do not remove
+    validateMeasurementModel(measurementModel, simulationPlan);
 end

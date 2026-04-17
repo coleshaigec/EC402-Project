@@ -49,6 +49,8 @@ function linearPlant = buildLinearPlant(simulationPlan)
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%
     % NOTES FOR IMPLEMENTATION %
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    % Please do not delete the docstring at the top of this file.
+    %
     % This function builds the linear plant model that the downstream
     % simulators will use. To ensure fast simulation, we don't want to
     % evaluate the Jacobians more than once, so we're doing it here inside
@@ -64,9 +66,8 @@ function linearPlant = buildLinearPlant(simulationPlan)
     linearPlant.A = []; % state Jacobian
     linearPlant.B = []; % input Jacobian
     linearPlant.E = []; % disturbance Jacobian
+    linearPlant.metadata = []; % populate according to docstring
 
     % Output validation - please do not remove!
     validateLinearPlant(linearPlant, simulationPlan);
-
-
 end
