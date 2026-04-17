@@ -1,5 +1,5 @@
-function simulationResult = runSingleSimulation(simulationPlan)
-    % RUNSINGLESIMULATION Top-level module that executes full simulation workflow for a single set of parameters.
+function simulationResult = runSimulationPipeline(simulationPlan)
+    % RUNSIMULATIONPIPELINE Top-level module that executes full simulation workflow for a single set of parameters.
     %
     % AUTHOR: Cole H. Shaigec
     %
@@ -44,6 +44,10 @@ function simulationResult = runSingleSimulation(simulationPlan)
     simulationResult.results.openLoopResult = openLoopResult;
 
     % -- Build controllers --
+    % REFACTOR TO BUILDCONTROLLERS()
+    % Then produce a struct array of controllers and pass each of them
+    % through the closed-loop analysis pipeline
+
     stateFeedbackController = buildStateFeedbackController(linearPlant, measurementModel, simulationPlan);
     linearQuadraticRegulator = buildLQRController(linearPlant, measurementModel, simulationPlan);
 

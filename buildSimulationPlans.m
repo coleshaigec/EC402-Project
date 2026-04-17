@@ -74,6 +74,7 @@ function simulationPlans = buildSimulationPlans(allSimulationParameters)
     %          .tundishCrossSectionalArea  (double)
     %
     %      .observabilityCase (string) - 'full' or 'moldOnly'
+    %      .controllers (cell array of strings/char arrays) - may contain 'lqr' and/or 'stateFeedback'
     %
     %      .shouldUseNonBaselineDisturbance (boolean) - true iff disturbanceScenario is empty
     %

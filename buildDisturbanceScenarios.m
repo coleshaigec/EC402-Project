@@ -48,6 +48,13 @@ function disturbanceScenarios = buildDisturbanceScenarios(chosenDisturbanceScena
         currentScenario.name = chosenScenario;
 
         switch chosenScenario
+            case 'baseline'
+                currentScenario.descriptionString = "Baseline: no disturbance";
+                currentScenario.shouldApplyToLinearPlant = false;
+                currentScenario.shouldApplyToNonlinearPlant = false;
+                currentScenario.channels.dl.isActive = false;
+                currentScenario.channels.dn.isActive = false;
+                currentScenario.channels.dw.isActive = false;
             case 'ladleConstant'
                 currentScenario.descriptionString = "Constant ladle -> tundish flow disturbance";
                 currentScenario.shouldApplyToLinearPlant = true;

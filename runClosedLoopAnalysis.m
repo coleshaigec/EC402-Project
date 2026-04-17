@@ -1,0 +1,37 @@
+function closedLoopResult = runClosedLoopAnalysis(closedLoopAnalysisPlan)
+    % RUNCLOSEDLOOPANALYSIS Performs simulation and analysis for a single closed-loop system configuration.
+    %
+    % AUTHOR: Cole H. Shaigec
+    %
+    % INPUT
+    %  closedLoopAnalysisPlan struct with fields
+    %      .linearPlant struct with fields
+    %      .nonlinearPlant struct with fields
+    %      .measurementModel struct with fields
+    %      .controller struct with fields
+    %      .observer struct with fields
+    %      .simulationCase (string)
+    %
+    % OUTPUT
+    %  simulationResult struct with fields
+    
+
+    % -- Run simulation --
+    switch closedLoopAnalysisPlan.simulationCase
+        case 'linearFullState'
+            simulationResult = simulateLinearClosedLoopFullState(closedLoopAnalysisPlan);
+        case 'linearObserver'
+            simulationResult = simulateLinearClosedLoopObserver(closedLoopAnalysisPlan);
+        case 'nonlinearFullState'
+            simulationResult = simulateNonlinearClosedLoopFullState(closedLoopAnalysisPlan);
+        case 'nonlinearObserver'
+            simulationResult = simulateNoninearClosedLoopObserver(closedLoopAnalysisPlan);
+        otherwise
+            error('runClosedLoopAnalysis:InvalidFieldValue', ...
+                'simulationCase %s is invalid', closedLoopAnalysisPlan.simulationCase);
+    end
+
+    % -- 
+
+
+end
