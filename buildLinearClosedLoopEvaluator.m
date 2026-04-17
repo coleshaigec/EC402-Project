@@ -46,8 +46,7 @@ function evaluator = buildLinearClosedLoopEvaluator(linearPlant, controller, dis
     % - This function assumes that state, input, and disturbance values are supplied in original
     % coordinates, NOT deviation coordinates. It backs out the deviation
     % coordinates from equilibria packaged within its inputs. 
-
-
+    
     % -- Extract relevant quantities from inputs --
     A = linearPlant.A;
     B = linearPlant.B;
