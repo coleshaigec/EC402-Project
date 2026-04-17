@@ -1,19 +1,17 @@
-function evaluator = buildLinearClosedLoopEvaluator(linearPlant, controller, disturbanceEvaluator)
-    % BUILDLINEARCLOSEDLOOPEVALUATOR Builds anonymous function to evaluate linear closed-loop dynamics for ODE45 under full-state observability.
-    % 
+function evaluator = buildNonlinearFullStateClosedLoopEvaluator(nonlinearPlant, controller, disturbanceEvaluator)
+    % BUILDNONLINEARFULLSTATECLOSEDLOOPEVALUATOR Builds utility to evaluate nonlinear closed-loop dynamics for ODE45 under full-state observability.
+    %
     % AUTHOR: Cole H. Shaigec
     %
     % INPUTS
-    %  linearPlant struct with fields
-    %      .A (2 x 2 double) - state Jacobian, evaluated at operating point
-    %      .B (2 x 2 double) - input Jacobian, evaluated at operating point
-    %      .E (2 x 3 double) - disturbance Jacobian, evaluated at operating point
+    %  nonlinearPlant struct with fields
+    %      .f (anonymous function) - passed into ODE45 as nonlinear dynamics
     %      .metadata struct with fields
     %          .operatingPoint struct with fields
     %              .K        (double)    - plant-specific proportionality constant
     %              .vW       (double)    - computed withdrawal speed at operating point
     %              .hT       (double)    - computed tundish height
-    %              .hM       (double)    - prescribed molds height at operating point
+    %              .hM       (double)    - prescribed mold height at operating point
     %              .Qladle   (double)    - computed ladle -> tundish flow rate
     %              .uM       (double)    - prescribed tundish -> mold flow regulation setting
     %          .plantGeometry struct with fields
@@ -25,7 +23,7 @@ function evaluator = buildLinearClosedLoopEvaluator(linearPlant, controller, dis
     %              .tundishCrossSectionalArea  (double)
     %          .physicalConstants struct with fields
     %              .g (double)    - acceleration due to gravity
-    % 
+    %
     %  controller struct with fields
     %      .type (string) - either 'stateFeedback' or 'lqr'
     %      .gains (2 x 2 double) 
@@ -36,37 +34,30 @@ function evaluator = buildLinearClosedLoopEvaluator(linearPlant, controller, dis
     %
     %  disturbanceEvaluator (anonymous function)
     %
-    % OUTPUTS
+    % OUTPUT
     %  evaluator struct with fields
     %      .evaluateStateDerivative (function handle) - computes xDot(t, x)
     %      .evaluateDisturbance (function handle) - computes d(t)
-    %      .evaluateControlInput (function handle) - computes control input u(t, x)
-    %
-    % NOTES
-    % - This function assumes that state, input, and disturbance values are supplied in original
-    % coordinates, NOT deviation coordinates. It backs out the deviation
-    % coordinates from equilibria packaged within its inputs. 
-    
-    % -- Extract relevant quantities from inputs --
-    A = linearPlant.A;
-    B = linearPlant.B;
-    E = linearPlant.E;
-    
+    %      .evaluateControlInput (function handle) - computes u(t, x)
+
+
+    % -- Nonlinear dynamics utility already baked into plant --
+    f = nonlinearPlant.f;
+
+    % -- Extract controller parameters --
     K = controller.gains;
     xe = controller.equilibrium.xe;
     ue = controller.equilibrium.ue;
-    
-    % -- Construct evaluators --
+
+    % -- Build evaluators --
     evaluateDisturbance = disturbanceEvaluator;
-    
     evaluateControlInput = @(t, x) ue - K * (x - xe);
-    
-    evaluateStateDerivative = @(t, x) ...
-        A * (x - xe) + B * (evaluateControlInput(t, x) - ue) + E * evaluateDisturbance(t);
-    
-    % -- Package results into output struct --
+    evaluateStateDerivative = @(t, x) f(x, evaluateControlInput(t, x), evaluateDisturbance(t));
+
+    % -- Package results into output struct -- 
     evaluator = struct();
     evaluator.evaluateStateDerivative = evaluateStateDerivative;
     evaluator.evaluateControlInput = evaluateControlInput;
     evaluator.evaluateDisturbance = evaluateDisturbance;
+
 end

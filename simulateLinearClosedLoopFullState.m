@@ -42,7 +42,4 @@ function simulationResult = simulateLinearClosedLoopFullState(closedLoopSimulati
     simulationResult.xDot = [];
     simulationResult.u = [];
     simulationResult.d = [];
-  
-    
-
 end
