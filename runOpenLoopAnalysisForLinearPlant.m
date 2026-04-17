@@ -28,7 +28,6 @@ function openLoopResult = runOpenLoopAnalysisForLinearPlant(linearPlant, measure
     %          .observabilityMatrix
     %          .observabilityMatrixRank
     %          .isObservable
-    % 
     %
     % NOTES
     %
@@ -40,8 +39,12 @@ function openLoopResult = runOpenLoopAnalysisForLinearPlant(linearPlant, measure
         disturbanceScenario = simulationPlan.baselineDisturbance;
     end
 
-    % -- Evaluate equilibrium values --
-    equilibriumValues = computeEquilibriumValues(linearPlant, disturbanceScenario);
+    % -- Analyze eigenstructure --
+    eigenstructure = analyzeLinearPlantEigenstructure(linearPlant);
+
+    % -- Analyze controllability -- 
+
+    
     
 
 
