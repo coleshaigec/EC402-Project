@@ -4,9 +4,24 @@ function xDot = evaluateNonlinearDynamics(x, u, d, plantGeometry, physicalConsta
     % AUTHOR: Richie Kim/Dani Schwartz
     %
     % INPUTS
+    %  x (2 x 1 double) - state vector
+    %  u (2 x 1 double) - input vector
+    %  d (3 x 1 double) - disturbance vector
     %
+    %  plantGeometry struct with fields
+    %      .moldCrossSectionWidth      (double)
+    %      .moldCrossSectionLength     (double)
+    %      .moldCrossSectionalArea     (double)
+    %      .moldAxialLength            (double)
+    %      .nozzleCrossSectionalArea   (double)
+    %      .tundishCrossSectionalArea  (double)
+    %
+    %  physicalConstants struct with fields
+    %      .g                          (double) - gravity
     %
     % OUTPUTS
+    %  xDot (2 x 1 double) - time derivative of state, evaluated at
+    %  supplied input
 
 
     %%%%%%%%%%%%%%%%%%%%%%%%
@@ -14,13 +29,11 @@ function xDot = evaluateNonlinearDynamics(x, u, d, plantGeometry, physicalConsta
     %%%%%%%%%%%%%%%%%%%%%%%%
     % Please don't delete the docstring above. 
     %
-    % This function builds a nonlinear plant object that packages the
-    % nonlinear dynamics as a computable function usable by the simulator. 
-    % 
-    % The nonlinear plant object will also carry relevant metadata. 
-    % This skeleton packages the anonymous function for evaluating
-    % nonlinear dynamics already, so your task here is to add the metadata
-    % and to implement evaluateNonlinearDynamics in a separate file.
+    % This function is used by ODE45 to simulate the nonlinear plant dynamics.  
+    % The full nonlinear state space model used to evaluate xDot is
+    % supplied in the project plan document. 
+
+    % -- Your implementation here --
     
 end
 
