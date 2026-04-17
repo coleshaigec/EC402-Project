@@ -31,10 +31,15 @@ function stateFeedbackController = buildStateFeedbackController(linearPlant, sta
     %
     % OUTPUT
     %  stateFeedbackController struct with fields
-    %      .Acl (matrix) - closed-loop matrix
-    %      .desiredPoles (2 x 1 double)
-    %      .placedPoles (2 x 1 double)
-    %      .gains (2 x 2 double) - controller gains
+    %      .type (string) 
+    %      .gains (2 x 2 double)
+    %      .equilibrium struct with fields
+    %          .xe (state equilibrium)
+    %          .ue (input equilibrium)
+    %      .designMetadata struct with fields
+    %          .Acl (matrix) - closed-loop matrix
+    %          .desiredPoles (2 x 1 double)
+    %          .placedPoles (2 x 1 double)
     %
     % NOTES
     % - The desired poles can be tuned in
@@ -47,7 +52,6 @@ function stateFeedbackController = buildStateFeedbackController(linearPlant, sta
     % - Please do not delete the docstring above. 
     % - MATLAB's built-in "place" function is the easiest, most convenient,
     % and most effective way to place poles for this project.
-
 
     % -- YOUR IMPLEMENTATION HERE --
     stateFeedbackController = struct();

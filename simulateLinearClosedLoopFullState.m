@@ -14,7 +14,7 @@ function simulationResult = simulateLinearClosedLoopFullState(closedLoopAnalysis
     %                  .K        (double)    - plant-specific proportionality constant
     %                  .vW       (double)    - computed withdrawal speed at operating point
     %                  .hT       (double)    - computed tundish height
-    %                  .hM       (double)    - prescribed mold height at operating point
+    %                  .hM       (double)    - prescribed molds height at operating point
     %                  .Qladle   (double)    - computed ladle -> tundish flow rate
     %                  .uM       (double)    - prescribed tundish -> mold flow regulation setting
     %              .plantGeometry struct with fields
@@ -26,42 +26,16 @@ function simulationResult = simulateLinearClosedLoopFullState(closedLoopAnalysis
     %                  .tundishCrossSectionalArea  (double)
     %              .physicalConstants struct with fields
     %                  .g (double)    - acceleration due to gravity
-    %      .measurementModel struct with fields
-    %          .observabilityCase (string) - 'full' or 'moldOnly'
-    %          .C (matrix of doubles, size depends on observability case)
-    %          .D (2 x 2 double) - zeros here
     %
-    %      .shouldUseNonBaselineDisturbance (boolean) - true iff disturbanceScenario is empty
-    %
-    %      .baselineDisturbances struct with fields
-    %          .dlStar                     (double) 
-    %          .dnStar                     (double in [0,1])
-    %          .dwStar                     (double)
-    %
-    %      .disturbanceScenario struct with fields
-    %          .name
-    %          .descriptionString
-    %          .shouldApplyToLinearPlant
-    %          .shouldApplyToNonlinearPlant
-    %          .channels struct with fields
-    %              .dl struct with fields
-    %                  .isActive           (boolean)
-    %                  .functionalForm     (string)
-    %                  .parameters struct with scenario-specific fields
-    %              .dn struct with fields
-    %                  .isActive           (boolean)
-    %                  .functionalForm     (string)
-    %                  .parameters struct with scenario-specific fields
-    %              .dw struct with fields
-    %                  .isActive           (boolean)
-    %                  .functionalForm     (string)
-    %                  .parameters struct with scenario-specific fields
-    %
-    %      .simulationConfig struct with fields
-    %          .duration (double)
-    %          .chosenDisturbanceScenarios (1 x N cell array of char vectors or strings)
+    %      .duration (double) - length of simulation
     %
     %      .controller struct with fields
+    %          .type (string) - either 'stateFeedback' or 'lqr'
+    %          .gains (2 x 2 double) 
+    %          .equilibrium struct with fields
+    %              .xe (state equilibrium)
+    %              .ue (input equilibrium)
+    %          .designMetadata struct with controller-specific fields
     %
     % OUTPUT
     %  simulationResult struct with fields
