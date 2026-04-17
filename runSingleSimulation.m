@@ -16,6 +16,12 @@ function simulationResult = runSingleSimulation(simulationPlan)
     % If you want to isolate certain portions of the workflow, comment out
     % function calls outside your task's work sequence in this file
 
+    % -- Build plant models --
+    linearPlant = buildLinearPlant(simulationPlan);
+    nonlinearPlant = buildNonlinearPlant(simulationPlan);
+
+    
+
 
     % --  --
     

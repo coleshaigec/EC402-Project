@@ -57,6 +57,42 @@ function simulationPlans = buildSimulationPlans(allSimulationParameters)
     %
     % OUTPUT 
     %  simulationPlans array of structs, each with fields
+    %      .operatingPoint struct with fields
+    %          .K        (double)    - plant-specific proportionality constant
+    %          .vW       (double)    - computed withdrawal speed at operating point
+    %          .hT       (double)    - computed tundish height
+    %          .hM       (double)    - prescribed mold height at operating point
+    %          .Qladle   (double)    - computed ladle -> tundish flow rate
+    %          .uM       (double)    - prescribed tundish -> mold flow regulation setting
+    %
+    %      .plantGeometry struct with fields
+    %          .moldCrossSectionWidth      (double)
+    %          .moldCrossSectionLength     (double)
+    %          .moldCrossSectionalArea     (double)
+    %          .moldAxialLength            (double)
+    %          .nozzleCrossSectionalArea   (double)
+    %          .tundishCrossSectionalArea  (double)
+    %
+    %      .observabilityCase (string) - 'full' or 'moldOnly'
+    %
+    %      .disturbanceScenario struct with fields
+    %          .name
+    %          .descriptionString
+    %          .shouldApplyToLinearPlant
+    %          .shouldApplyToNonlinearPlant
+    %          .channels struct with fields
+    %              .dl struct with fields
+    %                  .isActive           (boolean)
+    %                  .functionalForm     (string)
+    %                  .parameters struct with scenario-specific fields
+    %              .dn struct with fields
+    %                  .isActive           (boolean)
+    %                  .functionalForm     (string)
+    %                  .parameters struct with scenario-specific fields
+    %              .dw struct with fields
+    %                  .isActive           (boolean)
+    %                  .functionalForm     (string)
+    %                  .parameters struct with scenario-specific fields      
     %      
     %
     % NOTES
@@ -64,7 +100,25 @@ function simulationPlans = buildSimulationPlans(allSimulationParameters)
     % - If any non-baseline disturbance scenarios are provided, exactly one
     % disturbance scenario is assigned to each simulationPlan. 
     % - simulationPlans are produced as the Cartesian product of the
-    % disturbanceScenarios and 
+    % disturbanceScenarios and K-values
+    
+
+    % -- Determine number of simulations to be run and preallocate output --
+    numDisturbanceScenarios = numel(allSimulationParameters.disturbanceScenarios);
+    numKValues = numel(allSimulationParameters.Kvalues);
+    numSimulationsToRun = numDisturbanceScenarios * numKValues;
+
+    templateSimulationPlan = buildTemplateSimulationPlanStruct();
+    simulationPlans = repmat(templateSimulationPlan, numSimulationsToRun, 1);
+
+    % -- Populate simulation plans using Cartesian product --
+    
+
+
+
+
+
+
 
 
 

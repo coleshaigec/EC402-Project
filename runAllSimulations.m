@@ -5,12 +5,17 @@ function simulationResults = runAllSimulations(simulationPlans)
     %
     % INPUT
     %  simulationPlans array of structs, each with fields
+    %      .operatingPoint
     %
     %
     % OUTPUT
     %  simulationResults array of structs, each with fields
     %
     %
+
+
+
+
 
     
 end
