@@ -40,7 +40,6 @@ function evaluator = buildNonlinearFullStateClosedLoopEvaluator(nonlinearPlant, 
     %      .evaluateDisturbance (function handle) - computes d(t)
     %      .evaluateControlInput (function handle) - computes u(t, x)
 
-
     % -- Nonlinear dynamics utility already baked into plant --
     f = nonlinearPlant.f;
 

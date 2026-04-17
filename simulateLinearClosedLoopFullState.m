@@ -11,7 +11,7 @@ function simulationResult = simulateLinearClosedLoopFullState(closedLoopSimulati
     %          .evaluateControlInput (function) - computes control input u(t, x)
     %      .duration (double) - length of simulation
     %      .x0 (2 x 1 double) - initial state
-  
+    %
     %
     % OUTPUT
     %  simulationResult struct with fields
