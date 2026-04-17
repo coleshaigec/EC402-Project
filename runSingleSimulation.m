@@ -39,7 +39,7 @@ function simulationResult = runSingleSimulation(simulationPlan)
     measurementModel = buildMeasurementModel(simulationPlan);
 
     % -- Perform open-loop analysis on linearized plant --
-    openLoopResult = runOpenLoopAnalysis(linearPlant, measurementModel, simulationPlan);
+    openLoopResult = runOpenLoopAnalysisForLinearPlant(linearPlant, measurementModel);
 
     simulationResult.results.openLoopResult = openLoopResult;
 

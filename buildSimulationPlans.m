@@ -99,7 +99,11 @@ function simulationPlans = buildSimulationPlans(allSimulationParameters)
     %              .dw struct with fields
     %                  .isActive           (boolean)
     %                  .functionalForm     (string)
-    %                  .parameters struct with scenario-specific fields      
+    %                  .parameters struct with scenario-specific fields
+    %
+    %      .controllerParameters
+    %          .stateFeedbackController
+    % 
     %      
     %
     % NOTES
