@@ -1,0 +1,47 @@
+function openLoopResult = runOpenLoopAnalysisForLinearPlant(linearPlant, measurementModel, simulationPlan)
+    % RUNOPENLOOPANALYSIS Performs open-loop analysis on the linear plant.  
+    %
+    % AUTHOR: Cole H. Shaigec
+    %
+    % INPUTS
+    %  linearPlant struct with fields
+    %
+    %  measurementModel struct with fields
+    %
+    %  simulationPlan struct with fields
+    %
+    %
+    %
+    % OUTPUTS
+    %  openLoopResult struct with fields
+    %      .equilibriumValues struct with fields
+    %          .xe
+    %          .ue 
+    %          .de
+    % 
+    %      .eigenstructure struct with fields
+    %          .eigenvalues
+    %          .isStable
+    %
+    %      .controllability struct with fields
+    %          .controllabilityMatrix
+    %          .controllabilityMatrixRank
+    %          .isControllable
+    %
+    %      .observability struct with fields
+    %          .observabilityMatrix
+    %          .observabilityMatrixRank
+    %          .isObservable
+    % 
+    %
+    % NOTES
+    %
+
+    
+    
+
+
+    
+
+
+end

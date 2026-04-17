@@ -75,6 +75,13 @@ function simulationPlans = buildSimulationPlans(allSimulationParameters)
     %
     %      .observabilityCase (string) - 'full' or 'moldOnly'
     %
+    %      .shouldUseNonBaselineDisturbance (boolean) - true iff disturbanceScenario is empty
+    %
+    %      .baselineDisturbances struct with fields
+    %          .dlStar                     (double) 
+    %          .dnStar                     (double in [0,1])
+    %          .dwStar                     (double)
+    %
     %      .disturbanceScenario struct with fields
     %          .name
     %          .descriptionString
@@ -101,7 +108,7 @@ function simulationPlans = buildSimulationPlans(allSimulationParameters)
     % disturbance scenario is assigned to each simulationPlan. 
     % - simulationPlans are produced as the Cartesian product of the
     % disturbanceScenarios and K-values
-    
+
 
     % -- Determine number of simulations to be run and preallocate output --
     numDisturbanceScenarios = numel(allSimulationParameters.disturbanceScenarios);
