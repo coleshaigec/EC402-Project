@@ -17,8 +17,9 @@ function simulationResult = simulateLinearClosedLoopFullState(closedLoopAnalysis
     % OUTPUT
     %  simulationResult struct with fields
     %      .timestamps (numTimestamps x 1 double)
-    %      .x (numTimestamps x 2 double) - simulated state trajectory
-    %      .xDot (numTimestamps x 2 double) - simulated state derivative trajectory
+    %      .state struct with fields
+    %          .x (numTimestamps x 2 double) - simulated state trajectory
+    %          .xDot (numTimestamps x 2 double) - simulated state derivative trajectory
     %      .u (numTimestamps x 2 double) - simulated input trajectory
     %      .d (numTimestamps x 3 double) - simulated disturbance trajectory
     %
@@ -39,8 +40,9 @@ function simulationResult = simulateLinearClosedLoopFullState(closedLoopAnalysis
     % -- YOUR IMPLEMENTATION HERE -- 
     simulationResult = struct();
     simulationResult.timestamps = [];
-    simulationResult.x = [];
-    simulationResult.xDot = [];
+    simulationResult.state = struct();
+    simulationResult.state.x = [];
+    simulationResult.state.xDot = [];
     simulationResult.u = [];
     simulationResult.d = [];
 end

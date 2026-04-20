@@ -77,7 +77,5 @@ function simulationResults = runAllSimulations(simulationPlans)
     for i = 1 : numSimulationsToRun
         simulationResults(i) = runSingleSimulation(simulationPlans(i));
     end
-
-
     
 end
