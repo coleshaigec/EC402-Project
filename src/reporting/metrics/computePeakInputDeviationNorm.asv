@@ -9,14 +9,11 @@ function peakInputDeviationNorm = computePeakInputDeviationNorm(u, uStar)
     %
     % OUTPUT
     %  peakInputDeviationNorm (double)
-    %
-    % NOTES
-    % - To my knowledge, there is no convenient MATLAB utility for
-    % computing row-level norms of a matrix. This function thus exploits
-    % the fact that norm rankings are transitive under squaring, picks the
-    % largest squared norm, and returns its square root.
 
     uTilde = u - uStar.';
-    uTildeRowLevelSquaredNorms = sum(uTilde.^2, 2);
-    peakInputDeviationNorm = sqrt(max(uTildeRowLevelSquaredNorms));
+    uTildeRowLevelNorms = 
+
+
+
+
 end
