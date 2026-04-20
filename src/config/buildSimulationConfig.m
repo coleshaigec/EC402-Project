@@ -8,8 +8,6 @@ function simulationConfig = buildSimulationConfig()
     %      .duration (double)
     %      .kValues (vector of doubles) 
     %      .chosenDisturbanceScenarios (1 x N cell array of char vectors or strings)
-    %      .observabilityCases (cell array of char vectors or strings)
-    %      .controllers (cell array of char vectors or strings)
     %
     % NOTES
     % - Per Thomas (2002), K is a plant-specific constant that is usually
@@ -29,10 +27,5 @@ function simulationConfig = buildSimulationConfig()
     simulationConfig = struct();
     simulationConfig.kValues = [0.0290; 0.0300; 0.0310];
     simulationConfig.duration = 1000;
-    simulationConfig.observabilityCases = {"fullState"};
-    simulationConfig.controllers = {"stateFeedback"};
-    simulationConfig.controllerParameters = struct();
-    simulationConfig.controllerParameters.lqr = struct();
-    simulationConfig.controllerParameters.stateFeedback = struct();
     simulationConfig.chosenDisturbanceScenarios = {"nozzlePulse", "withdrawalStep"};
 end

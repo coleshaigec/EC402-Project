@@ -30,9 +30,6 @@ function simulationConfig = buildSimulationConfig()
     simulationConfig.kValues = [0.0290; 0.0300; 0.0310];
     simulationConfig.duration = 1000;
     simulationConfig.observabilityCases = {"fullState"};
-    simulationConfig.controllers = {"stateFeedback"};
-    simulationConfig.controllerParameters = struct();
-    simulationConfig.controllerParameters.lqr = struct();
-    simulationConfig.controllerParameters.stateFeedback = struct();
+    simulationConfig.controllers = {"stateFeedback"}
     simulationConfig.chosenDisturbanceScenarios = {"nozzlePulse", "withdrawalStep"};
 end
