@@ -1,10 +1,10 @@
-function simulationResult = simulateLinearClosedLoopFullState(closedLoopSimulationPlan)
+function simulationResult = simulateLinearClosedLoopFullState(closedLoopAnalysisPlan)
     % SIMULATELINEARCLOSEDLOOPFULLSTATE Simulates closed-loop dynamics for linear plant with full observability. 
     %
     % AUTHOR: Richie Kim/Dani Schwartz
     %
     % INPUT
-    %  closedLoopSimulationPlan struct with fields
+    %  closedLoopAnalysisPlan struct with fields
     %      .evaluator struct with fields
     %          .evaluateStateDerivative (function) - computes xDot(t, x)
     %          .evaluateDisturbance (function) - computes d(t)

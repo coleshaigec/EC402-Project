@@ -1,5 +1,5 @@
-function initialConditions = setInitialConditions()
-    % SETINITIALCONDITIONS Allows user to hard-code initial conditions for closed-loop simulation.
+function initialConditions = buildInitialConditions()
+    % BUILDINITIALCONDITIONS Allows user to hard-code initial conditions for closed-loop simulation.
     %
     % AUTHOR: Cole H. Shaigec
     %

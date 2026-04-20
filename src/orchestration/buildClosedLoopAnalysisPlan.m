@@ -98,9 +98,10 @@ function closedLoopAnalysisPlan = buildClosedLoopAnalysisPlan(simulationPlan, co
     
     % -- Populate output struct --
     closedLoopAnalysisPlan.linearPlant.evaluator = linearEvaluator;
-    closedLoopAnalysisPlan.linearPlant.initialConditions = simulationPlan.initialConditions;
-    closedLoopAnalysisPlan.linearPlant.duration = simulationPlan.duration;
+    closedLoopAnalysisPlan.linearPlant.initialConditions = buildInitialConditions();
+    closedLoopAnalysisPlan.linearPlant.duration = getSimulationDuration();
+
     closedLoopAnalysisPlan.nonlinearPlant.evaluator = nonlinearEvaluator;
-    closedLoopAnalysisPlan.nonlinearPlant.initialConditions = simulationPlan.initialConditions;
-    closedLoopAnalysisPlan.nonlinearPlant.duration = simulationPlan.duration;
+    closedLoopAnalysisPlan.nonlinearPlant.initialConditions = buildInitialConditions();
+    closedLoopAnalysisPlan.nonlinearPlant.duration = getSimulationDuration();
 end

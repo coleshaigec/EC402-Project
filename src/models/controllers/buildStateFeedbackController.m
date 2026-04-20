@@ -1,4 +1,4 @@
-function stateFeedbackController = buildStateFeedbackController(linearPlant, stateFeedbackControllerParameters)
+function stateFeedbackController = buildStateFeedbackController(linearPlant, operatingPoint, stateFeedbackControllerParameters)
     % BUILDSTATEFEEDBACKCONTROLLER Places poles on the linearized plant and builds a state feedback controller model for use in simulation.
     %
     % AUTHOR: Richie Kim/Dani Schwartz
@@ -40,11 +40,6 @@ function stateFeedbackController = buildStateFeedbackController(linearPlant, sta
     %          .Acl (matrix) - closed-loop matrix
     %          .desiredPoles (2 x 1 double)
     %          .placedPoles (2 x 1 double)
-    %
-    % NOTES
-    % - The desired poles can be tuned in
-    % buildStateFeedbackControllerParameters.m. This function takes them as
-    % exogenous. 
 
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%
     % NOTES FOR IMPLEMENTATION %
@@ -52,6 +47,8 @@ function stateFeedbackController = buildStateFeedbackController(linearPlant, sta
     % - Please do not delete the docstring above. 
     % - MATLAB's built-in "place" function is the easiest, most convenient,
     % and most effective way to place poles for this project.
+    % - To compute the equilibrium, please use the function
+    % getEquilibriumFromOperatingPoint
 
     % -- Hard-coded temporary values for pipeline testing --
     % Delete these and replace with your own implementation

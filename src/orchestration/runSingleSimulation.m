@@ -105,7 +105,7 @@ function simulationResult = runSingleSimulation(simulationPlan)
     % -- Build controller --
     switch simulationPlan.controller 
         case 'stateFeedback'
-            controller = buildStateFeedbackController(linearPlant, simulationPlan.controllerParameters);
+            controller = buildStateFeedbackController(linearPlant, simulationPlan.operatingPoint, simulationPlan.controllerParameters);
         case 'lqr'
             controller = buildLQR(linearPlant, simulationPlan.controllerParameters);
         otherwise
@@ -116,47 +116,52 @@ function simulationResult = runSingleSimulation(simulationPlan)
 
     simulationResult.controller = controller;
 
-    % -- Plan closed-loop simulation --
-    closedLoopSimulationPlan = buildClosedLoopAnalysisPlan(simulationPlan, controller, linearPlant, nonlinearPlant, measurementModel);
+    % -- Plan closed-loop analysis --
+    closedLoopAnalysisPlan = buildClosedLoopAnalysisPlan(simulationPlan, controller, linearPlant, nonlinearPlant, measurementModel);
 
     % -- Simulate controller performance on linearized plant --
     switch simulationPlan.controller 
         case 'stateFeedback'
             if observable
                 linearClosedLoopResult = simulateLinearClosedLoopFullState()
+            else
+                error('observer not yet implemented')
             end
             
         case 'lqr'
-            
+            error('lqr not yet implemented')
         otherwise
             error('runSingleSimulation:InvalidFieldValue', ...
                 'simulationPlan.controller expected ''lqr'' or ''stateFeedback'', provided %s', ...
                 simulationPlan.controller);
     end
 
+    % -- Simulate controller performance on nonlinear plant --
+    
 
-    stateFeedbackLinearClosedLoopResult = runClosedLoopAnalysis(linearPlant, ...
-        measurementModel, stateFeedbackController, simulationPlan);
-    lqrLinearClosedLoopResult = runClosedLoopAnalysis(linearPlant, ...
-        measurementModel, linearQuadraticRegulator, simulationPlan);
-
-    simulationResult.results.stateFeedback.linear = stateFeedbackLinearClosedLoopResult;
-    simulationResult.results.lqr.linear = lqrLinearClosedLoopResult;
+    % 
+    % stateFeedbackLinearClosedLoopResult = runClosedLoopAnalysis(linearPlant, ...
+    %     measurementModel, stateFeedbackController, simulationPlan);
+    % lqrLinearClosedLoopResult = runClosedLoopAnalysis(linearPlant, ...
+    %     measurementModel, linearQuadraticRegulator, simulationPlan);
+    % 
+    % simulationResult.results.stateFeedback.linear = stateFeedbackLinearClosedLoopResult;
+    % simulationResult.results.lqr.linear = lqrLinearClosedLoopResult;
 
     % -- Simulate controller performance on full nonlinear plant --
-    stateFeedbackNonlinearClosedLoopResult = runClosedLoopAnalysis(nonlinearPlant, ...
-        measurementModel, stateFeedbackController, simulationPlan);
-    lqrNonlinearClosedLoopResult = runClosedLoopAnalysis(nonlinearPlant, ...
-        measurementModel, linearQuadraticRegulator, simulationPlan);
-
-    simulationResult.results.stateFeedback.nonlinear = stateFeedbackNonlinearClosedLoopResult;
-    simulationResult.results.lqr.nonlinear = lqrNonlinearClosedLoopResult;
+    % stateFeedbackNonlinearClosedLoopResult = runClosedLoopAnalysis(nonlinearPlant, ...
+    %     measurementModel, stateFeedbackController, simulationPlan);
+    % lqrNonlinearClosedLoopResult = runClosedLoopAnalysis(nonlinearPlant, ...
+    %     measurementModel, linearQuadraticRegulator, simulationPlan);
+    % 
+    % simulationResult.results.stateFeedback.nonlinear = stateFeedbackNonlinearClosedLoopResult;
+    % simulationResult.results.lqr.nonlinear = lqrNonlinearClosedLoopResult;
 
     % -- If partial observability is to be tested, design and simulate observer --
-    if strcmp(simulationPlan.observabilityCase, 'moldOnly')
-        luenbergerObserver = buildLuenbergerObserver(); % to be architected
-        simulationResult.observers.luenberger = luenbergerObserver;
-
-        
-    end
+    % if strcmp(simulationPlan.observabilityCase, 'moldOnly')
+    %     luenbergerObserver = buildLuenbergerObserver(); % to be architected
+    %     simulationResult.observers.luenberger = luenbergerObserver;
+    % 
+    % 
+    % end
 end
