@@ -1,4 +1,4 @@
-function simulationResult = runSimulationPipeline(simulationPlan)
+function simulationResult = runSingleSimulation(simulationPlan)
     % RUNSIMULATIONPIPELINE Top-level module that executes full simulation workflow for a single set of parameters.
     %
     % AUTHOR: Cole H. Shaigec
@@ -68,7 +68,6 @@ function simulationResult = runSimulationPipeline(simulationPlan)
     % utility is to execute individual simulations and pass the results
     % upward.
 
-
     %%%%%%%%%%%%%%%%%%%%
     % DEVELOPMENT NOTE %
     %%%%%%%%%%%%%%%%%%%%
@@ -79,14 +78,14 @@ function simulationResult = runSimulationPipeline(simulationPlan)
     % analysis. 
     
     % -- DEBUGGING - REMOVE ON DEPLOY - Print all fields and values in plan
-    S = simulationPlan;
-    fields = fieldnames(S);
-    for i = 1:length(fields)
-        fieldName = fields{i};
-        value = S.(fieldName); % Use dynamic field names
-        fprintf('%s: ', fieldName);
-        disp(value);
-    end
+    % S = simulationPlan;
+    % fields = fieldnames(S);
+    % for i = 1:length(fields)
+    %     fieldName = fields{i};
+    %     value = S.(fieldName); % Use dynamic field names
+    %     fprintf('%s: ', fieldName);
+    %     disp(value);
+    % end
 
     simulationResult = buildTemplateSimulationResultStruct();
 
@@ -97,15 +96,17 @@ function simulationResult = runSimulationPipeline(simulationPlan)
     
     % -- Perform open-loop analysis on linearized plant --
     openLoopResult = runOpenLoopAnalysisForLinearPlant(linearPlant, measurementModel);
+    assignin('base', 'openLoopResult', openLoopResult); 
 
     simulationResult.results.openLoopResult = openLoopResult;
 
     % -- Build controller --
     switch simulationPlan.controller 
         case 'stateFeedback'
-            controller = buildStateFeedbackController(linearPlant, simulationPlan.controllerParameters.stateFeedback);
+            simulationPlan.controllerParameters
+            controller = buildStateFeedbackController(linearPlant, simulationPlan.controllerParameters);
         case 'lqr'
-            controller = buildLQR(linearPlant, simulationPlan.controllerParameters.lqr);
+            controller = buildLQR(linearPlant, simulationPlan.controllerParameters);
         otherwise
             error('runSingleSimulation:InvalidFieldValue', ...
                 'simulationPlan.controller expected ''lqr'' or ''stateFeedback'', provided %s', ...
