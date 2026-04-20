@@ -8,11 +8,6 @@ function allSimulationParameters = buildSimulationParameterGrids(simulationConfi
     %      .duration (double)
     %      .chosenDisturbanceScenarios (1 x N cell array of char vectors or strings)
     %      .kValues (1 x numKValues vector)
-    %      .observabilityCases (cell array of strings/character vectors)
-    %      .controllers (cell array of strings / char vectors)
-    %      .controllerParameters struct with fields
-    %          .lqr struct with fields
-    %          .stateFeedback struct with fields
     %
     % OUTPUT
     %  allSimulationParameters struct with fields
@@ -64,9 +59,6 @@ function allSimulationParameters = buildSimulationParameterGrids(simulationConfi
     %          .hM       (double)    - prescribed mold height at operating point
     %          .Qladle   (double)    - computed ladle -> tundish flow rate
     %          .uM       (double)    - prescribed tundish -> mold flow regulation setting
-    %   
-    %      .observabilityCases (cell array of strings / char vectors)
-    %      .controllers (cell array of strings / char vectors)
 
     % -- Define plant geometry -- 
     plantGeometry = buildPlantGeometry();
@@ -104,12 +96,19 @@ function allSimulationParameters = buildSimulationParameterGrids(simulationConfi
     allSimulationParameters.plantGeometry = plantGeometry;
     allSimulationParameters.physicalConstants = physicalConstants;
     allSimulationParameters.Kvalues = Kvalues;
-    allSimulationParameters.observabilityCases = simulationConfig.observabilityCases;
-    allSimulationParameters.controllers = simulationConfig.controllers;
     allSimulationParameters.safetyRequirements = safetyRequirements;
     allSimulationParameters.baselineDisturbances = baselineDisturbances;
     allSimulationParameters.disturbanceScenarios = disturbanceScenarios;
-    allSimulationParameters.controllerParameters = simulationConfig.controllerParameters;
-    simulationConfig.controllerParameters.stateFeedback
     allSimulationParameters.operatingPoints = operatingPoints;
+    allSimulationParameters.controllerParameters = simulationConfig.controllerParameters;
+
+    error('This is getting called');
+    S = allSimulationParameters;
+    fields = fieldnames(S);
+    for i = 1:length(fields)
+        fieldName = fields{i};
+        value = S.(fieldName); % Use dynamic field names
+        fprintf('%s: ', fieldName);
+        disp(value);
+    end
 end

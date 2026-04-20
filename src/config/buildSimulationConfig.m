@@ -8,8 +8,12 @@ function simulationConfig = buildSimulationConfig()
     %      .duration (double)
     %      .kValues (vector of doubles) 
     %      .chosenDisturbanceScenarios (1 x N cell array of char vectors or strings)
+    %      .controllerParameters struct with fields
+    %          .desiredPoles (2 x 1 vector)
     %
     % NOTES
+    % - This utility may be used to configure the pipeline for a given
+    % experiment run.
     % - Per Thomas (2002), K is a plant-specific constant that is usually
     % estimated from empirical data. 
     % - Since we do not have a concrete physical plant to work with, our
@@ -25,7 +29,24 @@ function simulationConfig = buildSimulationConfig()
     % approximation.
 
     simulationConfig = struct();
+
+    % -- Set k-values for simulation --
     simulationConfig.kValues = [0.0290; 0.0300; 0.0310];
+    
+    % -- Simulation duration --
     simulationConfig.duration = 1000;
+
+    % -- Configure controller(s) --
+    simulationConfig.controllerParameters = struct();
+
+    % -- State feedback controller --
+    simulationConfig.controllerParameters.stateFeedback = struct( ...
+        'desiredPoles', {[-0.1; -0.2]} ...
+    );
+
+    % -- LQR --
+    simulationConfig.controllerParameters.lqr = struct([]);
+
+    % -- Choose disturbance scenarios --
     simulationConfig.chosenDisturbanceScenarios = {"nozzlePulse", "withdrawalStep"};
 end

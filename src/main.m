@@ -5,7 +5,15 @@ function main()
 
     % -- Build simulation plans --
     simulationConfig = buildSimulationConfig();
+    disp(simulationConfig.controllerParameters)
     allSimulationParameters = buildSimulationParameterGrids(simulationConfig);
     simulationPlans = buildSimulationPlans(allSimulationParameters);
-    simulationPlans(1)
+    
+    
+    % -- Run all simulations -- 
+    simulationResults = runAllSimulations(simulationPlans);
+
+
+    % -- Pass results through reporting layer --
+
 end

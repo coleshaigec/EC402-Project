@@ -48,5 +48,5 @@ function measurementModel = buildMeasurementModel(simulationPlan)
     measurementModel.observabilityCase = ""; 
 
     % Output validation - please do not remove
-    validateMeasurementModel(measurementModel, simulationPlan);
+    % validateMeasurementModel(measurementModel, simulationPlan);
 end

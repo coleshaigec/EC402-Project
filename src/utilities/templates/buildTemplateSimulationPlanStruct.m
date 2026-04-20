@@ -10,7 +10,7 @@ function templateSimulationPlanStruct = buildTemplateSimulationPlanStruct()
     %      .physicalConstants
     %      .safetyRequirements
     %      .observabilityCase
-    %      .controllers
+    %      .controller
     %      .shouldUseNonBaselineDisturbance
     %      .baselineDisturbances
     %      .disturbanceScenario
@@ -22,10 +22,9 @@ function templateSimulationPlanStruct = buildTemplateSimulationPlanStruct()
     templateSimulationPlanStruct.physicalConstants = [];
     templateSimulationPlanStruct.safetyRequirements = [];
     templateSimulationPlanStruct.observabilityCase = [];
-    templateSimulationPlanStruct.controllers = [];
-    templateSimulationPlanStruct.baselineDisturbances = [];
+    templateSimulationPlanStruct.controller = [];
     templateSimulationPlanStruct.shouldUseNonBaselineDisturbance = [];
+    templateSimulationPlanStruct.baselineDisturbances = [];
     templateSimulationPlanStruct.disturbanceScenario = [];
-    templateSimulationPlanStruct.controllerParameters = struct();
-
+    templateSimulationPlanStruct.controllerParameters = [];
 end
