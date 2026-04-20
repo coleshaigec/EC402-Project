@@ -14,8 +14,10 @@ function closedLoopResult = runClosedLoopAnalysis(closedLoopAnalysisPlan)
     %
     % OUTPUT
     %  simulationResult struct with fields
-    
-
+   
+    % -- Get simulation plan from closed-loop analysis plan --
+    simulationPlan = buildClosedLoopSimulationPlan(closedLoopAnalysisPlan);
+   
     % -- Run simulation --
     switch closedLoopAnalysisPlan.simulationCase
         case 'linearFullState'

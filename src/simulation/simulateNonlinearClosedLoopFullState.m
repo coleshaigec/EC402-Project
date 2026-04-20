@@ -12,7 +12,6 @@ function simulationResult = simulateNonlinearClosedLoopFullState(closedLoopSimul
     %      .duration (double) - length of simulation
     %      .x0 (2 x 1 double) - initial state
     %
-    %
     % OUTPUT
     %  simulationResult struct with fields
     %      .timestamps (numTimestamps x 1 double)
