@@ -70,7 +70,7 @@ function simulationResults = runAllSimulations(simulationPlans)
 
     % -- Determine number of simulations to run and preallocate output --
     numSimulationsToRun = numel(simulationPlans);
-    templateSimulationResultStruct = buildTemplateSimulationPlanStruct();
+    templateSimulationResultStruct = buildTemplateSimulationResultStruct();
     simulationResults = repmat(templateSimulationResultStruct, numSimulationsToRun, 1);
 
     % -- Run simulations and populate result struct --

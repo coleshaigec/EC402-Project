@@ -89,6 +89,8 @@ function simulationResult = runSingleSimulation(simulationPlan)
     assert(ismember(simulationPlan.observabilityCase, getObservabilityCases()), 'observabilityCase must be ''full'' or ''moldOnly''');
     observable = strcmp(simulationPlan.observabilityCase, "full");
 
+    simulationResult = buildTemplateSimulationResultStruct();
+
     % -- Build plant models --
     linearPlant = buildLinearPlant(simulationPlan);
     nonlinearPlant = buildNonlinearPlant(simulationPlan);
@@ -96,6 +98,9 @@ function simulationResult = runSingleSimulation(simulationPlan)
     
     % -- Perform open-loop analysis on linearized plant --
     openLoopResult = runOpenLoopAnalysisForLinearPlant(linearPlant, measurementModel);
+    assignin('base', 'openLoopResult', openLoopResult); 
+
+    simulationResult.results.openLoopResult = openLoopResult;
 
     % -- Build controller --
     switch simulationPlan.controller 
@@ -108,6 +113,8 @@ function simulationResult = runSingleSimulation(simulationPlan)
                 'simulationPlan.controller expected ''lqr'' or ''stateFeedback'', provided %s', ...
                 simulationPlan.controller);
     end
+
+    simulationResult.controller = controller;
 
     % -- Plan closed-loop analysis --
     closedLoopAnalysisPlan = buildClosedLoopAnalysisPlan(simulationPlan, controller, linearPlant, nonlinearPlant, measurementModel);
@@ -147,13 +154,7 @@ function simulationResult = runSingleSimulation(simulationPlan)
     end
 
     % -- Amalgamate results for reporting --
-    simulationResult = buildTemplateSimulationResultStruct;
-    simulationResult.linearPlant = linearPlant;
-    simulationResult.nonlinearPlant = nonlinearPlant;
-    simulationResult.measurementModel = measurementModel;
-    simulationResult.openLoopResult = openLoopResult;
-    simulationResult.controller = controller;
-    simulationResult.nonlinearClosedLoopResult = nonlinearClosedLoopResult;
-    simulationResult.linearClosedLoopResult = linearClosedLoopResult;
-    simulationResult.observabilityCase = simulationPlan.observabilityCase;
+    simulationResult = struct();
+    simulationResult.openLoopRes
+    simulationResult.nonlinear
 end

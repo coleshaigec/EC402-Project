@@ -1,4 +1,4 @@
-function simulationResult = simulateNonlinearClosedLoopFullState(closedLoopSimulationPlan)
+function simulationResult = simulateNonlinearClosedLoopFullState(closedLoopAnalysisPlan)
     % SIMULATELINEARCLOSEDLOOPFULLSTATE Simulates closed-loop dynamics for linear plant with full observability. 
     %
     % AUTHOR: Richie Kim/Dani Schwartz
@@ -10,8 +10,8 @@ function simulationResult = simulateNonlinearClosedLoopFullState(closedLoopSimul
     %          .evaluateDisturbance (function) - computes d(t)
     %          .evaluateControlInput (function) - computes control input u(t, x)
     %      .duration (double) - length of simulation
-    %      .x0 (2 x 1 double) - initial state
-    %      .xHat0 (2 x 1 double) - initial state estimate
+    %      .initialConditions struct with fields
+    %           .x0 (2 x 1 double) - initial state
     %
     % OUTPUT
     %  simulationResult struct with fields
@@ -26,9 +26,6 @@ function simulationResult = simulateNonlinearClosedLoopFullState(closedLoopSimul
     % nonlinear closed-loop system with a given controller, initial condition, and disturbance scenario. 
     % - The system dynamics are packaged into an evaluator utility provided
     % as an input to the function. 
-    % - xHat0 is an optional state included in the closedLoopSimulationPlan
-    % schema for the 'moldOnly' observability case. It is ignored in
-    % full-state simulations.
 
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%
     % NOTES FOR IMPLEMENTATION %
@@ -37,8 +34,6 @@ function simulationResult = simulateNonlinearClosedLoopFullState(closedLoopSimul
     % - The information needed for you to compute xDot and other required
     % quantities for the simulation is packaged into the provided
     % 'evaluator' utility. All you have to do is call it. 
-    % - Ignore xHat0 in the input struct. It's there for other functions,
-    % and you don't need it for this one.
 
     % -- YOUR IMPLEMENTATION HERE -- 
     simulationResult = struct();

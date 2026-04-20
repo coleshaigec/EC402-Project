@@ -5,5 +5,14 @@ function templateSimulationResultStruct = buildTemplateSimulationResultStruct()
     %
     % OUTPUT
     %  templateSimulationResultStruct struct with fields 
+    
     templateSimulationResultStruct = struct();
+    templateSimulationResultStruct.linearPlant = [];
+    templateSimulationResultStruct.nonlinearPlant = [];
+    templateSimulationResultStruct.measurementModel = [];
+    templateSimulationResultStruct.openLoopResult = [];
+    templateSimulationResultStruct.controller = [];
+    templateSimulationResultStruct.nonlinearClosedLoopResult = [];
+    templateSimulationResultStruct.linearClosedLoopResult = [];
+    templateSimulationResultStruct.observabilityCase = [];
 end
