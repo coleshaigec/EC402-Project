@@ -1,4 +1,4 @@
-function closedLoopAnalysisPlan = buildClosedLoopAnalysisPlan(simulationPlan, controller, linearPlant, nonlinearPlant, measurementModel)
+function closedLoopAnalysisPlan = buildClosedLoopAnalysisPlan(simulationPlan, controller, measurementModel)
     % BUILDCLOSEDLOOPANALYSISPLAN Constructs plan for single closed-loop analysis run.
     %
     % AUTHOR: Cole H. Shaigec
@@ -39,7 +39,7 @@ function closedLoopAnalysisPlan = buildClosedLoopAnalysisPlan(simulationPlan, co
     %          .dnStar                     (double in [0,1])
     %          .dwStar                     (double)
     %
-    %      .disturbanceScenario struct with fields
+    %      .disturbanceScenarios array of structs with fields
     %          .name
     %          .descriptionString
     %          .shouldApplyToLinearPlant
@@ -61,46 +61,38 @@ function closedLoopAnalysisPlan = buildClosedLoopAnalysisPlan(simulationPlan, co
     %      .controllerParameters struct with fields
     %          .stateFeedbackController
     %          .lqr
-    %     
-    %      .initialConditions struct with fields
-    %          .x0 (2 x 1 double) - initial state
-    %          .xHat0 (2 x 1 double) - initial state estimate, empty in non-observable case
-    % 
     %
     % OUTPUT
     %  closedLoopAnalysisPlan struct with fields
     %      .linearPlant struct with fields
-    %          .evaluator struct with case-specific fields
-    %          .duration (double) - length of simulation
-    %          .initialConditions struct with case-specific fields
-    %      .nonlinearPlant struct with fields
-    %          .evaluator struct with case-specific fields
-    %          .duration (double) - length of simulation
-    %          .initialConditions struct with case-specific fields
+    %      .evaluator struct with case-specific fields
+    %      .duration (double) - length of simulation
+    %      .x0 (2 x 1 double) - initial state
+    %      .xHat0 (2 x 1 double) - initial state estimate
+    
     assert(ismember(simulationPlan.observabilityCase, getObservabilityCases()), 'observabilityCase must be ''full'' or ''moldOnly''');
-    observable = strcmp(simulationPlan.observabilityCase, "full");
+    observable = strcmp(simlationPlan.observabilityCase, "full");
     
     closedLoopAnalysisPlan = struct();
-    closedLoopAnalysisPlan.linearPlant = struct();
-    closedLoopAnalysisPlan.nonlinearPlant = struct();
+
 
     % -- Design of closed-loop analysis plan depends on observability --
     if observable
-         disturbanceEvaluator = buildDisturbanceEvaluator(simulationPlan.disturbanceScenario);
-         linearEvaluator = buildLinearFullStateClosedLoopEvaluator(linearPlant, ...
-             controller, disturbanceEvaluator);
-         nonlinearEvaluator = nonlinearPlant.f;
+
     else
-        % Will deal with imperfect observability case later -- interface is
-        % the same!
     end
 
     
-    % -- Populate output struct --
-    closedLoopAnalysisPlan.linearPlant.evaluator = linearEvaluator;
-    closedLoopAnalysisPlan.linearPlant.initialConditions = simulationPlan.initialConditions;
-    closedLoopAnalysisPlan.linearPlant.duration = simulationPlan.duration;
-    closedLoopAnalysisPlan.nonlinearPlant.evaluator = nonlinearEvaluator;
-    closedLoopAnalysisPlan.nonlinearPlant.initialConditions = simulationPlan.initialConditions;
-    closedLoopAnalysisPlan.nonlinearPlant.duration = simulationPlan.duration;
+
+
+
+    
+
+
+     %          .evaluateStateDerivative (function) - computes xDot(t, x)
+    %          .evaluateDisturbance (function) - computes d(t)
+    %          .evaluateControlInput (function) - computes control input u(t, x)
+
+
+
 end

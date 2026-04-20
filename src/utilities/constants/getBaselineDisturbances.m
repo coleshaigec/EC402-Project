@@ -1,5 +1,5 @@
-function baselineDisturbances = buildBaselineDisturbances()
-    % BUILDBASELINEDISTURBANCES Establishes baseline disturbance scenario for simulation.
+function baselineDisturbances = getBaselineDisturbances()
+    % GETBASELINEDISTURBANCES Establishes baseline disturbance scenario for simulation.
     %
     % AUTHOR: Cole H. Shaigec
     %

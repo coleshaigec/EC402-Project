@@ -57,22 +57,16 @@ function stateFeedbackController = buildStateFeedbackController(linearPlant, sta
     % Delete these and replace with your own implementation
     Acl = eye(2);
     gains = [1;1];
-    xe = [1;1];
-    ue = [1;1];
 
     % -- YOUR IMPLEMENTATION HERE --
     stateFeedbackController = struct();
     stateFeedbackController.type = 'stateFeedback';
     stateFeedbackController.gains = gains;
-    stateFeedbackController.equilibrium = struct();
-    stateFeedbackController.equilibrium.xe = xe;
-    stateFeedbackController.equilibrium.ue = ue;
-
-    stateFeedbackController.designMetadata = struct();
-    stateFeedbackController.designMetadata.Acl = Acl;
-    stateFeedbackController.designMetadata.desiredPoles = stateFeedbackControllerParameters.desiredPoles;
-    stateFeedbackController.designMetadata.placedPoles = eig(Acl);
-    
+    stateFeedbackController.equilibrium = 
+    stateFeedbackController.Acl = Acl;
+    stateFeedbackController.desiredPoles = stateFeedbackControllerParameters.desiredPoles;
+    stateFeedbackController.placedPoles = eig(Acl);
+    stateFeedbackController.gains = gains;
 
 
 end

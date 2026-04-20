@@ -24,7 +24,7 @@ function nonlinearPlant = buildNonlinearPlant(simulationPlan)
     %
     % OUTPUT
     %  nonlinearPlant struct with fields
-    %      .f (anonymous function) - passed into ODE45 as nonlinear dynamics
+    %      .f (function handle) - passed into ODE45 as nonlinear dynamics
     %      .metadata struct with fields
     %          .operatingPoint struct with fields
     %              .K        (double)    - plant-specific proportionality constant

@@ -85,7 +85,9 @@ function simulationResult = runSingleSimulation(simulationPlan)
     %     value = S.(fieldName); % Use dynamic field names
     %     fprintf('%s: ', fieldName);
     %     disp(value);
-    % end
+
+    assert(ismember(simulationPlan.observabilityCase, getObservabilityCases()), 'observabilityCase must be ''full'' or ''moldOnly''');
+    observable = strcmp(simulationPlan.observabilityCase, "full");
 
     simulationResult = buildTemplateSimulationResultStruct();
 
@@ -103,7 +105,6 @@ function simulationResult = runSingleSimulation(simulationPlan)
     % -- Build controller --
     switch simulationPlan.controller 
         case 'stateFeedback'
-            simulationPlan.controllerParameters
             controller = buildStateFeedbackController(linearPlant, simulationPlan.controllerParameters);
         case 'lqr'
             controller = buildLQR(linearPlant, simulationPlan.controllerParameters);
@@ -115,7 +116,25 @@ function simulationResult = runSingleSimulation(simulationPlan)
 
     simulationResult.controller = controller;
 
+    % -- Plan closed-loop simulation --
+    closedLoopSimulationPlan = buildClosedLoopAnalysisPlan(simulationPlan, controller, linearPlant, nonlinearPlant, measurementModel);
+
     % -- Simulate controller performance on linearized plant --
+    switch simulationPlan.controller 
+        case 'stateFeedback'
+            if observable
+                linearClosedLoopResult = simulateLinearClosedLoopFullState()
+            end
+            
+        case 'lqr'
+            
+        otherwise
+            error('runSingleSimulation:InvalidFieldValue', ...
+                'simulationPlan.controller expected ''lqr'' or ''stateFeedback'', provided %s', ...
+                simulationPlan.controller);
+    end
+
+
     stateFeedbackLinearClosedLoopResult = runClosedLoopAnalysis(linearPlant, ...
         measurementModel, stateFeedbackController, simulationPlan);
     lqrLinearClosedLoopResult = runClosedLoopAnalysis(linearPlant, ...

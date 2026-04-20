@@ -1,4 +1,4 @@
-function simulationResult = simulateNonlinearClosedLoopFullState(closedLoopSimulationPlan)
+function simulationResult = simulateLinearClosedLoopFullState(closedLoopSimulationPlan)
     % SIMULATELINEARCLOSEDLOOPFULLSTATE Simulates closed-loop dynamics for linear plant with full observability. 
     %
     % AUTHOR: Richie Kim/Dani Schwartz
@@ -10,7 +10,9 @@ function simulationResult = simulateNonlinearClosedLoopFullState(closedLoopSimul
     %          .evaluateDisturbance (function) - computes d(t)
     %          .evaluateControlInput (function) - computes control input u(t, x)
     %      .duration (double) - length of simulation
-    %      .x0 (2 x 1 double) - initial state
+    %      .initialConditions struct with fields
+    %          .x0 (2 x 1 double) - initial state
+    %
     %
     % OUTPUT
     %  simulationResult struct with fields
@@ -22,7 +24,7 @@ function simulationResult = simulateNonlinearClosedLoopFullState(closedLoopSimul
     %
     % NOTES
     % - This function uses MATLAB's ODE45 to simulate the behavior of the
-    % nonlinear closed-loop system with a given controller, initial condition, and disturbance scenario. 
+    % linear closed-loop system with a given controller, initial condition, and disturbance scenario. 
     % - The system dynamics are packaged into an evaluator utility provided
     % as an input to the function. 
 

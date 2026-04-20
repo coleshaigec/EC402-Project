@@ -76,7 +76,7 @@ function allSimulationParameters = buildSimulationParameterGrids(simulationConfi
     physicalConstants = buildPhysicalConstants();
 
     % -- Define baseline disturbances -- 
-    baselineDisturbances = buildBaselineDisturbances();
+    baselineDisturbances = getBaselineDisturbances();
 
     % -- Define search grid in K --
     Kvalues = simulationConfig.kValues;
