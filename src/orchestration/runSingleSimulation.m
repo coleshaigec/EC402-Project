@@ -136,6 +136,12 @@ function simulationResult = runSingleSimulation(simulationPlan)
     %          .designMetadata struct with controller-specific fields
     %
     %      .nonlinearClosedLoopResult struct with fields
+    %          .timestamps (numTimestamps x 1 double)
+    %          .state struct with fields
+    %              .x (numTimestamps x 2 double) - simulated state trajectory
+    %              .xDot (numTimestamps x 2 double) - simulated state derivative trajectory
+    %          .u (numTimestamps x 2 double) - simulated input trajectory
+    %          .d (numTimestamps x 3 double) - simulated disturbance trajectory
     %      
     %      .linearClosedLoopResult struct with fields
     %          .timestamps (numTimestamps x 1 double)
@@ -145,6 +151,7 @@ function simulationResult = runSingleSimulation(simulationPlan)
     %              .xDot (numTimestamps x 2 double) - simulated state derivative trajectory
     %          .u (numTimestamps x 2 double) - simulated input trajectory
     %          .d (numTimestamps x 3 double) - simulated disturbance trajectory
+    %
     %      .observabilityCase (string) - 'full' or 'moldOnly'
     %
     % NOTES
