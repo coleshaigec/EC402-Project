@@ -141,11 +141,12 @@ function singleRunPerformanceMetrics = computeSingleRunPerformanceMetrics(simula
     % - The semantic meaning of each performance metric is defined within
     % the utility responsible for computing it.
 
-    % -- Compute metrics for linear closed-loop result --
+    % -- Compute metrics for linear closed-loop result -
     xLinear = simulationResult.linearClosedLoopResult.state.x;
     uLinear = simulationResult.linearClosedLoopResult.u;
     linearTimestamps = simulationResult.linearClosedLoopResult.timestamps;
     linearOperatingPoint = simulationResult.linearPlant.metadata.operatingPoint;
+    
     uStarLinear = [linearOperatingPoint.uM; linearOperatingPoint.vW];
 
     linearAbsoluteMoldLevelOvershoot = computeAbsoluteMoldLevelOvershoot(xLinear, linearOperatingPoint.hM);

@@ -59,7 +59,7 @@ function linearPlant = buildLinearPlant(simulationPlan)
     %
     % See project plan for typed up Jacobians. 
 
-
+   
 
     % -- YOUR IMPLEMENTATION HERE -- 
     linearPlant = struct();
@@ -67,6 +67,16 @@ function linearPlant = buildLinearPlant(simulationPlan)
     linearPlant.B = []; % input Jacobian
     linearPlant.E = []; % disturbance Jacobian
     linearPlant.metadata = []; % populate according to docstring
+
+    % % -- Hard-coded values in place for pipeline debugging --
+    % % Delete these when you're ready to test your code
+    % linearPlant.A = eye(2);
+    % linearPlant.B = eye(2);
+    % linearPlant.E = [1,0,0;0,1,0];
+    % linearPlant.metadata = struct();
+    % linearPlant.metadata.operatingPoint = buildOperatingPoint(buildPlantGeometry(), buildSafetyRequirements, 1, struct('g', 9.81));
+    % linearPlant.metadata.plantGeometry = buildPlantGeometry();
+    % linearPlant.metadata.physicalConstants = struct('g', 9.81);
 
     % Output validation - please do not remove!
     validateLinearPlant(linearPlant, simulationPlan);
