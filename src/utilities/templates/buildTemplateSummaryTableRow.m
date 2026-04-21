@@ -1,49 +1,100 @@
 function templateRow = buildTemplateSummaryTableRow()
-    % BUILDTEMPLATESUMMARYTABLEROW Builds scalar struct containing template row for experiment summary table.
+    % BUILDTEMPLATESUMMARYTABLEROW Builds scalar struct containing fixed-schema template row
+    % for the run-level summary table.
     %
     % AUTHOR: Cole H. Shaigec
-    % 
-    % OUTPUTS
+    %
+    % OUTPUT
     %  templateRow struct with fields
-    %      .runNumber (double)     
-    %      .cmapssSubset (string)
-    %      .taskType  (string)   
-    %      .windowSize (double)
-    %      .warningHorizon (double)
-    %      .pcaEnabled (boolean)
-    %      .pcaSelectionMode (string)
-    %      .pcaVarianceThreshold (double)
-    %      .modelName (string)
-    %      .boostingRegressionT (double)
-    %      .knnK (double)
-    %      .qdaRegularizationStrength (double)
-    %      .naiveBayesVarianceSmoothing (double)
-    %      .randomForestNumTrees (double)
-    %      .randomForestMinLeafSize (double)
-    %      .randomForestNumPredictorsToSample (double)
-    %      .ridgeRegressionLambda (double)
-    %      .trainAccuracy (double)
-    %      .trainF1 (double)
-    %      .trainPrecision (double)
-    %      .trainRecall (double)
-    %      .trainSpecificity (double)
-    %      .trainBalancedAccuracy (double)
-    %      .trainRMSE (double)
-    %      .trainMAE (double)
-    %      .trainMedAE (double)
-    %      .trainR2 (double)
-    %      .trainBias (double)
-    %      .testAccuracy (double)
-    %      .testF1 (double)
-    %      .testPrecision (double)
-    %      .testRecall (double)
-    %      .testSpecificity (double)
-    %      .testBalancedAccuracy (double)
-    %      .testRMSE (double)
-    %      .testMAE (double)
-    %      .testMedAE (double)
-    %      .testR2 (double)
-    %      .testBias (double)
+    %      .runNumber (string)
+    %
+    %      % Linear plant metadata
+    %      .linearPlant_K (string)
+    %      .linearPlant_vW (string)
+    %      .linearPlant_hT (string)
+    %      .linearPlant_hM (string)
+    %      .linearPlant_Qladle (string)
+    %      .linearPlant_uM (string)
+    %      .linearPlant_moldCSWidth (string)
+    %      .linearPlant_moldCSLength (string)
+    %      .linearPlant_moldCSArea (string)
+    %      .linearPlant_moldAxialLength (string)
+    %      .linearPlant_nozzleCSArea (string)
+    %      .linearPlant_tundishCSArea (string)
+    %
+    %      % Nonlinear plant metadata
+    %      .nonlinearPlant_K (string)
+    %      .nonlinearPlant_vW (string)
+    %      .nonlinearPlant_hT (string)
+    %      .nonlinearPlant_hM (string)
+    %      .nonlinearPlant_Qladle (string)
+    %      .nonlinearPlant_uM (string)
+    %      .nonlinearPlant_moldCSWidth (string)
+    %      .nonlinearPlant_moldCSLength (string)
+    %      .nonlinearPlant_moldCSArea (string)
+    %      .nonlinearPlant_moldAxialLength (string)
+    %      .nonlinearPlant_nozzleCSArea (string)
+    %      .nonlinearPlant_tundishCSArea (string)
+    %
+    %      % Open-loop / measurement / controller metadata
+    %      .observabilityCase (string)
+    %      .openLoopIsStable (string)
+    %      .controllabilityMatrixRank (string)
+    %      .isControllable (string)
+    %      .observabilityMatrixRank (string)
+    %      .isObservable (string)
+    %      .controllerType (string)
+    %      .controllerGains (string)
+    %
+    %      % Linear closed-loop performance metrics
+    %      .linearAbsoluteMoldLevelOvershoot (string)
+    %      .linearControlEnergy (string)
+    %      .linearFractionOutsidePrimaryBand (string)
+    %      .linearFractionInSevereBandViolation (string)
+    %      .linearFractionNearActuatorSaturation (string)
+    %      .linearMaxAbsoluteMoldLevelDeviation (string)
+    %      .linearMoldLevelSettlingTime (string)
+    %      .linearIsMoldLevelSettled (string)
+    %      .linearPeakInputDeviationNorm (string)
+    %      .linearMoldLevelSteadyStateError (string)
+    %      .linearAnySafetyViolationsOccurred (string)
+    %      .linearHasMoldOverflowOccurred (string)
+    %      .linearIsMoldLevelEverNegative (string)
+    %      .linearIsTundishLevelEverNegative (string)
+    %      .linearIsTrueSafeWithdrawalSpeedEverExceeded (string)
+    %      .linearIsAdjustedSafeWithdrawalSpeedEverExceeded (string)
+    %      .linearMaxEstimationErrorNorm (string)
+    %      .linearFinalEstimationErrorNorm (string)
+    %
+    %      % Nonlinear closed-loop performance metrics
+    %      .nonlinearAbsoluteMoldLevelOvershoot (string)
+    %      .nonlinearControlEnergy (string)
+    %      .nonlinearFractionOutsidePrimaryBand (string)
+    %      .nonlinearFractionInSevereBandViolation (string)
+    %      .nonlinearFractionNearActuatorSaturation (string)
+    %      .nonlinearMaxAbsoluteMoldLevelDeviation (string)
+    %      .nonlinearMoldLevelSettlingTime (string)
+    %      .nonlinearIsMoldLevelSettled (string)
+    %      .nonlinearPeakInputDeviationNorm (string)
+    %      .nonlinearMoldLevelSteadyStateError (string)
+    %      .nonlinearAnySafetyViolationsOccurred (string)
+    %      .nonlinearHasMoldOverflowOccurred (string)
+    %      .nonlinearIsMoldLevelEverNegative (string)
+    %      .nonlinearIsTundishLevelEverNegative (string)
+    %      .nonlinearIsTrueSafeWithdrawalSpeedEverExceeded (string)
+    %      .nonlinearIsAdjustedSafeWithdrawalSpeedEverExceeded (string)
+    %      .nonlinearMaxEstimationErrorNorm (string)
+    %      .nonlinearFinalEstimationErrorNorm (string)
+    %
+    % NOTES
+    % - This utility defines the canonical column schema for the flattened
+    % summary table used to aggregate simulation metadata and performance
+    % metrics across runs.
+    % - Each field is initialized with a string placeholder so that downstream
+    % row-building utilities can overwrite values while preserving a fixed,
+    % deterministic schema.
+    % - Linear and nonlinear performance metrics are kept side by side in
+    % the same row to simplify direct comparison across plant models.
 
     placeholder  = "";               
 
@@ -75,7 +126,6 @@ function templateRow = buildTemplateSummaryTableRow()
         'nonlinearPlant_nozzleCSArea', placeholder, ...
         'nonlinearPlant_tundishCSArea', placeholder, ...
         'observabilityCase', placeholder, ...
-        'openLoopEigenvalues', placeholder, ...
         'openLoopIsStable', placeholder, ...
         'controllabilityMatrixRank', placeholder, ...
         'isControllable', placeholder, ...
@@ -83,109 +133,41 @@ function templateRow = buildTemplateSummaryTableRow()
         'isObservable', placeholder, ...
         'controllerType', placeholder, ...
         'controllerGains', placeholder, ...
-        'controller_xe', placeholder, ...
-        'controller_ue', placeholder, ...
-        'isControllable', placeholder, ...
-        'isControllable', placeholder, ...
-        'isControllable', placeholder, ...
-        'isControllable', placeholder, ...
-        'isControllable', placeholder, ...
-        'isControllable', placeholder, ...
-        'isControllable', placeholder, ...
-        'isControllable', placeholder, ...
-        'isControllable', placeholder, ...
-        'isControllable', placeholder, ...
+        'linearAbsoluteMoldLevelOvershoot', placeholder, ...
+        'linearControlEnergy', placeholder, ...
+        'linearFractionOutsidePrimaryBand', placeholder, ...
+        'linearFractionInSevereBandViolation', placeholder, ...
+        'linearFractionNearActuatorSaturation', placeholder, ...
+        'linearMaxAbsoluteMoldLevelDeviation', placeholder, ...
+        'linearMoldLevelSettlingTime', placeholder, ...
+        'linearIsMoldLevelSettled', placeholder, ...
+        'linearPeakInputDeviationNorm', placeholder, ...
+        'linearMoldLevelSteadyStateError', placeholder, ...
+        'linearAnySafetyViolationsOccurred', placeholder, ...
+        'linearHasMoldOverflowOccurred', placeholder, ...
+        'linearIsMoldLevelEverNegative', placeholder, ...
+        'linearIsTundishLevelEverNegative', placeholder, ...
+        'linearIsTrueSafeWithdrawalSpeedEverExceeded', placeholder, ...
+        'linearIsAdjustedSafeWithdrawalSpeedEverExceeded', placeholder, ...
+        'linearMaxEstimationErrorNorm', placeholder, ...
+        'linearFinalEstimationErrorNorm', placeholder, ...
+        'nonlinearAbsoluteMoldLevelOvershoot', placeholder, ...
+        'nonlinearControlEnergy', placeholder, ...
+        'nonlinearFractionOutsidePrimaryBand', placeholder, ...
+        'nonlinearFractionInSevereBandViolation', placeholder, ...
+        'nonlinearFractionNearActuatorSaturation', placeholder, ...
+        'nonlinearMaxAbsoluteMoldLevelDeviation', placeholder, ...
+        'nonlinearMoldLevelSettlingTime', placeholder, ...
+        'nonlinearIsMoldLevelSettled', placeholder, ...
+        'nonlinearPeakInputDeviationNorm', placeholder, ...
+        'nonlinearMoldLevelSteadyStateError', placeholder, ...
+        'nonlinearAnySafetyViolationsOccurred', placeholder, ...
+        'nonlinearHasMoldOverflowOccurred', placeholder, ...
+        'nonlinearIsMoldLevelEverNegative', placeholder, ...
+        'nonlinearIsTundishLevelEverNegative', placeholder, ...
+        'nonlinearIsTrueSafeWithdrawalSpeedEverExceeded', placeholder, ...
+        'nonlinearIsAdjustedSafeWithdrawalSpeedEverExceeded', placeholder, ...
+        'nonlinearMaxEstimationErrorNorm', placeholder, ...
+        'nonlinearFinalEstimationErrorNorm', placeholder ...
     );
-
-
-    %  simulationResult struct with fields
-    %
-    %      .linearPlant struct with fields
-    %          .A (2 x 2 double) - state Jacobian, evaluated at operating point
-    %          .B (2 x 2 double) - input Jacobian, evaluated at operating point
-    %          .E (2 x 3 double) - disturbance Jacobian, evaluated at operating point
-    %          .metadata struct with fields
-    %              .operatingPoint struct with fields
-    %                  .K        (double)    - plant-specific proportionality constant
-    %                  .vW       (double)    - computed withdrawal speed at operating point
-    %                  .hT       (double)    - computed tundish height
-    %                  .hM       (double)    - prescribed mold height at operating point
-    %                  .Qladle   (double)    - computed ladle -> tundish flow rate
-    %                  .uM       (double)    - prescribed tundish -> mold flow regulation setting
-    %              .plantGeometry struct with fields
-    %                  .moldCrossSectionWidth      (double)
-    %                  .moldCrossSectionLength     (double)
-    %                  .moldCrossSectionalArea     (double)
-    %                  .moldAxialLength            (double)
-    %                  .nozzleCrossSectionalArea   (double)
-    %                  .tundishCrossSectionalArea  (double)
-    %              .physicalConstants struct with fields
-    %                  .g (double)    - acceleration due to gravity
-    %
-    %      .nonlinearPlant struct with fields
-    %          .f (function handle) - passed into ODE45 as nonlinear dynamics
-    %          .metadata struct with fields
-    %              .operatingPoint struct with fields
-    %                  .K        (double)    - plant-specific proportionality constant
-    %                  .vW       (double)    - computed withdrawal speed at operating point
-    %                  .hT       (double)    - computed tundish height
-    %                  .hM       (double)    - prescribed mold height at operating point
-    %                  .Qladle   (double)    - computed ladle -> tundish flow rate
-    %                  .uM       (double)    - prescribed tundish -> mold flow regulation setting
-    %              .plantGeometry struct with fields
-    %                  .moldCrossSectionWidth      (double)
-    %                  .moldCrossSectionLength     (double)
-    %                  .moldCrossSectionalArea     (double)
-    %                  .moldAxialLength            (double)
-    %                  .nozzleCrossSectionalArea   (double)
-    %                  .tundishCrossSectionalArea  (double)
-    %              .physicalConstants struct with fields
-    %                  .g (double)    - acceleration due to gravity
-    %
-    %      .measurementModel struct with fields
-    %          .observabilityCase (string) - 'full' or 'moldOnly'
-    %          .C (matrix of doubles, size depends on observability case)
-    %          .D (2 x 2 double) - zeros here
-    %
-    %      .openLoopResult struct with fields
-    %          .eigenstructure struct with fields
-    %              .eigenvalues (2 x 1 double)
-    %              .isStable (boolean)
-    %    
-    %          .controllability struct with fields
-    %              .controllabilityMatrix (matrix)
-    %              .controllabilityMatrixRank (double)
-    %              .isControllable (boolean)
-    %    
-    %          .observability struct with fields
-    %              .observabilityMatrix (matrix)
-    %              .observabilityMatrixRank (double)
-    %              .isObservable (boolean)
-    % 
-    %      .controller struct with fields
-    %          .type (string) - either 'stateFeedback' or 'lqr'
-    %          .gains (2 x 2 double) 
-    %          .equilibrium struct with fields
-    %              .xe (state equilibrium)
-    %              .ue (input equilibrium)
-    %          .designMetadata struct with controller-specific fields
-    %
-    %      .nonlinearClosedLoopResult struct with fields
-    %          .timestamps (numTimestamps x 1 double)
-    %          .state struct with fields
-    %              .x (numTimestamps x 2 double) - simulated state trajectory
-    %              .xDot (numTimestamps x 2 double) - simulated state derivative trajectory
-    %          .u (numTimestamps x 2 double) - simulated input trajectory
-    %          .d (numTimestamps x 3 double) - simulated disturbance trajectory
-    %      
-    %      .linearClosedLoopResult struct with fields
-    %          .timestamps (numTimestamps x 1 double)
-    %          .state struct with fields
-    %              .x (numTimestamps x 2 double) - simulated state trajectory
-    %              .xHat (numTimestamps x 2 double) - state estimate trajectory (only in partial observability case)
-    %              .xDot (numTimestamps x 2 double) - simulated state derivative trajectory
-    %          .u (numTimestamps x 2 double) - simulated input trajectory
-    %          .d (numTimestamps x 3 double) - simulated disturbance trajectory
-    %
-    %      .observabilityCase (string) - 'full' or 'moldOnly'
 end
