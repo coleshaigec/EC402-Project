@@ -45,4 +45,7 @@ function equilibrium = getEquilibriumFromOperatingPoint(operatingPoint)
     equilibrium.xe = [];
     equilibrium.ue = [];
 
+    % -- Output validation - please do not remove
+    validateEquilibrium(equilibrium, operatingPoint);
+
 end

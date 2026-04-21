@@ -191,14 +191,8 @@ function validateStateFeedbackController(stateFeedbackController, linearPlant, .
         ['stateFeedbackController.designMetadata.Acl must equal ', ...
          'linearPlant.A - linearPlant.B * stateFeedbackController.gains.']);
 
-    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    % EQUILIBRIUM / OPERATING-POINT   %
-    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    % This validator assumes equilibrium is just the operating point encoded
-    % in state/input coordinates. Given the builder notes, that is the
-    % intended contract via getEquilibriumFromOperatingPoint.
-    expectedXe = [operatingPoint.hM; operatingPoint.hT];
-    expectedUe = [operatingPoint.uM; operatingPoint.vW];
+    expectedXe = [operatingPoint.hT; operatingPoint.hM];
+    expectedUe = [operatingPoint.Qladle; operatingPoint.uM];
 
     assert(isequal(equilibrium.xe(:), expectedXe), ...
         'validateStateFeedbackController:StateEquilibriumMismatch', ...
