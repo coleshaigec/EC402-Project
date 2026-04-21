@@ -32,9 +32,6 @@ function simulationConfig = buildSimulationConfig()
 
     % -- Set k-values for simulation --
     simulationConfig.kValues = [0.0290; 0.0300; 0.0310];
-    
-    % -- Simulation duration --
-    simulationConfig.duration = 1000;
 
     % -- Configure controller(s) --
     % Chosen controllers can be "stateFeedback" and/or "lqr"

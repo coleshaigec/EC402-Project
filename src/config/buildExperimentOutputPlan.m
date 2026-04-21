@@ -1,5 +1,6 @@
 function outputPlan = buildExperimentOutputPlan(numRuns, plottingPlan)
     % BUILDEXPERIMENTOUTPUTPLAN Defines output plan for reporting workflow.
+    % PLEASE DON'T TOUCH THIS!
     %
     % AUTHOR: Cole H. Shaigec
     %
