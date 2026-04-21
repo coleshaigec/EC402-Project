@@ -134,7 +134,18 @@ function runFullPlottingWorkflow(simulationResults, allRunsMetrics)
     %          .observerMetrics struct with simulation-specific fields
     %
 
-    % --
+    % -- Set up plotting config --
+
+    % -- Build and validate plotting plan --
+    plottingPlan = buildPlottingPlan();
+    validatePlottingPlan(plottingPlan);
+
+    % -- If enabled, plot trajectories --
+    if plottingPlan.trajectories.enabled
+        runTrajectoryPlottingWorkflow(simulationResults, allRunsMetrics);
+    end
+
+    % -- If enabled, build 
 
     % -- Plot phase portraits ? --
 
