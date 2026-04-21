@@ -64,7 +64,7 @@ function allSimulationParameters = buildSimulationParameterGrids(simulationConfi
     plantGeometry = buildPlantGeometry();
 
     % -- Define safety requirements --
-    safetyRequirements = buildSafetyRequirements();
+    safetyRequirements = buildSafetyRequirements(plantGeometry);
 
     % -- Define physical constants --
     physicalConstants = buildPhysicalConstants();
@@ -101,14 +101,4 @@ function allSimulationParameters = buildSimulationParameterGrids(simulationConfi
     allSimulationParameters.disturbanceScenarios = disturbanceScenarios;
     allSimulationParameters.operatingPoints = operatingPoints;
     allSimulationParameters.controllerParameters = simulationConfig.controllerParameters;
-
-    error('This is getting called');
-    S = allSimulationParameters;
-    fields = fieldnames(S);
-    for i = 1:length(fields)
-        fieldName = fields{i};
-        value = S.(fieldName); % Use dynamic field names
-        fprintf('%s: ', fieldName);
-        disp(value);
-    end
 end

@@ -14,6 +14,5 @@ function finalEstimationErrorNorm = computeFinalEstimationErrorNorm(x, xHat)
     % - Although this is a finite-time simulation, we assume that the duration is sufficient to
     % use the final estimation error norm as a proxy for steady-state estimation error.
 
-    finalEstimationErrorNorm = norm(x(end, :) - xHat(end, :));
-     
+    finalEstimationErrorNorm = norm(x(end, :) - xHat(end, :));  
 end

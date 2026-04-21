@@ -22,5 +22,4 @@ function safetyRequirements = buildSafetyRequirements()
     safetyRequirements = struct();
     safetyRequirements.safetyFactor = 0.8;
     safetyRequirements.safeShellThickness = 0.025;
-
 end

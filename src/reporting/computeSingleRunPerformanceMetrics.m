@@ -100,6 +100,13 @@ function singleRunPerformanceMetrics = computeSingleRunPerformanceMetrics(simula
     %
 
 
-
+    % List of metrics always computed:
+    % - Absolute mold level overshoot
+    % - Control energy
+    % - Fraction in severe band violation
+    % - Fraction near actuator saturation
+    % - Fraction outside priamry band 
+    % - Max absolute mold level deviation
+    % -
 
 end
