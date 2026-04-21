@@ -10,15 +10,12 @@ function controlEnergy = computeControlEnergy(u, uStar, timestamps)
     %
     % OUTPUT
     %  controlEnergy (double)
-    %
-    % NOTES
-    % - This function uses MATLAB's trapz utility to approximate an
-    % integral over the samples of the input norm deviation signal.
 
     % -- Compute input deviation trajectory --
     uTildeTrajectory = u - uStar.';
-    squaredDeviationNormTrajectory = sum(uTildeTrajectory.^2, 2);
 
-    % -- Compute control energy --
-    controlEnergy = trapz(timestamps, squaredDeviationNormTrajectory);
+    % -- Weight by sampling periods --
+    uTilde
+
+    controlEnergy = sum(uTildeTrajectoryWeighted.^2, "all");
 end
