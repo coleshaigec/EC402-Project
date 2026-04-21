@@ -47,7 +47,7 @@ function plottingPlan = buildPlottingPlan()
 
     % -- Configure trajectory plotting --
     plottingPlan.trajectories = struct();
-    plottingPlan.trajectories.enabled = false;
+    plottingPlan.trajectories.enabled = true;
     plottingPlan.trajectories.moldLevel = true;
     plottingPlan.trajectories.tundishLevel = true;
     plottingPlan.trajectories.input = true;
@@ -55,19 +55,19 @@ function plottingPlan = buildPlottingPlan()
 
     % -- Configure comparison plots between controllers --
     plottingPlan.comparisons = struct();
-    plottingPlan.comparisons.enabled = false;
+    plottingPlan.comparisons.enabled = true;
     plottingPlan.comparisons.stateFeedbackVsLQR = true;
     plottingPlan.comparisons.linearVsNonlinear = true;
 
     % -- Configure observer plots --
     plottingPlan.observer = struct();
-    plottingPlan.observer.enabled = false;
+    plottingPlan.observer.enabled = true;
     plottingPlan.observer.xHatTrajectory = true;
     plottingPlan.observer.estimationErrorNormTrajectory = true;
     
     % -- Configure phase portrait plots --
     plottingPlan.phasePortraits = struct();
-    plottingPlan.phasePortraits.enabled = false;
+    plottingPlan.phasePortraits.enabled = true;
     plottingPlan.phasePortraits.linear = true;
     plottingPlan.phasePortraits.nonlinear = true;
 

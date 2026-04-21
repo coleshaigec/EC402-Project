@@ -1,0 +1,89 @@
+############################
+# Project Artifacts (CRITICAL)
+############################
+
+# Ignore all generated outputs, but keep folder
+outputs/*
+!outputs/.gitkeep
+
+
+############################
+# MATLAB Files
+############################
+
+# Autosave / backup files
+*.asv
+*.m~ 
+
+# MATLAB editor backups
+*.mlx.autosave
+
+# Simulink autosave / backup
+*.slx.autosave
+*.slxc
+
+# Code generation / build artifacts
+codegen/
+slprj/
+*.mex*
+
+# MATLAB preferences (user-specific)
+prefdir/
+*.prf
+
+
+############################
+# Python (for future ME714 work)
+############################
+
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Jupyter notebooks checkpoints
+.ipynb_checkpoints/
+
+
+############################
+# VSCode
+############################
+
+.vscode/
+
+
+############################
+# macOS
+############################
+
+.DS_Store
+
+
+############################
+# Windows
+############################
+
+Thumbs.db
+
+
+############################
+# Logs / Temporary Files
+############################
+
+*.log
+*.tmp
+*.temp
+
+
+############################
+# Misc
+############################
+
+# Ignore swap files
+*.swp
+*.swo

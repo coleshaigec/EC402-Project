@@ -138,22 +138,30 @@ function runFullPlottingWorkflow(simulationResults, allRunsMetrics)
 
     % -- Build and validate plotting plan --
     plottingPlan = buildPlottingPlan();
-    validatePlottingPlan(plottingPlan);
+    validatePlottingPlan(plottingPlan, simulationResults, allRunsMetrics);
 
-    % -- If enabled, plot trajectories --
+    % -- If enabled, build trajectory plots --
     if plottingPlan.trajectories.enabled
-        runTrajectoryPlottingWorkflow(simulationResults, allRunsMetrics);
+        runTrajectoryPlottingWorkflow(simulationResults, allRunsMetrics, plottingPlan);
     end
 
-    % -- If enabled, build 
+    % -- If enabled, build comparison plots --
+    if plottingPlan.comparisons.enabled
+        runComparisonPlottingWorkflow(simulationResults, allRunsMetrics, plottingPlan);
+    end
 
-    % -- Plot phase portraits ? --
+    % -- If enabled, build observer plots --
+    if plottingPlan.observer.enabled
+        runObserverPlottingWorkflow(simulationResults, allRunsMetrics, plottingPlan);
+    end
 
+    % -- If enabled, build phase portraits --
+    if plottingPlan.phasePortraits.enabled
+        runPhasePortraitWorkflow(simulationResults, allRunsMetrics, plottingPlan);
+    end
 
-
-    % -- Plot trajectories ? -- 
-
-    % -- Where does the file write utility live? --
-
-    
+    % -- If enabled, build summary plots --
+    if plottingPlan.summary.enabled
+        runSummaryPlottingWorkflow(simulationResults, allRunsMetrics, plottingPlan);
+    end    
 end

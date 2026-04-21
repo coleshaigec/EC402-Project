@@ -9,23 +9,7 @@ function outputPath = getOutputPath(filename)
     % OUTPUT
     %  outputPath (string)
 
-    currentFilePath = mfilename('fullpath');
-    currentFolder = fileparts(currentFilePath);
-
-    % -- Walk up until project root is found (contains 'src' and/or 'outputs') --
-    while ~isfolder(fullfile(currentFolder, 'src'))
-        parentFolder = fileparts(currentFolder);
-
-        % -- Safety guard to avoid infinite loop --
-        if strcmp(parentFolder, currentFolder)
-            error('getOutputPath:ProjectRootNotFound', ...
-                'Could not locate project root.');
-        end
-
-        currentFolder = parentFolder;
-    end
-
-    projectRoot = currentFolder;
+    
     outputFolder = fullfile(projectRoot, 'outputs');
 
     if ~exist(outputFolder, 'dir')
