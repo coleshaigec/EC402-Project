@@ -1,4 +1,4 @@
-function timeOutsideAcceptableBand = computePercentageOfTimeOutsidePrimaryAcceptableBand(x, hMStar, tolerance)
+function timeOutsideAcceptableBand = computePercentageOfTimeOutsidePrimaryAcceptableBand(x, hMStar)
     % COMPUTEPERCENTAGEOFTIMEOUTSIDEACCEPTABLEBAND Computes proportion of time mold height is outside acceptable band.
     %
     % AUTHOR: Cole H. Shaigec
