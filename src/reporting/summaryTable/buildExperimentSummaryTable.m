@@ -1,4 +1,4 @@
-function summaryTable = buildExperimentSummaryTable(simulationResults)
+function summaryTable = buildExperimentSummaryTable(simulationResults, allRunsMetrics)
     % BUILDEXPERIMENTSUMMARYTABLE Aggregates results from all runs of a single experiment into a summary table.
     %
     % AUTHOR: Cole H. Shaigec
@@ -92,6 +92,47 @@ function summaryTable = buildExperimentSummaryTable(simulationResults)
     %
     %      .observabilityCase (string) - 'full' or 'moldOnly'
     %
+    %  allRunsMetrics array of structs, each with fields
+    %      .linear struct with fields
+    %          .absoluteMoldLevelOvershoot (double)
+    %          .controlEnergy (double)
+    %          .fractionOutsidePrimaryBand (double)
+    %          .fractionInSevereBandViolation (double)
+    %          .fractionNearActuatorSaturation (double)
+    %          .maxAbsoluteMoldLevelDeviation (double)
+    %          .moldLevelSettlingTime struct with fields
+    %              .settlingTime (double)  - NaN if never settled
+    %              .isSettled (logical)
+    %          .peakInputDeviationNorm (double)
+    %          .moldLevelSteadyStateError (double)
+    %          .safetyViolations struct with fields
+    %              .hasMoldOverflowOccurred (logical)
+    %              .isMoldLevelEverNegative (logical)
+    %              .isTundishLevelEverNegative (logical)
+    %              .isTrueSafeWithdrawalSpeedEverExceeded (logical)
+    %              .isAdjustedSafeWithdrawalSpeedEverExceeded (logical)
+    %          .observerMetrics struct with simulation-specific fields
+    %
+    %      .nonlinear struct with fields
+    %          .absoluteMoldLevelOvershoot (double)
+    %          .controlEnergy (double)
+    %          .fractionOutsidePrimaryBand (double)
+    %          .fractionInSevereBandViolation (double)
+    %          .fractionNearActuatorSaturation (double)
+    %          .maxAbsoluteMoldLevelDeviation (double)
+    %          .moldLevelSettlingTime struct with fields
+    %              .settlingTime (double)  - NaN if never settled
+    %              .isSettled (logical)
+    %          .peakInputDeviationNorm (double)
+    %          .moldLevelSteadyStateError (double)
+    %          .safetyViolations struct with fields
+    %              .hasMoldOverflowOccurred (logical)
+    %              .isMoldLevelEverNegative (logical)
+    %              .isTundishLevelEverNegative (logical)
+    %              .isTrueSafeWithdrawalSpeedEverExceeded (logical)
+    %              .isAdjustedSafeWithdrawalSpeedEverExceeded (logical)
+    %          .observerMetrics struct with simulation-specific fields
+    %
     % OUTPUTS
     %  summaryTable table
     %      One row per runReport, with schema defined by
@@ -116,7 +157,7 @@ function summaryTable = buildExperimentSummaryTable(simulationResults)
 
     % -- Build one table row per run report --
     for iRun = 1:numRuns
-        tableRows(iRun) = buildTableRowFromRunReport(runReports(iRun), templateRow);
+        tableRows(iRun) = buildTableRowFromRunResults(runReports(iRun), allRunsMetrics(iRun), templateRow, iRun);
     end
 
     % -- Convert homogeneous struct array to MATLAB table --

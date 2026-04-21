@@ -64,7 +64,6 @@ function simulationResult = runSingleSimulation(simulationPlan)
     %
     % OUTPUT
     %  simulationResult struct with fields
-    %
     %      .linearPlant struct with fields
     %          .A (2 x 2 double) - state Jacobian, evaluated at operating point
     %          .B (2 x 2 double) - input Jacobian, evaluated at operating point

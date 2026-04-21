@@ -1,69 +1,9 @@
-function simulationResults = runAllSimulations(simulationPlans)
-    % RUNALLSIMULATIONS Executes all planned runs of the simulation pipeline. 
+function runFullReportingWorkflow(simulationResults)
+    % RUNFULLREPORTINGWORKFLOW Executes end-to-end reporting workflow.
     %
     % AUTHOR: Cole H. Shaigec
     %
     % INPUT
-    %  simulationPlans array of structs, each with fields
-    %      .operatingPoint struct with fields
-    %          .K        (double)
-    %          .vW       (double)
-    %          .hT       (double)
-    %          .hM       (double)
-    %          .Qladle   (double)
-    %          .uM       (double)'
-    %
-    %      .plantGeometry struct with fields
-    %          .moldCrossSectionWidth      (double)
-    %          .moldCrossSectionLength     (double)
-    %          .moldCrossSectionalArea     (double)
-    %          .moldAxialLength            (double)
-    %          .nozzleCrossSectionalArea   (double)
-    %          .tundishCrossSectionalArea  (double)
-    %
-    %      .physicalConstants struct with fields
-    %          .g                          (double) - gravity
-    %
-    %      .safetyRequirements struct with fields
-    %          .safeShellThickness         (double)
-    %          .safetyFactor               (double in [0,1])
-    %
-    %      .observabilityCase (string)
-    %
-    %      .controllers (cell array of strings/chars)
-    %
-    %      .shouldUseNonBaselineDisturbance (boolean)
-    %
-    %      .baselineDisturbances struct with fields
-    %          .dlStar                     (double)
-    %          .dnStar                     (double in [0,1])
-    %          .dwStar                     (double)
-    %
-    %      .disturbanceScenarios array of structs with fields
-    %          .name
-    %          .descriptionString
-    %          .shouldApplyToLinearPlant
-    %          .shouldApplyToNonlinearPlant
-    %          .channels struct with fields
-    %              .dl struct with fields
-    %                  .isActive
-    %                  .functionalForm
-    %                  .parameters
-    %              .dn struct with fields
-    %                  .isActive
-    %                  .functionalForm
-    %                  .parameters
-    %              .dw struct with fields
-    %                  .isActive
-    %                  .functionalForm
-    %                  .parameters
-    %
-    %      .controllerParameters struct with fields
-    %          .stateFeedbackController
-    %          .lqr
-    %
-    %
-    % OUTPUT
     %  simulationResults array of structs, each with fields
     %      .linearPlant struct with fields
     %          .A (2 x 2 double) - state Jacobian, evaluated at operating point
@@ -154,19 +94,22 @@ function simulationResults = runAllSimulations(simulationPlans)
     %          .d (numTimestamps x 3 double) - simulated disturbance trajectory
     %
     %      .observabilityCase (string) - 'full' or 'moldOnly'
-    %
+    
+    numRuns = numel(simulationResults);
 
-    % -- Determine number of simulations to run and preallocate output --
-    numSimulationsToRun = numel(simulationPlans);
-    templateSimulationResultStruct = buildTemplateSimulationResultStruct();
-    simulationResults = repmat(templateSimulationResultStruct, numSimulationsToRun, 1);
+    % -- Compute performance metrics for each run --
+    templateRunMetricsStruct = buildTemplateSingleRunPerformanceMetricsStruct();
+    allRunsMetrics = repmat(templateRunMetricsStruct, numRuns, 1);
 
-    % -- Run simulations and populate result struct --
-    for i = 1 : numSimulationsToRun
-        simulationResults(i) = runSingleSimulation(simulationPlans(i));
+    for i = 1 : numRuns
+        allRunsMetrics(i) = computeSingleRunPerformanceMetrics(simulationResults(i));
     end
 
-    % -- Run reporting workflow --
-
+    % -- Build summary table --
+    summaryTable = buildExperimentSummaryTable(simulationResults, allRunsMetrics);
     
+    % -- Write summary table to file --
+    writeTableToFile(summaryTable);
+
+    % -- Plot experiment results --
 end
