@@ -140,6 +140,7 @@ function simulationResult = runSingleSimulation(simulationPlan)
     %          .state struct with fields
     %              .x (numTimestamps x 2 double) - simulated state trajectory
     %              .xDot (numTimestamps x 2 double) - simulated state derivative trajectory
+    %              .xHat (numTimestamps x 2 double) - state estimate trajectory (only in partial observability case)
     %          .u (numTimestamps x 2 double) - simulated input trajectory
     %          .d (numTimestamps x 3 double) - simulated disturbance trajectory
     %      

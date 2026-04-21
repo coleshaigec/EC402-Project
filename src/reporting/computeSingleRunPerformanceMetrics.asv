@@ -101,45 +101,16 @@ function singleRunPerformanceMetrics = computeSingleRunPerformanceMetrics(simula
     %          .absoluteMoldLevelOvershoot (double)
     %          .controlEnergy (double)
     %          .fractionOutsidePrimaryBand (double)
-    %          .fractionInSevereBandViolation (double)
-    %          .fractionNearActuatorSaturation (double)
-    %          .maxAbsoluteMoldLevelDeviation (double)
-    %          .moldLevelSettlingTime struct with fields
-    %              .settlingTime (double)  - NaN if never settled
-    %              .isSettled (logical)
-    %          .peakInputDeviationNorm (double)
-    %          .moldLevelSteadyStateError (double)
-    %          .safetyViolations struct with fields
-    %              .hasMoldOverflowOccurred (logical)
-    %              .isMoldLevelEverNegative (logical)
-    %              .isTundishLevelEverNegative (logical)
-    %              .isTrueSafeWithdrawalSpeedEverExceeded (logical)
-    %              .isAdjustedSafeWithdrawalSpeedEverExceeded (logical)
-    %          .observerMetrics struct with simulation-specific fields
-    %
+    %          .fractionInSevereBandViolation 
+    %          .fractionNearActuatorSaturation
+    %          .maxAbsoluteMoldLevelDeviation 
+    %          .moldLevelSettlingTime
+    %          .peakInputDeviationNorm 
+    %          .moldLevelSteadyStateError 
+    %          .safetyViolations
+    %          .observerMetrics
     %      .nonlinear struct with fields
-    %          .absoluteMoldLevelOvershoot (double)
-    %          .controlEnergy (double)
-    %          .fractionOutsidePrimaryBand (double)
-    %          .fractionInSevereBandViolation (double)
-    %          .fractionNearActuatorSaturation (double)
-    %          .maxAbsoluteMoldLevelDeviation (double)
-    %          .moldLevelSettlingTime struct with fields
-    %              .settlingTime (double)  - NaN if never settled
-    %              .isSettled (logical)
-    %          .peakInputDeviationNorm (double)
-    %          .moldLevelSteadyStateError (double)
-    %          .safetyViolations struct with fields
-    %              .hasMoldOverflowOccurred (logical)
-    %              .isMoldLevelEverNegative (logical)
-    %              .isTundishLevelEverNegative (logical)
-    %              .isTrueSafeWithdrawalSpeedEverExceeded (logical)
-    %              .isAdjustedSafeWithdrawalSpeedEverExceeded (logical)
-    %          .observerMetrics struct with simulation-specific fields
     %
-    % NOTES
-    % - The semantic meaning of each performance metric is defined within
-    % the utility responsible for computing it.
 
     % -- Compute metrics for linear closed-loop result --
     xLinear = simulationResult.linearClosedLoopResult.state.x;
@@ -154,11 +125,11 @@ function singleRunPerformanceMetrics = computeSingleRunPerformanceMetrics(simula
     linearFractionInSevereBandViolation = computeFractionInSevereBandViolation(xLinear, linearOperatingPoint.hM);
     linearFractionNearActuatorSaturation = computeFractionNearActuatorSaturation(uLinear);
     linearMaxAbsoluteMoldLevelDeviation = computeMaxAbsoluteMoldLevelDeviation(xLinear, linearOperatingPoint.hM);
-    linearMoldLevelSettlingTimeResult = computeSettlingTimeForMoldLevel(xLinear, linearTimestamps, linearOperatingPoint.hM);
+    linearMoldLevelSettlingTime = computeSettlingTimeForMoldLevel(xLinear, linearTimestamps, linearOperatingPoint.hM);
     linearPeakInputDeviationNorm = computePeakInputDeviationNorm(uLinear, uStarLinear);
     linearMoldLevelSteadyStateError = computeMoldLevelSteadyStateError(xLinear, linearOperatingPoint.hM);
     linearSafetyViolations = checkForSafetyViolations(xLinear, uLinear, ...
-        simulationResult.linearPlant.metadata.plantGeometry, buildSafetyRequirements(), ...
+        simulationResult.linearPlant.plantGeometry, buildSafetyRequirements(), ...
         linearOperatingPoint ...
     );
 
@@ -170,16 +141,16 @@ function singleRunPerformanceMetrics = computeSingleRunPerformanceMetrics(simula
     uStarNonlinear = [nonlinearOperatingPoint.uM; nonlinearOperatingPoint.vW];
 
     nonlinearAbsoluteMoldLevelOvershoot = computeAbsoluteMoldLevelOvershoot(xNonlinear, nonlinearOperatingPoint.hM);
-    nonlinearControlEnergy = computeControlEnergy(uNonlinear, uStarNonlinear, nonlinearTimestamps);
+    nonlinearControlEnergy = computeControlEnergy(uLinear, uStarLinear, nonlinearTimestamps);
     nonlinearFractionOutsidePrimaryBand = computeFractionOutsidePrimaryBand(xNonlinear, nonlinearOperatingPoint.hM);
     nonlinearFractionInSevereBandViolation = computeFractionInSevereBandViolation(xNonlinear, nonlinearOperatingPoint.hM);
     nonlinearFractionNearActuatorSaturation = computeFractionNearActuatorSaturation(uNonlinear);
     nonlinearMaxAbsoluteMoldLevelDeviation = computeMaxAbsoluteMoldLevelDeviation(xNonlinear, nonlinearOperatingPoint.hM);
-    nonlinearMoldLevelSettlingTimeResult = computeSettlingTimeForMoldLevel(xNonlinear, nonlinearTimestamps, nonlinearOperatingPoint.hM);
+    nonlinearMoldLevelSettlingTime = computeSettlingTimeForMoldLevel(xNonlinear, nonlinearTimestamps, nonlinearOperatingPoint.hM);
     nonlinearPeakInputDeviationNorm = computePeakInputDeviationNorm(uNonlinear, uStarNonlinear);
     nonlinearMoldLevelSteadyStateError = computeMoldLevelSteadyStateError(xNonlinear, nonlinearOperatingPoint.hM);
     nonlinearSafetyViolations = checkForSafetyViolations(xNonlinear, uNonlinear, ...
-        simulationResult.nonlinearPlant.metadata.plantGeometry, buildSafetyRequirements(), ...
+        simulationResult.nonlinearPlant.plantGeometry, buildSafetyRequirements(), ...
         nonlinearOperatingPoint ...
     );
     
@@ -216,7 +187,7 @@ function singleRunPerformanceMetrics = computeSingleRunPerformanceMetrics(simula
     singleRunPerformanceMetrics.linear.fractionInSevereBandViolation = linearFractionInSevereBandViolation;
     singleRunPerformanceMetrics.linear.fractionNearActuatorSaturation = linearFractionNearActuatorSaturation;
     singleRunPerformanceMetrics.linear.maxAbsoluteMoldLevelDeviation = linearMaxAbsoluteMoldLevelDeviation;
-    singleRunPerformanceMetrics.linear.moldLevelSettlingTime = linearMoldLevelSettlingTimeResult;
+    singleRunPerformanceMetrics.linear.moldLevelSettlingTime = linearMoldLevelSettlingTime;
     singleRunPerformanceMetrics.linear.peakInputDeviationNorm = linearPeakInputDeviationNorm;
     singleRunPerformanceMetrics.linear.moldLevelSteadyStateError = linearMoldLevelSteadyStateError;
     singleRunPerformanceMetrics.linear.safetyViolations = linearSafetyViolations;
@@ -229,7 +200,7 @@ function singleRunPerformanceMetrics = computeSingleRunPerformanceMetrics(simula
     singleRunPerformanceMetrics.nonlinear.fractionInSevereBandViolation = nonlinearFractionInSevereBandViolation;
     singleRunPerformanceMetrics.nonlinear.fractionNearActuatorSaturation = nonlinearFractionNearActuatorSaturation;
     singleRunPerformanceMetrics.nonlinear.maxAbsoluteMoldLevelDeviation = nonlinearMaxAbsoluteMoldLevelDeviation;
-    singleRunPerformanceMetrics.nonlinear.moldLevelSettlingTime = nonlinearMoldLevelSettlingTimeResult;
+    singleRunPerformanceMetrics.nonlinear.moldLevelSettlingTime = nonlinearMoldLevelSettlingTime;
     singleRunPerformanceMetrics.nonlinear.peakInputDeviationNorm = nonlinearPeakInputDeviationNorm;
     singleRunPerformanceMetrics.nonlinear.moldLevelSteadyStateError = nonlinearMoldLevelSteadyStateError;
     singleRunPerformanceMetrics.nonlinear.safetyViolations = nonlinearSafetyViolations;
