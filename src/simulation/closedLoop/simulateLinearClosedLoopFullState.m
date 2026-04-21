@@ -45,4 +45,7 @@ function simulationResult = simulateLinearClosedLoopFullState(closedLoopAnalysis
     simulationResult.state.xDot = [];
     simulationResult.u = [];
     simulationResult.d = [];
+
+    % Output validation - please do not remove
+    validateLinearClosedLoopFullStateResult(simulationResult, closedLoopAnalysisPlan);
 end
