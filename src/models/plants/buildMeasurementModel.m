@@ -67,7 +67,7 @@ function measurementModel = buildMeasurementModel(simulationPlan)
     %  measurementModel struct with fields
     %      .observabilityCase (string) - 'full' or 'moldOnly'
     %      .C (matrix of doubles, size depends on observability case)
-    %      .D (2 x 2 double) - zeros here
+    %      .D (matrix of doubles, size depends on observability case) - zeros here
     %
     % NOTES
     % - Given that two observability scenarios are tested, this function
@@ -96,6 +96,8 @@ function measurementModel = buildMeasurementModel(simulationPlan)
     %
     % See the state space model in the project plan for more details if
     % needed.
+    %
+    % The validator will enforce the correct size of D.
 
     % -- YOUR IMPLEMENTATION HERE -- 
     measurementModel = struct();
