@@ -30,7 +30,7 @@ function plantGeometry = buildPlantGeometry()
     plantGeometry.moldCrossSectionWidth = 0.220;
     plantGeometry.moldCrossSectionLength = 1.320;
     plantGeometry.moldCrossSectionalArea = plantGeometry.moldCrossSectionWidth * plantGeometry.moldCrossSectionLength;
-    plantGeometry.moldAxialLength = 0.810;
+    plantGeometry.moldAxialLength = 0.810; %height of the container
 
     % -- Define nozzle geometry --
     nozzleDiameter = 0.075; % [m]
