@@ -13,6 +13,5 @@ function main()
     simulationResults = runAllSimulations(simulationPlans);
 
     % -- Pass results through reporting layer --
-    runFullReportingWorkflow(simulationResults);
-
+    runFullReportingWorkflow(simulationResults); 
 end
