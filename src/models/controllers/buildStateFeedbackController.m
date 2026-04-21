@@ -1,7 +1,7 @@
 function stateFeedbackController = buildStateFeedbackController(linearPlant, operatingPoint, stateFeedbackControllerParameters)
     % BUILDSTATEFEEDBACKCONTROLLER Places poles on the linearized plant and builds a state feedback controller model for use in simulation.
     %
-    % AUTHOR: Richie Kim/Dani Schwartz
+    % AUTHOR: Dani Schwartz
     %
     % INPUTS
     %  linearPlant struct with fields

@@ -1,7 +1,7 @@
 function controllability = analyzeLinearPlantControllability(linearPlant)
     % ANALYZELINEARPLANTCONTROLLABILITY Computes controllability matrix for linear plant and evaluates controllability via rank criterion.
     %
-    % AUTHOR: Dani Schwartz/Richie Kim
+    % AUTHOR: Richie Kim
     %
     % INPUT
     %  linearPlant struct with fields

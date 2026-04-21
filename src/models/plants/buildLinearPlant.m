@@ -1,17 +1,18 @@
 function linearPlant = buildLinearPlant(simulationPlan)
     % BUILDLINEARPLANT Uses simulation plan to encode linearized plant model for pipeline run.
     %
-    % AUTHOR: Richie Kim/Dani Schwartz
+    % AUTHOR: Richie Kim
     %
     % INPUT
     %  simulationPlan struct with fields
     %      .operatingPoint struct with fields
-    %          .K        (double)    - plant-specific proportionality constant
-    %          .vW       (double)    - computed withdrawal speed at operating point
-    %          .hT       (double)    - computed tundish height
-    %          .hM       (double)    - prescribed mold height at operating point
-    %          .Qladle   (double)    - computed ladle -> tundish flow rate
-    %          .uM       (double)    - prescribed tundish -> mold flow regulation setting
+    %          .K        (double)
+    %          .vW       (double)
+    %          .hT       (double)
+    %          .hM       (double)
+    %          .Qladle   (double)
+    %          .uM       (double)'
+    %
     %      .plantGeometry struct with fields
     %          .moldCrossSectionWidth      (double)
     %          .moldCrossSectionLength     (double)
@@ -19,8 +20,48 @@ function linearPlant = buildLinearPlant(simulationPlan)
     %          .moldAxialLength            (double)
     %          .nozzleCrossSectionalArea   (double)
     %          .tundishCrossSectionalArea  (double)
-    %     .physicalConstants struct with fields
-    %          .g (double)    - acceleration due to gravity
+    %
+    %      .physicalConstants struct with fields
+    %          .g                          (double) - gravity
+    %
+    %      .safetyRequirements struct with fields
+    %          .safeShellThickness         (double)
+    %          .safetyFactor               (double in [0,1])
+    %
+    %      .observabilityCase (string)
+    %
+    %      .controller (string)
+    %
+    %      .shouldUseNonBaselineDisturbance (boolean)
+    %
+    %      .baselineDisturbances struct with fields
+    %          .dlStar                     (double)
+    %          .dnStar                     (double in [0,1])
+    %          .dwStar                     (double)
+    %
+    %      .disturbanceScenarios array of structs with fields
+    %          .name
+    %          .descriptionString
+    %          .shouldApplyToLinearPlant
+    %          .shouldApplyToNonlinearPlant
+    %          .channels struct with fields
+    %              .dl struct with fields
+    %                  .isActive
+    %                  .functionalForm
+    %                  .parameters
+    %              .dn struct with fields
+    %                  .isActive
+    %                  .functionalForm
+    %                  .parameters
+    %              .dw struct with fields
+    %                  .isActive
+    %                  .functionalForm
+    %                  .parameters
+    %
+    %      .controllerParameters struct with fields
+    %          .stateFeedbackController
+    %          .lqr
+    %
     %
     % OUTPUT
     %  linearPlant struct with fields

@@ -1,10 +1,66 @@
 function measurementModel = buildMeasurementModel(simulationPlan)
     % BUILDMEASUREMENTMODEL Constructs C and D for output computation during simulation run.
     %
-    % AUTHOR: Dani Schwartz/Richie Kim
+    % AUTHOR: Richie Kim
     %
     % INPUT
     %  simulationPlan struct with fields
+    %      .operatingPoint struct with fields
+    %          .K        (double)
+    %          .vW       (double)
+    %          .hT       (double)
+    %          .hM       (double)
+    %          .Qladle   (double)
+    %          .uM       (double)
+    %
+    %      .plantGeometry struct with fields
+    %          .moldCrossSectionWidth      (double)
+    %          .moldCrossSectionLength     (double)
+    %          .moldCrossSectionalArea     (double)
+    %          .moldAxialLength            (double)
+    %          .nozzleCrossSectionalArea   (double)
+    %          .tundishCrossSectionalArea  (double)
+    %
+    %      .physicalConstants struct with fields
+    %          .g                          (double) - gravity
+    %
+    %      .safetyRequirements struct with fields
+    %          .safeShellThickness         (double)
+    %          .safetyFactor               (double in [0,1])
+    %
+    %      .observabilityCase (string)
+    %
+    %      .controller (string)
+    %
+    %      .shouldUseNonBaselineDisturbance (boolean)
+    %
+    %      .baselineDisturbances struct with fields
+    %          .dlStar                     (double)
+    %          .dnStar                     (double in [0,1])
+    %          .dwStar                     (double)
+    %
+    %      .disturbanceScenarios array of structs with fields
+    %          .name
+    %          .descriptionString
+    %          .shouldApplyToLinearPlant
+    %          .shouldApplyToNonlinearPlant
+    %          .channels struct with fields
+    %              .dl struct with fields
+    %                  .isActive
+    %                  .functionalForm
+    %                  .parameters
+    %              .dn struct with fields
+    %                  .isActive
+    %                  .functionalForm
+    %                  .parameters
+    %              .dw struct with fields
+    %                  .isActive
+    %                  .functionalForm
+    %                  .parameters
+    %
+    %      .controllerParameters struct with fields
+    %          .stateFeedbackController
+    %          .lqr
     %
     %
     % OUTPUT

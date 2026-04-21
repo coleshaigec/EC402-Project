@@ -1,7 +1,7 @@
 function observability = analyzeLinearPlantObservability(linearPlant, measurementModel)
     % ANALYZELINEARPLANTOBSERVABILITY Computes observability matrix for linear plant and evaluates observability via rank criterion.
     %
-    % AUTHOR: Dani Schwartz/Richie Kim
+    % AUTHOR: Richie Kim
     %
     % INPUTS
     %  linearPlant struct with fields
