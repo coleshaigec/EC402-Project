@@ -117,7 +117,7 @@ function runFullReportingWorkflow(simulationResults)
     summaryTable = buildExperimentSummaryTable(simulationResults, allRunsMetrics);
     
     % -- Write summary table to file --
-    writeTableToFile(summaryTable, outputPlan);
+    writeSummaryTableToFile(summaryTable, outputPlan);
 
     % -- Plot experiment results --
     runFullPlottingWorkflow(simulationResults, allRunsMetrics, plottingPlan, outputPlan);

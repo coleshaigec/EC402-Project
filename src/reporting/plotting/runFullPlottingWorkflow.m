@@ -194,7 +194,7 @@ function runFullPlottingWorkflow(simulationResults, allRunsMetrics, plottingPlan
 
     % -- If enabled, build observer plots --
     if plottingPlan.observer.enabled
-        runObserverPlottingWorkflow(simulationResults, allRunsMetrics, outputPlan, plottingPlan);
+        runObserverPlottingWorkflow(simulationResults, outputPlan, plottingPlan);
     end
 
     % -- If enabled, build phase portraits --
