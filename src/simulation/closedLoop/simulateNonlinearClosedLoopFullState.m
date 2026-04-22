@@ -44,4 +44,7 @@ function simulationResult = simulateNonlinearClosedLoopFullState(closedLoopAnaly
     simulationResult.state.xDot = [];
     simulationResult.u = [];
     simulationResult.d = [];
+
+    % Output validation - please do nnot remove
+    validateClosedLoopFullStateResult(simulationResult, closedLoopAnalysisPlan);
 end
