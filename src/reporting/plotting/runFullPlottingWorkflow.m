@@ -189,7 +189,7 @@ function runFullPlottingWorkflow(simulationResults, allRunsMetrics, plottingPlan
 
     % -- If enabled, build comparison plots --
     if plottingPlan.comparisons.enabled
-        runComparisonPlottingWorkflow(simulationResults, allRunsMetrics, outputPlan, plottingPlan);
+        runComparisonPlottingWorkflow(simulationResults, outputPlan, plottingPlan);
     end
 
     % -- If enabled, build observer plots --
@@ -204,6 +204,6 @@ function runFullPlottingWorkflow(simulationResults, allRunsMetrics, plottingPlan
 
     % -- If enabled, build summary plots --
     if plottingPlan.summary.enabled
-        runSummaryPlottingWorkflow(simulationResults, allRunsMetrics, outputPlan, plottingPlan);
+        runSummaryPlottingWorkflow(allRunsMetrics, outputPlan, plottingPlan);
     end    
 end
