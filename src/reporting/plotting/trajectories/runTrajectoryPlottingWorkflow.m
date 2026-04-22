@@ -191,45 +191,219 @@ function runTrajectoryPlottingWorkflow(simulationResults, allRunsMetrics, output
         return;
     end
 
-    % -- Proceed plot-wise through trajectories at run level --
     numRuns = numel(simulationResults);
 
-    
-
-    for i = 1 : numRuns
+    for i = 1:numRuns
         runOutputPlan = outputPlan.runs(i);
         trajectoriesTargetDirectory = runOutputPlan.plotPaths.trajectoriesDirectory;
 
+        linearOperatingPoint = simulationResults(i).linearPlant.metadata.operatingPoint;
+        nonlinearOperatingPoint = simulationResults(i).nonlinearPlant.metadata.operatingPoint;
+
+        % ================================================================
+        % Mold level trajectories
+        % ================================================================
         if plottingPlan.trajectories.moldLevel
-            % -- Plot mold level trajectory for linear plant -- 
-            % Extract setpoints
-            linearPlantMoldLevelSetpoints = struct();
-            linearPlantMoldLevelSetpoints.hMStar = simulationResults(i).linearPlant.metadata.operatingPoint.hM;
-            linearPlantMoldLevelSetpoints.tolerances = getMoldHeightDeviationTolerances();
+            tolerances = getMoldHeightDeviationTolerances();
 
-            % Package trajectory into struct
-            linearPlantMoldLevelTrajectory = struct();
-            linearPlantMoldLevelTrajectory.x = simulationResults(i).linearClosedLoopResult.state.x(:,1);
-            linearPlantMoldLevelTrajectory.t = simulationResults(i).linearClosedLoopResult.timestamps;
+            % -- Linear plant mold level trajectory --
+            linearMoldLevelTrajectory = struct();
+            linearMoldLevelTrajectory.x = simulationResults(i).linearClosedLoopResult.state.x(:, 1);
+            linearMoldLevelTrajectory.t = simulationResults(i).linearClosedLoopResult.timestamps;
 
-            % Establish display specifications
-            linearPlantMoldLevelTrajectoryDisplaySpec = struct();
-            linearPlantMoldLevelTrajectoryDisplaySpec.title = 'Mold level trajectory for linear plant';
-            linearPlantMoldLevelTrajectoryDisplaySpec.xLabel = 'Time';
-            linearPlantMoldLevelTrajectoryDisplaySpec.yLabel = 'Mold level (m)';
-            linearPlantMoldLevelTrajectoryDisplaySpec.legendEntries = {"Mold level", "Setpoint", "Primary Band", "Severe Band"};
-            
-            % Build plot and write to file
-            linearPlantMoldLevelTrajectoryPlot = plotMoldLevelTrajectory(linearPlantMoldLevelTrajectory, ...
-                linearPlantMoldLevelSetpoints, linearPlantMoldLevelTrajectoryDisplaySpec);
+            linearMoldLevelSetpoints = struct();
+            linearMoldLevelSetpoints.hMStar = linearOperatingPoint.hM;
+            linearMoldLevelSetpoints.tolerances = tolerances;
 
-            writeFigureToOutput(linearPlantMoldLevelTrajectoryPlot, trajectoriesTargetDirectory, 'linearPlantMoldLevelTrajectory');
+            linearMoldLevelDisplaySpec = struct();
+            linearMoldLevelDisplaySpec.title = "Mold level trajectory for linear plant";
+            linearMoldLevelDisplaySpec.xLabel = "Time";
+            linearMoldLevelDisplaySpec.yLabel = "Mold level (m)";
+            linearMoldLevelDisplaySpec.legendEntries = {"Mold level", "Setpoint", "Primary Band", "Severe Band"};
 
-            % -- Plot mold level trajectory for nonlinear plant --
-            moldLevelSetpoints.hMStarNonlinearPlant = simulationResults(i).nonlinearPlant.metadata.operatingPoint.hM;
-            nonlinearMoldLevelTrajectoryPlot = plotMoldLevelTrajectory();
+            linearMoldLevelPlot = plotMoldLevelTrajectory( ...
+                linearMoldLevelTrajectory, ...
+                linearMoldLevelSetpoints, ...
+                linearMoldLevelDisplaySpec);
+
+            writeFigureToOutput(linearMoldLevelPlot, trajectoriesTargetDirectory, ...
+                "linearPlantMoldLevelTrajectory");
+
+            % -- Nonlinear plant mold level trajectory --
+            nonlinearMoldLevelTrajectory = struct();
+            nonlinearMoldLevelTrajectory.x = simulationResults(i).nonlinearClosedLoopResult.state.x(:, 1);
+            nonlinearMoldLevelTrajectory.t = simulationResults(i).nonlinearClosedLoopResult.timestamps;
+
+            nonlinearMoldLevelSetpoints = struct();
+            nonlinearMoldLevelSetpoints.hMStar = nonlinearOperatingPoint.hM;
+            nonlinearMoldLevelSetpoints.tolerances = tolerances;
+
+            nonlinearMoldLevelDisplaySpec = struct();
+            nonlinearMoldLevelDisplaySpec.title = "Mold level trajectory for nonlinear plant";
+            nonlinearMoldLevelDisplaySpec.xLabel = "Time";
+            nonlinearMoldLevelDisplaySpec.yLabel = "Mold level (m)";
+            nonlinearMoldLevelDisplaySpec.legendEntries = {"Mold level", "Setpoint", "Primary Band", "Severe Band"};
+
+            nonlinearMoldLevelPlot = plotMoldLevelTrajectory( ...
+                nonlinearMoldLevelTrajectory, ...
+                nonlinearMoldLevelSetpoints, ...
+                nonlinearMoldLevelDisplaySpec);
+
+            writeFigureToOutput(nonlinearMoldLevelPlot, trajectoriesTargetDirectory, ...
+                "nonlinearPlantMoldLevelTrajectory");
+        end
+
+        % ================================================================
+        % Tundish level trajectories
+        % ================================================================
+        if plottingPlan.trajectories.tundishLevel
+            % -- Linear plant tundish level trajectory --
+            linearTundishLevelTrajectory = struct();
+            linearTundishLevelTrajectory.x = simulationResults(i).linearClosedLoopResult.state.x(:, 2);
+            linearTundishLevelTrajectory.t = simulationResults(i).linearClosedLoopResult.timestamps;
+
+            linearTundishLevelSetpoints = struct();
+            linearTundishLevelSetpoints.hTStar = linearOperatingPoint.hT;
+
+            linearTundishLevelDisplaySpec = struct();
+            linearTundishLevelDisplaySpec.title = "Tundish level trajectory for linear plant";
+            linearTundishLevelDisplaySpec.xLabel = "Time";
+            linearTundishLevelDisplaySpec.yLabel = "Tundish level (m)";
+            linearTundishLevelDisplaySpec.legendEntries = {"Tundish level", "Setpoint"};
+
+            linearTundishLevelPlot = plotTundishLevelTrajectory( ...
+                linearTundishLevelTrajectory, ...
+                linearTundishLevelSetpoints, ...
+                linearTundishLevelDisplaySpec);
+
+            writeFigureToOutput(linearTundishLevelPlot, trajectoriesTargetDirectory, ...
+                "linearPlantTundishLevelTrajectory");
+
+            % -- Nonlinear plant tundish level trajectory --
+            nonlinearTundishLevelTrajectory = struct();
+            nonlinearTundishLevelTrajectory.x = simulationResults(i).nonlinearClosedLoopResult.state.x(:, 2);
+            nonlinearTundishLevelTrajectory.t = simulationResults(i).nonlinearClosedLoopResult.timestamps;
+
+            nonlinearTundishLevelSetpoints = struct();
+            nonlinearTundishLevelSetpoints.hTStar = nonlinearOperatingPoint.hT;
+
+            nonlinearTundishLevelDisplaySpec = struct();
+            nonlinearTundishLevelDisplaySpec.title = "Tundish level trajectory for nonlinear plant";
+            nonlinearTundishLevelDisplaySpec.xLabel = "Time";
+            nonlinearTundishLevelDisplaySpec.yLabel = "Tundish level (m)";
+            nonlinearTundishLevelDisplaySpec.legendEntries = {"Tundish level", "Setpoint"};
+
+            nonlinearTundishLevelPlot = plotTundishLevelTrajectory( ...
+                nonlinearTundishLevelTrajectory, ...
+                nonlinearTundishLevelSetpoints, ...
+                nonlinearTundishLevelDisplaySpec);
+
+            writeFigureToOutput(nonlinearTundishLevelPlot, trajectoriesTargetDirectory, ...
+                "nonlinearPlantTundishLevelTrajectory");
+        end
+
+        % ================================================================
+        % Input trajectories
+        % ================================================================
+        if plottingPlan.trajectories.input
+            % -- Linear plant input trajectory --
+            linearInputTrajectory = struct();
+            linearInputTrajectory.u = simulationResults(i).linearClosedLoopResult.u;
+            linearInputTrajectory.t = simulationResults(i).linearClosedLoopResult.timestamps;
+
+            linearInputSetpoints = struct();
+            linearInputSetpoints.uStar = [linearOperatingPoint.uM; linearOperatingPoint.vW];
+
+            linearInputDisplaySpec = struct();
+            linearInputDisplaySpec.title = "Input trajectory for linear plant";
+            linearInputDisplaySpec.xLabel = "Time";
+            linearInputDisplaySpec.yLabel = "Input value";
+            linearInputDisplaySpec.legendEntries = { ...
+                "Flow control input", ...
+                "Withdrawal speed input", ...
+                "Flow control setpoint", ...
+                "Withdrawal speed setpoint"};
+
+            linearInputPlot = plotInputVectorTrajectory( ...
+                linearInputTrajectory, ...
+                linearInputSetpoints, ...
+                linearInputDisplaySpec);
+
+            writeFigureToOutput(linearInputPlot, trajectoriesTargetDirectory, ...
+                "linearPlantInputTrajectory");
+
+            % -- Nonlinear plant input trajectory --
+            nonlinearInputTrajectory = struct();
+            nonlinearInputTrajectory.u = simulationResults(i).nonlinearClosedLoopResult.u;
+            nonlinearInputTrajectory.t = simulationResults(i).nonlinearClosedLoopResult.timestamps;
+
+            nonlinearInputSetpoints = struct();
+            nonlinearInputSetpoints.uStar = [nonlinearOperatingPoint.uM; nonlinearOperatingPoint.vW];
+
+            nonlinearInputDisplaySpec = struct();
+            nonlinearInputDisplaySpec.title = "Input trajectory for nonlinear plant";
+            nonlinearInputDisplaySpec.xLabel = "Time";
+            nonlinearInputDisplaySpec.yLabel = "Input value";
+            nonlinearInputDisplaySpec.legendEntries = { ...
+                "Flow control input", ...
+                "Withdrawal speed input", ...
+                "Flow control setpoint", ...
+                "Withdrawal speed setpoint"};
+
+            nonlinearInputPlot = plotInputVectorTrajectory( ...
+                nonlinearInputTrajectory, ...
+                nonlinearInputSetpoints, ...
+                nonlinearInputDisplaySpec);
+
+            writeFigureToOutput(nonlinearInputPlot, trajectoriesTargetDirectory, ...
+                "nonlinearPlantInputTrajectory");
+        end
+
+        % ================================================================
+        % Disturbance trajectories
+        % ================================================================
+        if plottingPlan.trajectories.disturbance
+            % -- Linear plant disturbance trajectory --
+            linearDisturbanceTrajectory = struct();
+            linearDisturbanceTrajectory.d = simulationResults(i).linearClosedLoopResult.d;
+            linearDisturbanceTrajectory.t = simulationResults(i).linearClosedLoopResult.timestamps;
+
+            linearDisturbanceDisplaySpec = struct();
+            linearDisturbanceDisplaySpec.title = "Disturbance trajectory for linear plant";
+            linearDisturbanceDisplaySpec.xLabel = "Time";
+            linearDisturbanceDisplaySpec.yLabel = "Disturbance value";
+            linearDisturbanceDisplaySpec.legendEntries = { ...
+                "Disturbance 1", ...
+                "Disturbance 2", ...
+                "Disturbance 3"};
+
+            linearDisturbancePlot = plotDisturbanceTrajectory( ...
+                linearDisturbanceTrajectory, ...
+                linearDisturbanceDisplaySpec);
+
+            writeFigureToOutput(linearDisturbancePlot, trajectoriesTargetDirectory, ...
+                "linearPlantDisturbanceTrajectory");
+
+            % -- Nonlinear plant disturbance trajectory --
+            nonlinearDisturbanceTrajectory = struct();
+            nonlinearDisturbanceTrajectory.d = simulationResults(i).nonlinearClosedLoopResult.d;
+            nonlinearDisturbanceTrajectory.t = simulationResults(i).nonlinearClosedLoopResult.timestamps;
+
+            nonlinearDisturbanceDisplaySpec = struct();
+            nonlinearDisturbanceDisplaySpec.title = "Disturbance trajectory for nonlinear plant";
+            nonlinearDisturbanceDisplaySpec.xLabel = "Time";
+            nonlinearDisturbanceDisplaySpec.yLabel = "Disturbance value";
+            nonlinearDisturbanceDisplaySpec.legendEntries = { ...
+                "Disturbance 1", ...
+                "Disturbance 2", ...
+                "Disturbance 3"};
+
+            nonlinearDisturbancePlot = plotDisturbanceTrajectory( ...
+                nonlinearDisturbanceTrajectory, ...
+                nonlinearDisturbanceDisplaySpec);
+
+            writeFigureToOutput(nonlinearDisturbancePlot, trajectoriesTargetDirectory, ...
+                "nonlinearPlantDisturbanceTrajectory");
         end
     end
-
-
 end

@@ -41,7 +41,7 @@ function moldLevelTrajectoryPlot = plotMoldLevelTrajectory(moldLevelTrajectory, 
     severeBandLowerBound = moldLevelSetpoints.hMStar - moldLevelSetpoints.tolerances.severe;
     severeBandUpperBound = moldLevelSetpoints.hMStar + moldLevelSetpoints.tolerances.severe;
     severeBand = plot(moldLevelTrajectory.t, severeBandLowerBound, 'r:'); % severe band lower bound
-    plot(moldLevelTrajectory.t, severeBandUpperBound, 'r:'); % severe band lower bound
+    plot(moldLevelTrajectory.t, severeBandUpperBound, 'r:'); % severe band upper bound
 
     % -- Apply display spec requirements --
     title(moldLevelDisplaySpec.title);
