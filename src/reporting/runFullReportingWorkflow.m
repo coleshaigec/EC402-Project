@@ -105,12 +105,20 @@ function runFullReportingWorkflow(simulationResults)
         allRunsMetrics(i) = computeSingleRunPerformanceMetrics(simulationResults(i));
     end
 
+    % -- Build plotting and output plans --
+    plottingPlan = buildPlottingPlan();
+    validatePlottingPlan(plottingPlan, simulationResults, allRunsMetrics);
+    outputPlan = buildExperimentOutputPlan(numRuns, plottingPlan);
+
+    % -- Construct output directory --
+    buildExperimentOutputDirectory(outputPlan);
+
     % -- Build summary table --
     summaryTable = buildExperimentSummaryTable(simulationResults, allRunsMetrics);
     
     % -- Write summary table to file --
-    writeTableToFile(summaryTable, getSummaryTableFileName());
+    writeTableToFile(summaryTable, outputPlan);
 
     % -- Plot experiment results --
-    runFullPlottingWorkflow(simulationResults, allRunsMetrics);
+    runFullPlottingWorkflow(simulationResults, allRunsMetrics, plottingPlan, outputPlan);
 end

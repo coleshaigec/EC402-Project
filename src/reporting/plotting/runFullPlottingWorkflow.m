@@ -184,26 +184,26 @@ function runFullPlottingWorkflow(simulationResults, allRunsMetrics, plottingPlan
 
     % -- If enabled, build trajectory plots --
     if plottingPlan.trajectories.enabled
-        runTrajectoryPlottingWorkflow(simulationResults, allRunsMetrics, plottingPlan);
+        runTrajectoryPlottingWorkflow(simulationResults, allRunsMetrics, outputPlan, plottingPlan);
     end
 
     % -- If enabled, build comparison plots --
     if plottingPlan.comparisons.enabled
-        runComparisonPlottingWorkflow(simulationResults, allRunsMetrics, plottingPlan);
+        runComparisonPlottingWorkflow(simulationResults, allRunsMetrics, outputPlan, plottingPlan);
     end
 
     % -- If enabled, build observer plots --
     if plottingPlan.observer.enabled
-        runObserverPlottingWorkflow(simulationResults, allRunsMetrics, plottingPlan);
+        runObserverPlottingWorkflow(simulationResults, allRunsMetrics, outputPlan, plottingPlan);
     end
 
     % -- If enabled, build phase portraits --
     if plottingPlan.phasePortraits.enabled
-        runPhasePortraitWorkflow(simulationResults, allRunsMetrics, plottingPlan);
+        runPhasePortraitWorkflow(simulationResults, allRunsMetrics, outputPlan, plottingPlan);
     end
 
     % -- If enabled, build summary plots --
     if plottingPlan.summary.enabled
-        runSummaryPlottingWorkflow(simulationResults, allRunsMetrics, plottingPlan);
+        runSummaryPlottingWorkflow(simulationResults, allRunsMetrics, outputPlan, plottingPlan);
     end    
 end
