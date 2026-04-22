@@ -29,7 +29,7 @@ function observability = analyzeLinearPlantObservability(linearPlant, measuremen
     %  measurementModel struct with fields
     %      .observabilityCase (string) - 'full' or 'moldOnly'
     %      .C (matrix of doubles, size depends on observability case)
-    %      .D (2 x 2 double) - zeros here
+    %      .D (matrix of doubles, size depends on observability case) - zeros here
     %
     % OUTPUT
     %  observability struct with fields
