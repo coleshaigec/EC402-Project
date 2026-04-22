@@ -199,7 +199,7 @@ function runFullPlottingWorkflow(simulationResults, allRunsMetrics, plottingPlan
 
     % -- If enabled, build phase portraits --
     if plottingPlan.phasePortraits.enabled
-        runPhasePortraitWorkflow(simulationResults, allRunsMetrics, outputPlan, plottingPlan);
+        runPhasePortraitWorkflow(simulationResults, outputPlan, plottingPlan);
     end
 
     % -- If enabled, build summary plots --
