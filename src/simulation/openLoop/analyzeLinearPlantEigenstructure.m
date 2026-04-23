@@ -1,7 +1,7 @@
 function eigenstructure = analyzeLinearPlantEigenstructure(linearPlant)
     % ANALYZELINEARPLANTEIGENSTRUCTURE Computes eigenvalues of state Jacobian and analyzes open-loop stability for the linearized model. 
     %
-    % AUTHOR: Dani Schwartz/Richie Kim
+    % AUTHOR: Richie Kim
     %
     % INPUTS
     % linearPlant struct with fields

@@ -1,4 +1,4 @@
-function runFullPlottingWorkflow(simulationResults, allRunsMetrics)
+function runFullPlottingWorkflow(simulationResults, allRunsMetrics, plottingPlan, outputPlan)
     % RUNFULLPLOTTINGWORKFLOW Executes end-to-end plotting workflow for experiment results.
     %
     % AUTHOR: Cole H. Shaigec
@@ -133,35 +133,77 @@ function runFullPlottingWorkflow(simulationResults, allRunsMetrics)
     %              .isAdjustedSafeWithdrawalSpeedEverExceeded (logical)
     %          .observerMetrics struct with simulation-specific fields
     %
-
-    % -- Set up plotting config --
-
-    % -- Build and validate plotting plan --
-    plottingPlan = buildPlottingPlan();
-    validatePlottingPlan(plottingPlan, simulationResults, allRunsMetrics);
+    %  outputPlan struct with fields
+    %      .projectRoot (string)
+    %      .outputsRoot (string)
+    %      .experimentRoot (string)
+    %      .summary struct with fields
+    %          .root (string)
+    %          .tableDirectory (string)
+    %          .tableFileName (string)
+    %          .tableFilePath (string)
+    %          .plotsDirectory (string) - iff summary plots enabled
+    %      .comparisons struct with fields
+    %          .root (string)
+    %          .plotsDirectory (string) - iff comparison plots enabled
+    %      .runsRoot (string)
+    %      .runs array of structs, each with fields
+    %          .runFolderName (string)
+    %          .root (string)
+    %          .plotPaths struct with fields
+    %              .trajectoriesDirectory (string) - iff trajectory plots enabled
+    %              .observerDirectory (string) - iff observer plots enabled
+    %              .phasePortraitsDirectory (string) - iff phase portraits enabled
+    %
+    %  plottingPlan struct with fields
+    %      .trajectories struct with fields
+    %          .enabled (logical)
+    %          .moldLevel (logical)
+    %          .tundishLevel (logical)
+    %          .input (logical)
+    %          .disturbance (logical)
+    %      .comparisons struct with fields
+    %          .enabled (logical)
+    %          .stateFeedbackVsLQR (logical)
+    %          .linearVsNonlinear (logical)
+    %      .observer struct with fields
+    %          .enabled (logical)
+    %          .xHatTrajectory (logical)
+    %          .estimationErrorNormTrajectory (logical)
+    %      .phasePortraits struct with fields
+    %          .enabled (logical)
+    %          .linear (logical)
+    %          .nonlinear (logical)
+    %      .summary struct with fields
+    %          .enabled (logical)
+    %          .fractionOutsidePrimaryBand (logical)
+    %          .fractionOutsideSevereBand (logical)
+    %          .peakMoldDeviation (logical)
+    %          .controlEnergy (logical)
+    %          .peakDeviationControlEnergyScatter (logical)   
 
     % -- If enabled, build trajectory plots --
     if plottingPlan.trajectories.enabled
-        runTrajectoryPlottingWorkflow(simulationResults, allRunsMetrics, plottingPlan);
+        runTrajectoryPlottingWorkflow(simulationResults, allRunsMetrics, outputPlan, plottingPlan);
     end
 
     % -- If enabled, build comparison plots --
     if plottingPlan.comparisons.enabled
-        runComparisonPlottingWorkflow(simulationResults, allRunsMetrics, plottingPlan);
+        runComparisonPlottingWorkflow(simulationResults, outputPlan, plottingPlan);
     end
 
     % -- If enabled, build observer plots --
     if plottingPlan.observer.enabled
-        runObserverPlottingWorkflow(simulationResults, allRunsMetrics, plottingPlan);
+        runObserverPlottingWorkflow(simulationResults, outputPlan, plottingPlan);
     end
 
     % -- If enabled, build phase portraits --
     if plottingPlan.phasePortraits.enabled
-        runPhasePortraitWorkflow(simulationResults, allRunsMetrics, plottingPlan);
+        runPhasePortraitWorkflow(simulationResults, outputPlan, plottingPlan);
     end
 
     % -- If enabled, build summary plots --
     if plottingPlan.summary.enabled
-        runSummaryPlottingWorkflow(simulationResults, allRunsMetrics, plottingPlan);
+        runSummaryPlottingWorkflow(allRunsMetrics, outputPlan, plottingPlan);
     end    
 end

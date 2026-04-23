@@ -1,7 +1,7 @@
 function simulationResult = simulateNonlinearClosedLoopFullState(closedLoopAnalysisPlan)
     % SIMULATELINEARCLOSEDLOOPFULLSTATE Simulates closed-loop dynamics for linear plant with full observability. 
     %
-    % AUTHOR: Richie Kim/Dani Schwartz
+    % AUTHOR: Dani Schwartz
     %
     % INPUT
     %  closedLoopSimulationPlan struct with fields
@@ -44,4 +44,7 @@ function simulationResult = simulateNonlinearClosedLoopFullState(closedLoopAnaly
     simulationResult.state.xDot = [];
     simulationResult.u = [];
     simulationResult.d = [];
+
+    % Output validation - please do nnot remove
+    validateClosedLoopFullStateResult(simulationResult, closedLoopAnalysisPlan);
 end

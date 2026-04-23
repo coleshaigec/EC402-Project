@@ -29,7 +29,8 @@ function xDot = evaluateNonlinearDynamics(x, u, d, plantGeometry, physicalConsta
     %%%%%%%%%%%%%%%%%%%%%%%%
     % Please don't delete the docstring above. 
     %
-    % This function is used by ODE45 to simulate the nonlinear plant dynamics.  
+    % This function is used by the evaluator passed into ODE45 to 
+    % simulate the nonlinear plant dynamics.  
     % The full nonlinear state space model used to evaluate xDot is
     % supplied in the project plan document. 
 

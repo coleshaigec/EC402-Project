@@ -5,13 +5,69 @@ function measurementModel = buildMeasurementModel(simulationPlan)
     %
     % INPUT
     %  simulationPlan struct with fields
+    %      .operatingPoint struct with fields
+    %          .K        (double)
+    %          .vW       (double)
+    %          .hT       (double)
+    %          .hM       (double)
+    %          .Qladle   (double)
+    %          .uM       (double)
+    %
+    %      .plantGeometry struct with fields
+    %          .moldCrossSectionWidth      (double)
+    %          .moldCrossSectionLength     (double)
+    %          .moldCrossSectionalArea     (double)
+    %          .moldAxialLength            (double)
+    %          .nozzleCrossSectionalArea   (double)
+    %          .tundishCrossSectionalArea  (double)
+    %
+    %      .physicalConstants struct with fields
+    %          .g                          (double) - gravity
+    %
+    %      .safetyRequirements struct with fields
+    %          .safeShellThickness         (double)
+    %          .safetyFactor               (double in [0,1])
+    %
+    %      .observabilityCase (string)
+    %
+    %      .controller (string)
+    %
+    %      .shouldUseNonBaselineDisturbance (boolean)
+    %
+    %      .baselineDisturbances struct with fields
+    %          .dlStar                     (double)
+    %          .dnStar                     (double in [0,1])
+    %          .dwStar                     (double)
+    %
+    %      .disturbanceScenarios array of structs with fields
+    %          .name
+    %          .descriptionString
+    %          .shouldApplyToLinearPlant
+    %          .shouldApplyToNonlinearPlant
+    %          .channels struct with fields
+    %              .dl struct with fields
+    %                  .isActive
+    %                  .functionalForm
+    %                  .parameters
+    %              .dn struct with fields
+    %                  .isActive
+    %                  .functionalForm
+    %                  .parameters
+    %              .dw struct with fields
+    %                  .isActive
+    %                  .functionalForm
+    %                  .parameters
+    %
+    %      .controllerParameters struct with fields
+    %          .stateFeedbackController
+    %          .lqr
     %
     %
     % OUTPUT
     %  measurementModel struct with fields
     %      .observabilityCase (string) - 'full' or 'moldOnly'
     %      .C (matrix of doubles, size depends on observability case)
-    %      .D (2 x 2 double) - zeros here
+    %      .D (matrix of doubles, size depends on observability case) - zeros here
     %
     % NOTES
     % - Given that two observability scenarios are tested, this function
@@ -40,6 +96,8 @@ function measurementModel = buildMeasurementModel(simulationPlan)
     %
     % See the state space model in the project plan for more details if
     % needed.
+    %
+    % The validator will enforce the correct size of D.
 
     observabilityCase = simulationPlan.observabilityCase;
 

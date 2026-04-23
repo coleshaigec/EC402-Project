@@ -1,7 +1,7 @@
 function equilibrium = getEquilibriumFromOperatingPoint(operatingPoint)
     % GETEQUILIBRIUMFROMOPERATINGPOINT Computes equilibrium values from specified operating point.
     %
-    % AUTHOR: Dani Schwartz/Richie Kim
+    % AUTHOR: Richie Kim
     %
     % INPUT
     %  operatingPoint struct with fields
@@ -44,5 +44,8 @@ function equilibrium = getEquilibriumFromOperatingPoint(operatingPoint)
     equilibrium = struct();
     equilibrium.xe = [];
     equilibrium.ue = [];
+
+    % -- Output validation - please do not remove
+    validateEquilibrium(equilibrium, operatingPoint);
 
 end

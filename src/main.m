@@ -8,7 +8,6 @@ function main()
     allSimulationParameters = buildSimulationParameterGrids(simulationConfig);
     simulationPlans = buildSimulationPlans(allSimulationParameters);
     
-    
     % -- Run all simulations -- 
     simulationResults = runAllSimulations(simulationPlans);
 

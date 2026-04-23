@@ -1,7 +1,7 @@
 function stateFeedbackController = buildStateFeedbackController(linearPlant, operatingPoint, stateFeedbackControllerParameters)
     % BUILDSTATEFEEDBACKCONTROLLER Places poles on the linearized plant and builds a state feedback controller model for use in simulation.
     %
-    % AUTHOR: Richie Kim/Dani Schwartz
+    % AUTHOR: Dani Schwartz
     %
     % INPUTS
     %  linearPlant struct with fields
@@ -50,13 +50,6 @@ function stateFeedbackController = buildStateFeedbackController(linearPlant, ope
     % - To compute the equilibrium, please use the function
     % getEquilibriumFromOperatingPoint
 
-    % -- Hard-coded temporary values for pipeline testing --
-    % Delete these and replace with your own implementation
-    Acl = eye(2);
-    gains = [1;1];
-    xe = [1;1];
-    ue = [1;1];
-
     % -- YOUR IMPLEMENTATION HERE --
     stateFeedbackController = struct();
     stateFeedbackController.type = 'stateFeedback';
@@ -70,6 +63,8 @@ function stateFeedbackController = buildStateFeedbackController(linearPlant, ope
     stateFeedbackController.designMetadata.desiredPoles = stateFeedbackControllerParameters.desiredPoles;
     stateFeedbackController.designMetadata.placedPoles = eig(Acl);
     
-
+    % Output validation -- please do not remove
+    validateStateFeedbackController(stateFeedbackController, linearPlant, ...
+        operatingPoint, stateFeedbackControllerParameters);
 
 end
