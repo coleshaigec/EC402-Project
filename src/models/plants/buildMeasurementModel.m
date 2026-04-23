@@ -4,7 +4,6 @@ function measurementModel = buildMeasurementModel(simulationPlan)
     % AUTHOR: Richie Kim
     %
     % INPUT
-
     %  simulationPlan struct with fields
     %
     %
@@ -62,5 +61,5 @@ function measurementModel = buildMeasurementModel(simulationPlan)
     end
 
     % Output validation - please do not remove
-    % validateMeasurementModel(measurementModel, simulationPlan);
+    validateMeasurementModel(measurementModel, simulationPlan);
 end
