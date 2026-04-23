@@ -1,7 +1,7 @@
 function linearPlant = buildLinearPlant(simulationPlan)
     % BUILDLINEARPLANT Uses simulation plan to encode linearized plant model for pipeline run.
     %
-    % AUTHOR: Richie Kim/Dani Schwartz
+    % AUTHOR: Richie Kim
     %
     % INPUT
     %  simulationPlan struct with fields
@@ -59,24 +59,60 @@ function linearPlant = buildLinearPlant(simulationPlan)
     %
     % See project plan for typed up Jacobians. 
 
-   
+    op = simulationPlan.operatingPoint;
+    geom = simulationPlan.plantGeometry;
+    phys = simulationPlan.physicalConstants;
 
-    % -- YOUR IMPLEMENTATION HERE -- 
+    hTStar = op.hT;
+    hMStar = op.hM;
+    uMStar = op.uM;
+    vWStar = op.vW;
+
+    AM = geom.moldCrossSectionalArea;
+    AT = geom.tundishCrossSectionalArea;
+    Anozzle = geom.nozzleCrossSectionalArea;
+    g = phys.g;
+
+    % Linearization is about the nominal disturbance operating point
+    % d* = [d_l^*, d_n^*, d_w^*]^T = [0, 0, 0]^T
+    dNStar = 0;
+    dWStar = 0;
+
+    deltaH = hTStar - hMStar;
+    if deltaH <= 0
+        error('buildLinearPlant:InvalidOperatingPoint', ...
+            'Operating point must satisfy hT > hM so sqrt(2g(hT-hM)) is well-defined.');
+    end
+
+    sqrtTerm = sqrt(2 * g * deltaH);
+    commonTerm = (Anozzle * uMStar * (1 - dNStar) * g) / sqrtTerm;
+
+    % State Jacobian
+    A = [ ...
+        -commonTerm / AM,   commonTerm / AM; ...
+        -commonTerm / AT,   commonTerm / AT  ...
+    ];
+
+    % Input Jacobian
+    B = [ ...
+         Anozzle * (1 - dNStar) * sqrtTerm / AM,   -(1 + dWStar); ...
+        -Anozzle * (1 - dNStar) * sqrtTerm / AT,    0            ...
+    ];
+
+    % Disturbance Jacobian
+    E = [ ...
+         0,  -uMStar * Anozzle * sqrtTerm / AM,  -vWStar; ...
+        -1 / AT,   uMStar * Anozzle * sqrtTerm / AT,   0 ...
+    ];
+
     linearPlant = struct();
-    linearPlant.A = []; % state Jacobian
-    linearPlant.B = []; % input Jacobian
-    linearPlant.E = []; % disturbance Jacobian
-    linearPlant.metadata = []; % populate according to docstring
-
-    % % -- Hard-coded values in place for pipeline debugging --
-    % % Delete these when you're ready to test your code
-    % linearPlant.A = eye(2);
-    % linearPlant.B = eye(2);
-    % linearPlant.E = [1,0,0;0,1,0];
-    % linearPlant.metadata = struct();
-    % linearPlant.metadata.operatingPoint = buildOperatingPoint(buildPlantGeometry(), buildSafetyRequirements, 1, struct('g', 9.81));
-    % linearPlant.metadata.plantGeometry = buildPlantGeometry();
-    % linearPlant.metadata.physicalConstants = struct('g', 9.81);
+    linearPlant.A = A;
+    linearPlant.B = B;
+    linearPlant.E = E;
+    linearPlant.metadata = struct();
+    linearPlant.metadata.operatingPoint = op;
+    linearPlant.metadata.plantGeometry = geom;
+    linearPlant.metadata.physicalConstants = phys;
 
     % Output validation - please do not remove!
     validateLinearPlant(linearPlant, simulationPlan);

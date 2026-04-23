@@ -1,9 +1,10 @@
 function measurementModel = buildMeasurementModel(simulationPlan)
     % BUILDMEASUREMENTMODEL Constructs C and D for output computation during simulation run.
     %
-    % AUTHOR: Dani Schwartz/Richie Kim
+    % AUTHOR: Richie Kim
     %
     % INPUT
+
     %  simulationPlan struct with fields
     %
     %
@@ -41,11 +42,24 @@ function measurementModel = buildMeasurementModel(simulationPlan)
     % See the state space model in the project plan for more details if
     % needed.
 
-    % -- YOUR IMPLEMENTATION HERE -- 
+    observabilityCase = simulationPlan.observabilityCase;
+
     measurementModel = struct();
-    measurementModel.C = []; 
-    measurementModel.D = []; 
-    measurementModel.observabilityCase = ""; 
+    measurementModel.observabilityCase = observabilityCase;
+
+    switch observabilityCase
+        case "full"
+            measurementModel.C = eye(2);
+            measurementModel.D = zeros(2, 2);
+
+        case "moldOnly"
+            measurementModel.C = [1, 0];
+            measurementModel.D = zeros(1, 2);
+
+        otherwise
+            error('buildMeasurementModel:InvalidObservabilityCase', ...
+                'observabilityCase must be "full" or "moldOnly".');
+    end
 
     % Output validation - please do not remove
     % validateMeasurementModel(measurementModel, simulationPlan);
