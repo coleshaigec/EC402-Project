@@ -15,15 +15,6 @@ function controllability = analyzeLinearPlantControllability(linearPlant)
     %      .controllabilityMatrixRank (double)
     %      .isControllable (boolean)
 
-    %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    % NOTES FOR IMPLEMENTATION %
-    %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    % - Please do not delete the docstring above. 
-    % - isControllable is true if and only if the controllability matrix has full row
-    % rank. 
-    % - Only the input and state Jacobians A and B should be used here. The
-    % disturbance Jacobian E is irrelevant.
-
     A = linearPlant.A;
     B = linearPlant.B;
 

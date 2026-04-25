@@ -20,16 +20,6 @@ function observability = analyzeLinearPlantObservability(linearPlant, measuremen
     %      .observabilityMatrix (matrix)
     %      .observabilityMatrixRank (double)
     %      .isObservable (boolean)
-    
-    %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    % NOTES FOR IMPLEMENTATION %
-    %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    % - Please do not delete the docstring above. 
-    % - isObservable is true if and only if the observability matrix has
-    % rank equal to the number of states.
-    % - The matrices B, D and E are irrelevant to this calculation. Only
-    % A and C should be used.
-    % - For this two-state model, the observability matrix is [C; CA]
 
     A = linearPlant.A;
     C = measurementModel.C;

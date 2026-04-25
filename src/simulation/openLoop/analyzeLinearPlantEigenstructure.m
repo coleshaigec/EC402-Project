@@ -32,15 +32,6 @@ function eigenstructure = analyzeLinearPlantEigenstructure(linearPlant)
     %      .isStable (boolean) - 'true' if state Jacobian is Hurwitz, false otherwise
     %
 
-    %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    % NOTES FOR IMPLEMENTATION %
-    %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    % - Please do not delete the docstring above. 
-    % - Please ensure that the eigenvalues of the state Jacobian are
-    % returned as a column vector sorted in descending order by real part.
-    % - Only the state Jacobian A should be used in this analysis. The input
-    % and disturbance Jacobians do not define the plant eigenstructure.
-    
     A = linearPlant.A;
 
     eigenvalues = eig(A);
