@@ -9,22 +9,6 @@ function observability = analyzeLinearPlantObservability(linearPlant, measuremen
     %      .B (2 x 2 double) - input Jacobian, evaluated at operating point
     %      .E (2 x 3 double) - disturbance Jacobian, evaluated at operating point
     %      .metadata struct with fields
-    %          .operatingPoint struct with fields
-    %              .K        (double)    - plant-specific proportionality constant
-    %              .vW       (double)    - computed withdrawal speed at operating point
-    %              .hT       (double)    - computed tundish height
-    %              .hM       (double)    - prescribed mold height at operating point
-    %              .Qladle   (double)    - computed ladle -> tundish flow rate
-    %              .uM       (double)    - prescribed tundish -> mold flow regulation setting
-    %          .plantGeometry struct with fields
-    %              .moldCrossSectionWidth      (double)
-    %              .moldCrossSectionLength     (double)
-    %              .moldCrossSectionalArea     (double)
-    %              .moldAxialLength            (double)
-    %              .nozzleCrossSectionalArea   (double)
-    %              .tundishCrossSectionalArea  (double)
-    %          .physicalConstants struct with fields
-    %              .g (double)    - acceleration due to gravity
     %
     %  measurementModel struct with fields
     %      .observabilityCase (string) - 'full' or 'moldOnly'
@@ -47,9 +31,15 @@ function observability = analyzeLinearPlantObservability(linearPlant, measuremen
     % A and C should be used.
     % - For this two-state model, the observability matrix is [C; CA]
 
-    % -- YOUR IMPLEMENTATION HERE --
+    A = linearPlant.A;
+    C = measurementModel.C;
+
+    observabilityMatrix = [C; C*A];
+    observabilityMatrixRank = rank(observabilityMatrix);
+
     observability = struct();
-    observability.observabilityMatrix = [];
-    observability.observabilityMatrixRank = [];
-    observability.isObservable = [];
+    observability.observabilityMatrix = observabilityMatrix;
+    observability.observabilityMatrixRank = observabilityMatrixRank;
+    observability.isObservable = observabilityMatrixRank == size(A, 1);
+
 end

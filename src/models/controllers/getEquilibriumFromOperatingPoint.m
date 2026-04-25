@@ -40,10 +40,26 @@ function equilibrium = getEquilibriumFromOperatingPoint(operatingPoint)
     %       equilibrium.xe
     %       equilibrium.ue
 
-    % -- YOUR IMPLEMENTATION HERE -- 
+    requiredFields = {'K', 'vW', 'hT', 'hM', 'Qladle', 'uM'};
+
+    for i = 1:length(requiredFields)
+        if ~isfield(operatingPoint, requiredFields{i})
+            error('getEquilibriumFromOperatingPoint:MissingField', ...
+                'operatingPoint is missing required field: %s', requiredFields{i});
+        end
+    end
+
     equilibrium = struct();
-    equilibrium.xe = [];
-    equilibrium.ue = [];
+
+    equilibrium.xe = [
+        operatingPoint.hT;
+        operatingPoint.hM
+    ];
+
+    equilibrium.ue = [
+        operatingPoint.Qladle;
+        operatingPoint.uM
+    ];
 
     % -- Output validation - please do not remove
     validateEquilibrium(equilibrium, operatingPoint);
