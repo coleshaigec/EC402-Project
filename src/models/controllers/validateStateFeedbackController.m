@@ -191,8 +191,8 @@ function validateStateFeedbackController(stateFeedbackController, linearPlant, .
         ['stateFeedbackController.designMetadata.Acl must equal ', ...
          'linearPlant.A - linearPlant.B * stateFeedbackController.gains.']);
 
-    expectedXe = [operatingPoint.hT; operatingPoint.hM];
-    expectedUe = [operatingPoint.Qladle; operatingPoint.uM];
+    expectedXe = [operatingPoint.hM; operatingPoint.hT];
+    expectedUe = [operatingPoint.uM; operatingPoint.vW];
 
     assert(isequal(equilibrium.xe(:), expectedXe), ...
         'validateStateFeedbackController:StateEquilibriumMismatch', ...

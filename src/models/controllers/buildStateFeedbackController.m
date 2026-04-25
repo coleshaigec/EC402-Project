@@ -51,6 +51,17 @@ function stateFeedbackController = buildStateFeedbackController(linearPlant, ope
     % getEquilibriumFromOperatingPoint
 
     % -- YOUR IMPLEMENTATION HERE --
+    A = linearPlant.A;
+    B = linearPlant.B;
+    desiredPoles = stateFeedbackControllerParameters.desiredPoles;
+    gains = place(A,B, desiredPoles);
+
+    Acl = A - B * gains;
+
+    %get equilib point from operating point
+    equilibrium = getEquilibriumFromOperatingPoint(operatingPoint);
+    xe = equilibrium.xe;
+    ue = equilibrium.ue;
     stateFeedbackController = struct();
     stateFeedbackController.type = 'stateFeedback';
     stateFeedbackController.gains = gains;
