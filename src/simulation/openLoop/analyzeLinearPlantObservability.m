@@ -34,7 +34,7 @@ function observability = analyzeLinearPlantObservability(linearPlant, measuremen
     A = linearPlant.A;
     C = measurementModel.C;
 
-    observabilityMatrix = obsv(A, C);
+    observabilityMatrix = [C; C*A];
     observabilityMatrixRank = rank(observabilityMatrix);
 
     observability = struct();
