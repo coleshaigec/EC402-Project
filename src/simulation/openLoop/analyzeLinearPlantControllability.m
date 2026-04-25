@@ -41,11 +41,15 @@ function controllability = analyzeLinearPlantControllability(linearPlant)
     % - Only the input and state Jacobians A and B should be used here. The
     % disturbance Jacobian E is irrelevant.
 
-    % -- YOUR IMPLEMENTATION HERE -- 
-    controllability = struct();
-    controllability.controllabilityMatrix = [];
-    controllability.controllabilityMatrixRank = [];
-    controllability.isControllable = [];
+    A = linearPlant.A;
+    B = linearPlant.B;
 
+    controllabilityMatrix = ctrb(A, B);
+    controllabilityMatrixRank = rank(controllabilityMatrix);
+
+    controllability = struct();
+    controllability.controllabilityMatrix = controllabilityMatrix;
+    controllability.controllabilityMatrixRank = controllabilityMatrixRank;
+    controllability.isControllable = controllabilityMatrixRank == size(A, 1);
 
 end

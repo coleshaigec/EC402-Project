@@ -41,9 +41,14 @@ function eigenstructure = analyzeLinearPlantEigenstructure(linearPlant)
     % - Only the state Jacobian A should be used in this analysis. The input
     % and disturbance Jacobians do not define the plant eigenstructure.
     
-    % -- YOUR IMPLEMENTATION HERE -- 
+    A = linearPlant.A;
+
+    eigenvalues = eig(A);
+    [~, sortIdx] = sort(real(eigenvalues), 'descend');
+    eigenvalues = eigenvalues(sortIdx);
+
     eigenstructure = struct();
-    eigenstructure.eigenvalues = [];
-    eigenstructure.isStable = [];
+    eigenstructure.eigenvalues = eigenvalues(:);
+    eigenstructure.isStable = all(real(eigenvalues) < 0);
 
 end
