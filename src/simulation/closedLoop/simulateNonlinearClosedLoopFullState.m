@@ -47,12 +47,12 @@ function simulationResult = simulateNonlinearClosedLoopFullState(closedLoopAnaly
     tspan = [0, duration];
     [timestamps, xHistory] = ode45(odeRHS, tspan, x0);
 
-    numTimesamps = length(timestamps);
-    uHistory = zeros(numTimesamps, 2);
-    dHistory = zeros(numTimesamps, 3);
-    xDotHistory = zeros(numTimesamps, 2);
+    numTimestamps = length(timestamps);
+    uHistory = zeros(numTimestamps, 2);
+    dHistory = zeros(numTimestamps, 3);
+    xDotHistory = zeros(numTimestamps, 2);
 
-    for i = 1:numTimesamps
+    for i = 1:numTimestamps
         t = timestamps(i);
         x = xHistory(i, :)';
         uHistory(i,:) = evaluator.evaluateControlInput(t,x)';
