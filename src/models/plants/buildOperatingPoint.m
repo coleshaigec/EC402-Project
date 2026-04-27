@@ -47,7 +47,7 @@ function operatingPoint = buildOperatingPoint(plantGeometry, safetyRequirements,
     %  applied downstream during simulation.
 
     % -- Apply setpoints for nominal mold height, tundish head, and uM setting --
-    uM = 0.9;
+    uM = 0.6;
     hM = plantGeometry.moldAxialLength - 0.075; % use m as unit of measurement
     nominalTundishHead = 1.0;                   % hT - hM, measured in m
     hT = hM + nominalTundishHead;

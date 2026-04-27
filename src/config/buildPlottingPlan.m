@@ -55,7 +55,7 @@ function plottingPlan = buildPlottingPlan()
 
     % -- Configure comparison plots between controllers --
     plottingPlan.comparisons = struct();
-    plottingPlan.comparisons.enabled = false;
+    plottingPlan.comparisons.enabled = true;
     plottingPlan.comparisons.stateFeedbackVsLQR = true;
     plottingPlan.comparisons.linearVsNonlinear = true;
 

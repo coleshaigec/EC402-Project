@@ -31,11 +31,11 @@ function simulationConfig = buildSimulationConfig()
     simulationConfig = struct();
 
     % -- Set k-values for simulation --
-    simulationConfig.kValues = [0.0290; 0.0300; 0.0310];
-
+    % simulationConfig.kValues = [0.0290; 0.0300; 0.0310]; % this is the real one - toggled off for convenience in testing
+    simulationConfig.kValues = 0.0300;
     % -- Configure controller(s) --
     % Chosen controllers can be "stateFeedback" and/or "lqr"
-    simulationConfig.controllers = {"stateFeedback"}; 
+    simulationConfig.controllers = {"stateFeedback", "lqr"}; 
 
     simulationConfig.controllerParameters = struct();
 
@@ -48,9 +48,9 @@ function simulationConfig = buildSimulationConfig()
     simulationConfig.controllerParameters.lqr = struct();
 
     % -- Choose disturbance scenarios --
-    simulationConfig.chosenDisturbanceScenarios = {"baseline"};
+    simulationConfig.chosenDisturbanceScenarios = {"nozzleConstant", "withdrawalPulse"};
 
     % -- Choose observability scenarios -- 
     % Choose either 'full' or 'moldOnly'
-    simulationConfig.observabilityCases = {"full"};
+    simulationConfig.observabilityCases = {"full", "moldOnly"};
 end
