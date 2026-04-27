@@ -46,15 +46,21 @@ function safetyViolationResult = checkForSafetyViolations(x, u, plantGeometry, s
     % limit, adjusted downward by the specified safety factor.
 
     % -- Check for mold overflow --
-    hasMoldOverflowOccurred = any(x(:,1) > plantGeometry.moldAxialLength);
+    hasMoldOverflowOccurred = any(x(:, 1) > plantGeometry.moldAxialLength);
 
     % -- Check for negative mold and tundish levels --
-    isMoldLevelEverNegative = any(x(:,1) < 0);
-    isTundishLevelEverNegative = any(x(:,2) < 0);
+    isMoldLevelEverNegative = any(x(:, 1) < 0);
+    isTundishLevelEverNegative = any(x(:, 2) < 0);
+
+    % -- Compute safe withdrawal-speed bounds --
+    trueSafeWithdrawalSpeed = operatingPoint.K^2 ...
+        * plantGeometry.moldAxialLength ...
+        / safetyRequirements.safeShellThickness^2;
+
+    adjustedSafeWithdrawalSpeed = safetyRequirements.safetyFactor ...
+        * trueSafeWithdrawalSpeed;
 
     % -- Check if safe withdrawal speed is ever exceeded --
-    adjustedSafeWithdrawalSpeed = operatingPoint.vW; % vW setpoint is equal to this by construction
-    trueSafeWithdrawalSpeed = adjustedSafeWithdrawalSpeed / safetyRequirements.safetyFactor;
     isAdjustedSafeWithdrawalSpeedEverExceeded = any(u(:, 2) > adjustedSafeWithdrawalSpeed);
     isTrueSafeWithdrawalSpeedEverExceeded = any(u(:, 2) > trueSafeWithdrawalSpeed);
 
@@ -63,6 +69,6 @@ function safetyViolationResult = checkForSafetyViolations(x, u, plantGeometry, s
     safetyViolationResult.hasMoldOverflowOccurred = hasMoldOverflowOccurred;
     safetyViolationResult.isMoldLevelEverNegative = isMoldLevelEverNegative;
     safetyViolationResult.isTundishLevelEverNegative = isTundishLevelEverNegative;
-    safetyViolationResult.isAdjustedSafeWithdrawalSpeedEverExceeded = isAdjustedSafeWithdrawalSpeedEverExceeded;
     safetyViolationResult.isTrueSafeWithdrawalSpeedEverExceeded = isTrueSafeWithdrawalSpeedEverExceeded;
+    safetyViolationResult.isAdjustedSafeWithdrawalSpeedEverExceeded = isAdjustedSafeWithdrawalSpeedEverExceeded;
 end
