@@ -196,7 +196,7 @@ function simulationResult = runSingleSimulation(simulationPlan)
         case 'stateFeedback'
             controller = buildStateFeedbackController(linearPlant, simulationPlan.operatingPoint, simulationPlan.controllerParameters);
         case 'lqr'
-            controller = buildLQR(linearPlant, simulationPlan.controllerParameters);
+            controller = buildLQRController(linearPlant);
         otherwise
             error('runSingleSimulation:InvalidFieldValue', ...
                 'simulationPlan.controller expected ''lqr'' or ''stateFeedback'', provided %s', ...
@@ -216,7 +216,11 @@ function simulationResult = runSingleSimulation(simulationPlan)
             end
             
         case 'lqr'
-            error('lqr not yet implemented')
+            if observable
+                linearClosedLoopResult = simulateLinearClosedLoopFullState(closedLoopAnalysisPlan.linearPlant);
+            else
+                error('observer not yet implemented')
+            end
         otherwise
             error('runSingleSimulation:InvalidFieldValue', ...
                 'simulationPlan.controller expected ''lqr'' or ''stateFeedback'', provided %s', ...
@@ -233,7 +237,11 @@ function simulationResult = runSingleSimulation(simulationPlan)
             end
             
         case 'lqr'
-            error('lqr not yet implemented')
+             if observable
+                nonlinearClosedLoopResult = simulateNonlinearClosedLoopFullState(closedLoopAnalysisPlan.nonlinearPlant);
+            else
+                error('observer not yet implemented')
+            end
         otherwise
             error('runSingleSimulation:InvalidFieldValue', ...
                 'simulationPlan.controller expected ''lqr'' or ''stateFeedback'', provided %s', ...

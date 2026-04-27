@@ -35,7 +35,7 @@ function simulationConfig = buildSimulationConfig()
 
     % -- Configure controller(s) --
     % Chosen controllers can be "stateFeedback" and/or "lqr"
-    simulationConfig.controllers = {"stateFeedback"}; 
+    simulationConfig.controllers = {"stateFeedback", "lqr"}; 
 
     simulationConfig.controllerParameters = struct();
 
@@ -45,7 +45,7 @@ function simulationConfig = buildSimulationConfig()
     );
 
     % -- LQR --
-    simulationConfig.controllerParameters.lqr = struct([]);
+    simulationConfig.controllerParameters.lqr = struct();
 
     % -- Choose disturbance scenarios --
     simulationConfig.chosenDisturbanceScenarios = {"nozzlePulse", "withdrawalStep"};

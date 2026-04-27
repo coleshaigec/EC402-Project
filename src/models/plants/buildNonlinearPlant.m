@@ -59,6 +59,4 @@ function nonlinearPlant = buildNonlinearPlant(simulationPlan)
     nonlinearPlant.metadata.operatingPoint = simulationPlan.operatingPoint;
     nonlinearPlant.metadata.physicalConstants = simulationPlan.physicalConstants;
 
-    % -- Output validation --
-    % validateNonlinearPlant(nonlinearPlant, simulationPlan);
 end
