@@ -24,34 +24,44 @@ function xDot = evaluateNonlinearDynamics(x, u, d, plantGeometry, operatingPoint
     %  xDot (2 x 1 double) - time derivative of state, evaluated at
     %  supplied input
 
+    % -- Extract state --
     hM = x(1);
     hT = x(2);
-       
-    uM = u(1);
-    vW = u(2);
 
-    % disturbances in canonical form [d_l ; d_n; d_w]
-    d_l = d(1); %ladle flow disturbance Qladle + d_l
-    d_n = d(2); %nozzle flow degradation (1 - d_n) * Q_TM_nominal
-    d_w = d(3); %withdrawal disturbance  (1 + d_w) * vW
+    % -- Enforce actuator saturation --
+    uM = min(max(u(1), 0), 1);
+    vW = max(u(2), 0);
 
+    % -- Extract disturbances in canonical form [d_l; d_n; d_w] --
+    d_l = d(1); % ladle flow disturbance Qladle + d_l
+    d_n = d(2); % nozzle flow degradation (1 - d_n) * Q_TM_nominal
+    d_w = d(3); % withdrawal disturbance  (1 + d_w) * vW
+
+    % -- Clamp physically bounded disturbance factors --
+    nozzleFlowFactor = min(max(1 - d_n, 0), 1);
+    withdrawalFactor = max(1 + d_w, 0);
+
+    % -- Extract geometry and constants --
     AM = plantGeometry.moldCrossSectionalArea;
     AN = plantGeometry.nozzleCrossSectionalArea;
     AT = plantGeometry.tundishCrossSectionalArea;
-
-    % g is a physical constant
     g = physicalConstants.g;
 
-    %nominal ladle flow from operating point --CONSTANT/FIXED
+    % -- Extract nominal ladle flow from operating point --
     Qladle = operatingPoint.Qladle;
 
-    %tundish-to-mold flow
-    head = max(hT - hM, 0);
-    Q_TM_eff = uM * (1 - d_n) * AN * sqrt(2*g*head);
+    % -- Compute physically admissible tundish-to-mold flow --
+    head = hT - hM;
 
-    %nonlinear dynamics 
-    hM_dot = (1/AM) * (Q_TM_eff - (1+d_w) * vW * AM);
-    hT_dot = (1/AT) * ((Qladle + d_l) - Q_TM_eff);
-    xDot = [hM_dot;hT_dot];
-    
+    if head <= 0
+        Q_TM_eff = 0;
+    else
+        Q_TM_eff = uM * nozzleFlowFactor * AN * sqrt(2 * g * head);
+    end
+
+    % -- Nonlinear dynamics --
+    hM_dot = (Q_TM_eff - withdrawalFactor * vW * AM) / AM;
+    hT_dot = (Qladle + d_l - Q_TM_eff) / AT;
+
+    xDot = [hM_dot; hT_dot];
 end

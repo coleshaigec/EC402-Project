@@ -15,7 +15,7 @@ function plantGeometry = buildPlantGeometry()
     % NOTES
     %  - All lengths are measured in meters, all areas in m^2, and all
     %  volumes in m^3.
-    %  - The geometry of our plant is hard-coded with dimensions
+    %  - The geometry of our plant is hard-coded with dimensions roughly
     %  approximating patterns observed in the literature. Our plant was not
     %  designed as an isomorph of any real facility or as the result of any
     %  rigorous analysis.
@@ -33,9 +33,9 @@ function plantGeometry = buildPlantGeometry()
     plantGeometry.moldAxialLength = 0.810;
 
     % -- Define nozzle geometry --
-    nozzleDiameter = 0.075; % [m]
+    nozzleDiameter = 0.1; % [m]
     plantGeometry.nozzleCrossSectionalArea = pi * (nozzleDiameter / 2)^2;
 
     % -- Define tundish geometry --
-    plantGeometry.tundishCrossSectionalArea = 2.0;
+    plantGeometry.tundishCrossSectionalArea = 3.0;
 end

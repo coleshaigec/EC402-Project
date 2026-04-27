@@ -194,6 +194,7 @@ function runTrajectoryPlottingWorkflow(simulationResults, allRunsMetrics, output
     numRuns = numel(simulationResults);
 
     for i = 1:numRuns
+        fprintf('Plotting trajectories for run %i of %i.\n', i, numRuns);
         runOutputPlan = outputPlan.runs(i);
         trajectoriesTargetDirectory = runOutputPlan.plotPaths.trajectoriesDirectory;
 

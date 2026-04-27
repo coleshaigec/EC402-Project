@@ -37,7 +37,7 @@ function simulationResult = simulateLinearClosedLoopFullState(closedLoopAnalysis
 
     %simulation with ode45
     tspan = [0, duration];
-    [timestamps, xHistory] = ode45(odeRHS, tspan, x0);
+    [timestamps, xHistory] = ode45(odeRHS, tspan, x0, buildODEOptions());
 
     numTimestamps = length(timestamps);
     uHistory = zeros(numTimestamps, 2);

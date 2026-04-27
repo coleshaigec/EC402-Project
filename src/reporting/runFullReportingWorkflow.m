@@ -114,10 +114,13 @@ function runFullReportingWorkflow(simulationResults)
     buildExperimentOutputDirectory(outputPlan);
 
     % -- Build summary table --
+    fprintf('Building summary table.\n');
     summaryTable = buildExperimentSummaryTable(simulationResults, allRunsMetrics);
     
     % -- Write summary table to file --
+    fprintf('Writing summary table to file.\n');
     writeSummaryTableToFile(summaryTable, outputPlan);
+    fprintf('Summary table write complete.\n');
 
     % -- Plot experiment results --
     runFullPlottingWorkflow(simulationResults, allRunsMetrics, plottingPlan, outputPlan);

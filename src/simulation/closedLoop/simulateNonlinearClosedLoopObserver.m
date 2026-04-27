@@ -16,7 +16,7 @@ function simulationResult = simulateNonlinearClosedLoopObserver(closedLoopAnalys
     odeRHS = @(t, z) evaluator.evaluateAugmentedStateDerivative(t, z);
 
     tspan = [0, duration];
-    [timestamps, zHistory] = ode45(odeRHS, tspan, z0);
+    [timestamps, zHistory] = ode45(odeRHS, tspan, z0, buildODEOptions());
 
     xHistory = zHistory(:, 1:2);
     xHatHistory = zHistory(:, 3:4);

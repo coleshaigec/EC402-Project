@@ -55,13 +55,13 @@ function plottingPlan = buildPlottingPlan()
 
     % -- Configure comparison plots between controllers --
     plottingPlan.comparisons = struct();
-    plottingPlan.comparisons.enabled = true;
+    plottingPlan.comparisons.enabled = false;
     plottingPlan.comparisons.stateFeedbackVsLQR = true;
     plottingPlan.comparisons.linearVsNonlinear = true;
 
     % -- Configure observer plots --
     plottingPlan.observer = struct();
-    plottingPlan.observer.enabled = true;
+    plottingPlan.observer.enabled = false;
     plottingPlan.observer.xHatTrajectory = true;
     plottingPlan.observer.estimationErrorNormTrajectory = true;
     

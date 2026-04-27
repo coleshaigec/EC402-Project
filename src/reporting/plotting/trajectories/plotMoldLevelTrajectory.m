@@ -76,4 +76,5 @@ function moldLevelTrajectoryPlot = plotMoldLevelTrajectory(moldLevelTrajectory, 
             moldLevelDisplaySpec.legendEntries, ...
             'Location', 'best');
     end
+
 end

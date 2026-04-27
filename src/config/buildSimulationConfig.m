@@ -35,7 +35,7 @@ function simulationConfig = buildSimulationConfig()
 
     % -- Configure controller(s) --
     % Chosen controllers can be "stateFeedback" and/or "lqr"
-    simulationConfig.controllers = {"stateFeedback", "lqr"}; 
+    simulationConfig.controllers = {"stateFeedback"}; 
 
     simulationConfig.controllerParameters = struct();
 
@@ -48,9 +48,9 @@ function simulationConfig = buildSimulationConfig()
     simulationConfig.controllerParameters.lqr = struct();
 
     % -- Choose disturbance scenarios --
-    simulationConfig.chosenDisturbanceScenarios = {"nozzlePulse", "withdrawalStep"};
+    simulationConfig.chosenDisturbanceScenarios = {"baseline"};
 
     % -- Choose observability scenarios -- 
     % Choose either 'full' or 'moldOnly'
-    simulationConfig.observabilityCases = {"full", "moldOnly"};
+    simulationConfig.observabilityCases = {"full"};
 end

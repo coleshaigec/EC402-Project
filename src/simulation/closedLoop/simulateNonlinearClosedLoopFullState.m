@@ -28,15 +28,7 @@ function simulationResult = simulateNonlinearClosedLoopFullState(closedLoopAnaly
     % - The system dynamics are packaged into an evaluator utility provided
     % as an input to the function. 
 
-    %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    % NOTES FOR IMPLEMENTATION %
-    %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    % - Please do not delete the docstring above. 
-    % - The information needed for you to compute xDot and other required
-    % quantities for the simulation is packaged into the provided
-    % 'evaluator' utility. All you have to do is call it. 
-
-    % -- YOUR IMPLEMENTATION HERE -- 
+    
     evaluator = closedLoopAnalysisPlan.evaluator;
     duration = closedLoopAnalysisPlan.duration;
     x0 = closedLoopAnalysisPlan.initialConditions.x0;
@@ -45,7 +37,7 @@ function simulationResult = simulateNonlinearClosedLoopFullState(closedLoopAnaly
 
     %simulation with ode45
     tspan = [0, duration];
-    [timestamps, xHistory] = ode45(odeRHS, tspan, x0);
+    [timestamps, xHistory] = ode45(odeRHS, tspan, x0, buildODEOptions());
 
     numTimestamps = length(timestamps);
     uHistory = zeros(numTimestamps, 2);

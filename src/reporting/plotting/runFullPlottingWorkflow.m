@@ -184,26 +184,52 @@ function runFullPlottingWorkflow(simulationResults, allRunsMetrics, plottingPlan
 
     % -- If enabled, build trajectory plots --
     if plottingPlan.trajectories.enabled
+        tic
+        fprintf('Commencing trajectory plotting workflow.\n');
         runTrajectoryPlottingWorkflow(simulationResults, allRunsMetrics, outputPlan, plottingPlan);
+        fprintf('Trajectory plotting complete.\n');
+        toc;
+        fprintf('\n');
     end
 
     % -- If enabled, build comparison plots --
     if plottingPlan.comparisons.enabled
+        tic
+        fprintf('Commencing comparison plotting workflow.\n');
         runComparisonPlottingWorkflow(simulationResults, outputPlan, plottingPlan);
+        fprintf('Comparison plotting complete.\n');
+        toc;
+        fprintf('\n');
     end
 
     % -- If enabled, build observer plots --
     if plottingPlan.observer.enabled
+        tic
+        fprintf('Commencing observer plotting workflow.\n');
         runObserverPlottingWorkflow(simulationResults, outputPlan, plottingPlan);
+        fprintf('Observer plotting complete.\n');
+        toc;
+        fprintf('\n');
     end
 
     % -- If enabled, build phase portraits --
     if plottingPlan.phasePortraits.enabled
+        tic
+        fprintf('Commencing phase portrait plotting workflow.\n');
         runPhasePortraitWorkflow(simulationResults, outputPlan, plottingPlan);
+        fprintf('Phase portrait plotting complete.\n');
+        toc;
+        fprintf('\n');
     end
 
     % -- If enabled, build summary plots --
     if plottingPlan.summary.enabled
+        fprintf('Commencing summary plotting workflow.\n');
         runSummaryPlottingWorkflow(allRunsMetrics, outputPlan, plottingPlan);
+        fprintf('Summary plotting complete.\n');
+        toc;
+        fprintf('\n');
     end    
+
+    fprintf('Plotting workflow complete.\n');
 end

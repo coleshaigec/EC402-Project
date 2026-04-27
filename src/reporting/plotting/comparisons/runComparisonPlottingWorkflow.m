@@ -24,6 +24,7 @@ function runComparisonPlottingWorkflow(simulationResults, outputPlan, plottingPl
     % ================================================================
     if plottingPlan.comparisons.linearVsNonlinear
         for i = 1:numRuns
+            fprintf('Plotting linear vs nonlinear comparisons for run %i of %i.\n', i, numRuns);
             linearOperatingPoint = simulationResults(i).linearPlant.metadata.operatingPoint;
             nonlinearOperatingPoint = simulationResults(i).nonlinearPlant.metadata.operatingPoint;
 

@@ -20,6 +20,7 @@ function runPhasePortraitWorkflow(simulationResults, outputPlan, plottingPlan)
     numRuns = numel(simulationResults);
 
     for i = 1:numRuns
+        fprintf('Plotting phase portraits for run %i of %i.\n', i, numRuns);
         phasePortraitTargetDirectory = outputPlan.runs(i).plotPaths.phasePortraitsDirectory;
 
         linearOperatingPoint = simulationResults(i).linearPlant.metadata.operatingPoint;

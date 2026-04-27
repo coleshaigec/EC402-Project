@@ -33,6 +33,7 @@ function runSummaryPlottingWorkflow(allRunsMetrics, outputPlan, plottingPlan)
     nonlinearControlEnergy = zeros(numRuns, 1);
 
     for i = 1:numRuns
+        fprintf('Plotting summaries for run %i of %i.\n', i, numRuns);
         runLabels(i) = outputPlan.runs(i).runFolderName;
 
         linearFractionOutsidePrimaryBand(i) = allRunsMetrics(i).linear.fractionOutsidePrimaryBand;
