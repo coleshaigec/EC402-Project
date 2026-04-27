@@ -16,7 +16,6 @@ function xDot = evaluateNonlinearDynamics(x, u, d, plantGeometry, operatingPoint
     %      .nozzleCrossSectionalArea   (double)
     %      .tundishCrossSectionalArea  (double)
     %
-    %
     %  operatingPoint struct with fields
     %  physicalConstants struct with fields
     %      .g                          (double) - gravity
@@ -47,7 +46,8 @@ function xDot = evaluateNonlinearDynamics(x, u, d, plantGeometry, operatingPoint
     Qladle = operatingPoint.Qladle;
 
     %tundish-to-mold flow
-    Q_TM_eff = uM * (1-d_n) * AN * sqrt(2*g*(hT-hM));
+    head = max(hT - hM, 0);
+    Q_TM_eff = uM * (1 - d_n) * AN * sqrt(2*g*head);
 
     %nonlinear dynamics 
     hM_dot = (1/AM) * (Q_TM_eff - (1+d_w) * vW * AM);

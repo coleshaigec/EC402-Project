@@ -89,7 +89,7 @@ function closedLoopAnalysisPlan = buildClosedLoopAnalysisPlan(simulationPlan, co
          disturbanceEvaluator = buildDisturbanceEvaluator(simulationPlan.disturbanceScenario);
          linearEvaluator = buildLinearFullStateClosedLoopEvaluator(linearPlant, ...
              controller, disturbanceEvaluator);
-         nonlinearEvaluator = nonlinearPlant.f;
+         nonlinearEvaluator = buildNonlinearFullStateClosedLoopEvaluator(nonlinearPlant, controller, disturbanceEvaluator);
     else
         % Will deal with imperfect observability case later -- interface is
         % the same!

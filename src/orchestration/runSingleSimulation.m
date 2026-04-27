@@ -227,7 +227,7 @@ function simulationResult = runSingleSimulation(simulationPlan)
     switch simulationPlan.controller 
         case 'stateFeedback'
             if observable
-                nonlinearClosedLoopResult = simulateNonlinearClosedLoopFullState(closedLoopAnalysisPlan);
+                nonlinearClosedLoopResult = simulateNonlinearClosedLoopFullState(closedLoopAnalysisPlan.nonlinearPlant);
             else
                 error('observer not yet implemented')
             end
