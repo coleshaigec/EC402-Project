@@ -12,7 +12,7 @@ function initialConditions = buildInitialConditions()
     % - xHat0 is used for the 'moldOnly' observability case.
 
     initialConditions = struct();
-    initialConditions.x0 = [1;1];
-    initialConditions.xHat0 = [1,1];
+    initialConditions.x0 = [0.2; 0.2];
+    initialConditions.xHat0 = [0.4; 0.1];
 
 end

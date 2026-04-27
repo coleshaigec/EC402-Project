@@ -205,12 +205,12 @@ function simulationResult = runSingleSimulation(simulationPlan)
 
     % -- Plan closed-loop analysis --
     closedLoopAnalysisPlan = buildClosedLoopAnalysisPlan(simulationPlan, controller, linearPlant, nonlinearPlant, measurementModel);
-
+    disp(closedLoopAnalysisPlan)
     % -- Simulate controller performance on linearized plant --
     switch simulationPlan.controller 
         case 'stateFeedback'
             if observable
-                linearClosedLoopResult = simulateLinearClosedLoopFullState(closedLoopAnalysisPlan);
+                linearClosedLoopResult = simulateLinearClosedLoopFullState(closedLoopAnalysisPlan.linearPlant);
             else
                 error('observer not yet implemented')
             end

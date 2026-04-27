@@ -29,22 +29,36 @@ function simulationResult = simulateLinearClosedLoopFullState(closedLoopAnalysis
     % - The system dynamics are packaged into an evaluator utility provided
     % as an input to the function. 
 
-    %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    % NOTES FOR IMPLEMENTATION %
-    %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    % - Please do not delete the docstring above. 
-    % - The information needed for you to compute xDot and other required
-    % quantities for the simulation is packaged into the provided
-    % 'evaluator' utility. All you have to do is call it. 
+    evaluator = closedLoopAnalysisPlan.evaluator;
+    duration = closedLoopAnalysisPlan.duration;
+    x0 = closedLoopAnalysisPlan.initialConditions.x0;
 
-    % -- YOUR IMPLEMENTATION HERE -- 
+    odeRHS = @(t,x) evaluator.evaluateStateDerivative(t,x);
+
+    %simulation with ode45
+    tspan = [0, duration];
+    [timestamps, xHistory] = ode45(odeRHS, tspan, x0);
+
+    numTimestamps = length(timestamps);
+    uHistory = zeros(numTimestamps, 2);
+    dHistory = zeros(numTimestamps, 3);
+    xDotHistory = zeros(numTimestamps, 2);
+
+    for i = 1:numTimestamps
+        t = timestamps(i);
+        x = xHistory(i, :)';
+        uHistory(i,:) = evaluator.evaluateControlInput(t,x)';
+        dHistory(i,:) = evaluator.evaluateDisturbance(t)';
+        xDotHistory(i,:) = evaluator.evaluateStateDerivative(t,x)';
+    end
+
     simulationResult = struct();
-    simulationResult.timestamps = [];
+    simulationResult.timestamps = timestamps;
     simulationResult.state = struct();
-    simulationResult.state.x = [];
-    simulationResult.state.xDot = [];
-    simulationResult.u = [];
-    simulationResult.d = [];
+    simulationResult.state.x = xHistory;
+    simulationResult.state.xDot = xDotHistory;
+    simulationResult.u = uHistory;
+    simulationResult.d = dHistory;
 
     % Output validation - please do not remove
     validateLinearClosedLoopFullStateResult(simulationResult, closedLoopAnalysisPlan);
