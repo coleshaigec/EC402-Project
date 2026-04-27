@@ -52,5 +52,5 @@ function simulationConfig = buildSimulationConfig()
 
     % -- Choose observability scenarios -- 
     % Choose either 'full' or 'moldOnly'
-    simulationConfig.observabilityCases = {"full"};
+    simulationConfig.observabilityCases = {"full", "moldOnly"};
 end

@@ -205,21 +205,20 @@ function simulationResult = runSingleSimulation(simulationPlan)
 
     % -- Plan closed-loop analysis --
     closedLoopAnalysisPlan = buildClosedLoopAnalysisPlan(simulationPlan, controller, linearPlant, nonlinearPlant, measurementModel);
-    disp(closedLoopAnalysisPlan)
     % -- Simulate controller performance on linearized plant --
     switch simulationPlan.controller 
         case 'stateFeedback'
             if observable
                 linearClosedLoopResult = simulateLinearClosedLoopFullState(closedLoopAnalysisPlan.linearPlant);
             else
-                error('observer not yet implemented')
+                linearClosedLoopResult = simulateLinearClosedLoopObserver(closedLoopAnalysisPlan.linearPlant);
             end
             
         case 'lqr'
             if observable
                 linearClosedLoopResult = simulateLinearClosedLoopFullState(closedLoopAnalysisPlan.linearPlant);
             else
-                error('observer not yet implemented')
+                linearClosedLoopResult = simulateLinearClosedLoopObserver(closedLoopAnalysisPlan.linearPlant);
             end
         otherwise
             error('runSingleSimulation:InvalidFieldValue', ...
@@ -233,14 +232,14 @@ function simulationResult = runSingleSimulation(simulationPlan)
             if observable
                 nonlinearClosedLoopResult = simulateNonlinearClosedLoopFullState(closedLoopAnalysisPlan.nonlinearPlant);
             else
-                error('observer not yet implemented')
+                nonlinearClosedLoopResult = simulateNonlinearClosedLoopObserver(closedLoopAnalysisPlan.nonlinearPlant);
             end
             
         case 'lqr'
              if observable
                 nonlinearClosedLoopResult = simulateNonlinearClosedLoopFullState(closedLoopAnalysisPlan.nonlinearPlant);
             else
-                error('observer not yet implemented')
+                nonlinearClosedLoopResult = simulateNonlinearClosedLoopObserver(closedLoopAnalysisPlan.nonlinearPlant);
             end
         otherwise
             error('runSingleSimulation:InvalidFieldValue', ...
