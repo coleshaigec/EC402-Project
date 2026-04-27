@@ -20,5 +20,5 @@ function oscillationSeverity = computeOscillationSeverity(x, hMStar)
     end
 
     % -- Compute oscillation severity --
-    oscillationSeverity = sum(abs(diff(errorSignal))) - abs(errorSignal(end) - e(1));
+    oscillationSeverity = sum(abs(diff(errorSignal))) - abs(errorSignal(end) - errorSignal(1));
 end

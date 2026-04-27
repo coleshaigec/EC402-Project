@@ -48,6 +48,8 @@ function simulationConfig = buildSimulationConfig()
     simulationConfig.controllerParameters.lqr = struct();
 
     % -- Choose disturbance scenarios --
+    % see buildDisturbanceScenarios.m
+    % If you don't want any disturbances, populate this with "baseline" only
     simulationConfig.chosenDisturbanceScenarios = {"nozzleConstant", "withdrawalPulse"};
 
     % -- Choose observability scenarios -- 

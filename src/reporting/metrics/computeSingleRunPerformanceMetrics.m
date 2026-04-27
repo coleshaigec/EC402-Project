@@ -157,6 +157,7 @@ function singleRunPerformanceMetrics = computeSingleRunPerformanceMetrics(simula
     linearMaxAbsoluteMoldLevelDeviation = computeMaxAbsoluteMoldLevelDeviation(xLinear, linearOperatingPoint.hM);
     linearMoldLevelSettlingTimeResult = computeSettlingTimeForMoldLevel(xLinear, linearTimestamps, linearOperatingPoint.hM);
     linearPeakInputDeviationNorm = computePeakInputDeviationNorm(uLinear, uStarLinear);
+    linearOscillationSeverity = computeOscillationSeverity(xLinear, linearOperatingPoint.hM);
     linearMoldLevelSteadyStateError = computeMoldLevelSteadyStateError(xLinear, linearOperatingPoint.hM);
     linearSafetyViolations = checkForSafetyViolations(xLinear, uLinear, ...
         simulationResult.linearPlant.metadata.plantGeometry, buildSafetyRequirements(), ...
@@ -178,6 +179,7 @@ function singleRunPerformanceMetrics = computeSingleRunPerformanceMetrics(simula
     nonlinearMaxAbsoluteMoldLevelDeviation = computeMaxAbsoluteMoldLevelDeviation(xNonlinear, nonlinearOperatingPoint.hM);
     nonlinearMoldLevelSettlingTimeResult = computeSettlingTimeForMoldLevel(xNonlinear, nonlinearTimestamps, nonlinearOperatingPoint.hM);
     nonlinearPeakInputDeviationNorm = computePeakInputDeviationNorm(uNonlinear, uStarNonlinear);
+    nonlinearOscillationSeverity = computeOscillationSeverity(xNonlinear, nonlinearOperatingPoint.hM);
     nonlinearMoldLevelSteadyStateError = computeMoldLevelSteadyStateError(xNonlinear, nonlinearOperatingPoint.hM);
     nonlinearSafetyViolations = checkForSafetyViolations(xNonlinear, uNonlinear, ...
         simulationResult.nonlinearPlant.metadata.plantGeometry, buildSafetyRequirements(), ...
@@ -220,6 +222,7 @@ function singleRunPerformanceMetrics = computeSingleRunPerformanceMetrics(simula
     singleRunPerformanceMetrics.linear.moldLevelSettlingTime = linearMoldLevelSettlingTimeResult;
     singleRunPerformanceMetrics.linear.peakInputDeviationNorm = linearPeakInputDeviationNorm;
     singleRunPerformanceMetrics.linear.moldLevelSteadyStateError = linearMoldLevelSteadyStateError;
+    singleRunPerformanceMetrics.linear.oscillationSeverity = linearOscillationSeverity;
     singleRunPerformanceMetrics.linear.safetyViolations = linearSafetyViolations;
     singleRunPerformanceMetrics.linear.observerMetrics = observerMetrics.linear;
     
@@ -233,6 +236,7 @@ function singleRunPerformanceMetrics = computeSingleRunPerformanceMetrics(simula
     singleRunPerformanceMetrics.nonlinear.moldLevelSettlingTime = nonlinearMoldLevelSettlingTimeResult;
     singleRunPerformanceMetrics.nonlinear.peakInputDeviationNorm = nonlinearPeakInputDeviationNorm;
     singleRunPerformanceMetrics.nonlinear.moldLevelSteadyStateError = nonlinearMoldLevelSteadyStateError;
+    singleRunPerformanceMetrics.nonlinear.oscillationSeverity = nonlinearOscillationSeverity;
     singleRunPerformanceMetrics.nonlinear.safetyViolations = nonlinearSafetyViolations;
     singleRunPerformanceMetrics.nonlinear.observerMetrics = observerMetrics.nonlinear;
 end

@@ -93,6 +93,7 @@ function tableRow = buildTableRowFromRunResults(simulationResult, runMetrics, te
     tableRow.linearIsMoldLevelSettled = linearMetrics.moldLevelSettlingTime.isSettled;
     tableRow.linearPeakInputDeviationNorm = linearMetrics.peakInputDeviationNorm;
     tableRow.linearMoldLevelSteadyStateError = linearMetrics.moldLevelSteadyStateError;
+    tableRow.linearOscillationSeverity = linearMetrics.oscillationSeverity;
 
     tableRow.linearHasMoldOverflowOccurred = linearMetrics.safetyViolations.hasMoldOverflowOccurred;
     tableRow.linearIsMoldLevelEverNegative = linearMetrics.safetyViolations.isMoldLevelEverNegative;
@@ -120,6 +121,7 @@ function tableRow = buildTableRowFromRunResults(simulationResult, runMetrics, te
     tableRow.nonlinearIsMoldLevelSettled = nonlinearMetrics.moldLevelSettlingTime.isSettled;
     tableRow.nonlinearPeakInputDeviationNorm = nonlinearMetrics.peakInputDeviationNorm;
     tableRow.nonlinearMoldLevelSteadyStateError = nonlinearMetrics.moldLevelSteadyStateError;
+    tableRow.nonlinearOscillationSeverity = nonlinearMetrics.oscillationSeverity;
 
     tableRow.nonlinearHasMoldOverflowOccurred = nonlinearMetrics.safetyViolations.hasMoldOverflowOccurred;
     tableRow.nonlinearIsMoldLevelEverNegative = nonlinearMetrics.safetyViolations.isMoldLevelEverNegative;
