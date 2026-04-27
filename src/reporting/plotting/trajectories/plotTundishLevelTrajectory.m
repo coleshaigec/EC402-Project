@@ -21,19 +21,33 @@ function tundishLevelTrajectoryPlot = plotTundishLevelTrajectory(tundishLevelTra
     % OUTPUT
     %  tundishLevelTrajectoryPlot (figure handle)
 
+    t = tundishLevelTrajectory.t(:);
+    hT = tundishLevelTrajectory.x(:);
+
+    assert(numel(t) == numel(hT), ...
+        'plotTundishLevelTrajectory:DimensionMismatch', ...
+        'tundishLevelTrajectory.t and tundishLevelTrajectory.x must have same number of elements.');
+
+    hTStarTrajectory = tundishLevelSetpoints.hTStar * ones(size(t));
+
     tundishLevelTrajectoryPlot = figure('Visible', 'off');
     hold on;
     grid on;
 
-    trajectory = plot(tundishLevelTrajectory.t, tundishLevelTrajectory.x, 'b');
-    setpoint = plot(tundishLevelTrajectory.t, tundishLevelSetpoints.hTStar, 'k-');
+    trajectory = plot(t, hT, 'b');
+    setpoint = plot(t, hTStarTrajectory, 'k-');
 
     title(tundishLevelDisplaySpec.title);
     xlabel(tundishLevelDisplaySpec.xLabel);
     ylabel(tundishLevelDisplaySpec.yLabel);
 
     if ~isempty(tundishLevelDisplaySpec.legendEntries)
-        legend([trajectory, setpoint], ...
-            tundishLevelDisplaySpec.legendEntries, 'Location', 'best');
+        assert(numel(tundishLevelDisplaySpec.legendEntries) == 2, ...
+            'plotTundishLevelTrajectory:InvalidLegendEntries', ...
+            'legendEntries must contain exactly 2 entries.');
+
+        legend([trajectory; setpoint], ...
+            tundishLevelDisplaySpec.legendEntries, ...
+            'Location', 'best');
     end
 end

@@ -24,35 +24,56 @@ function moldLevelTrajectoryPlot = plotMoldLevelTrajectory(moldLevelTrajectory, 
     % OUTPUT
     %  moldLevelTrajectoryPlot (figure handle)
 
+    % -- Extract and validate data --
+    t = moldLevelTrajectory.t(:);
+    hM = moldLevelTrajectory.x(:);
+
+    assert(numel(t) == numel(hM), ...
+        'plotMoldLevelTrajectory:DimensionMismatch', ...
+        'moldLevelTrajectory.t and moldLevelTrajectory.x must have the same number of elements.');
+
+    hMStar = moldLevelSetpoints.hMStar;
+
+    setpointTrajectory = hMStar * ones(size(t));
+
+    primaryBandLowerBound = ...
+        (hMStar - moldLevelSetpoints.tolerances.primary) * ones(size(t));
+    primaryBandUpperBound = ...
+        (hMStar + moldLevelSetpoints.tolerances.primary) * ones(size(t));
+
+    severeBandLowerBound = ...
+        (hMStar - moldLevelSetpoints.tolerances.severe) * ones(size(t));
+    severeBandUpperBound = ...
+        (hMStar + moldLevelSetpoints.tolerances.severe) * ones(size(t));
+
     % -- Initialize figure --
     moldLevelTrajectoryPlot = figure;
-    hold on; grid on;
+    hold on;
+    grid on;
 
-    % -- Plot trajectory and superimpose operating point --
-    trajectory = plot(moldLevelTrajectory.t, moldLevelTrajectory.x ,'b'); % trajectory as blue line
-    setpoint = plot(moldLevelTrajectory.t, moldLevelSetpoints.hMStar, 'k-'); % setpoint as black line
-    
-    % -- Compute band bounds and add to plot --
-    primaryBandLowerBound = moldLevelSetpoints.hMStar - moldLevelSetpoints.tolerances.primary;
-    primaryBandUpperBound = moldLevelSetpoints.hMStar + moldLevelSetpoints.tolerances.primary;
-    primaryBand = plot(moldLevelTrajectory.t, primaryBandLowerBound, 'k:'); % primary band lower bound
-    plot(moldLevelTrajectory.t, primaryBandUpperBound, 'k:'); % primary band upper bound
+    % -- Plot trajectory and reference bands --
+    trajectory = plot(t, hM, 'b');
+    setpoint = plot(t, setpointTrajectory, 'k-');
 
-    severeBandLowerBound = moldLevelSetpoints.hMStar - moldLevelSetpoints.tolerances.severe;
-    severeBandUpperBound = moldLevelSetpoints.hMStar + moldLevelSetpoints.tolerances.severe;
-    severeBand = plot(moldLevelTrajectory.t, severeBandLowerBound, 'r:'); % severe band lower bound
-    plot(moldLevelTrajectory.t, severeBandUpperBound, 'r:'); % severe band upper bound
+    primaryBand = plot(t, primaryBandLowerBound, 'k:');
+    plot(t, primaryBandUpperBound, 'k:');
+
+    severeBand = plot(t, severeBandLowerBound, 'r:');
+    plot(t, severeBandUpperBound, 'r:');
 
     % -- Apply display spec requirements --
     title(moldLevelDisplaySpec.title);
     xlabel(moldLevelDisplaySpec.xLabel);
     ylabel(moldLevelDisplaySpec.yLabel);
 
-    % -- If legend entries are supplied, add a legend --
+    % -- Add legend if supplied --
     if ~isempty(moldLevelDisplaySpec.legendEntries)
-        legend([trajectory, setpoint, primaryBand, severeBand], ...
+        assert(numel(moldLevelDisplaySpec.legendEntries) == 4, ...
+            'plotMoldLevelTrajectory:InvalidLegendEntries', ...
+            'legendEntries must contain exactly 4 entries.');
+
+        legend([trajectory; setpoint; primaryBand; severeBand], ...
             moldLevelDisplaySpec.legendEntries, ...
-            'Location', 'best' ...
-        );
+            'Location', 'best');
     end
 end

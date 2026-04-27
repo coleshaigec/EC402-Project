@@ -163,8 +163,11 @@ function simulationResults = runAllSimulations(simulationPlans)
 
     % -- Run simulations and populate result struct --
     for i = 1 : numSimulationsToRun
+        tic;
         fprintf('Commencing simulation %i of %i.\n', i, numSimulationsToRun);
         simulationResults(i) = runSingleSimulation(simulationPlans(i));
-        fprintf('Simulation %i completed.\n', i, numSimulationsToRun);
+        fprintf('Simulation %i completed.\n', i);
+        toc
+        fprintf('\n\n');
     end   
 end

@@ -157,7 +157,7 @@ function summaryTable = buildExperimentSummaryTable(simulationResults, allRunsMe
 
     % -- Build one table row per run report --
     for iRun = 1:numRuns
-        tableRows(iRun) = buildTableRowFromRunResults(runReports(iRun), allRunsMetrics(iRun), templateRow, iRun);
+        tableRows(iRun) = buildTableRowFromRunResults(simulationResults(iRun), allRunsMetrics(iRun), templateRow, iRun);
     end
 
     % -- Convert homogeneous struct array to MATLAB table --
