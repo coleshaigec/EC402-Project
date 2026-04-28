@@ -47,4 +47,5 @@ function simulationResult = simulateNonlinearClosedLoopObserver(closedLoopAnalys
 
     simulationResult.u = uHistory;
     simulationResult.d = dHistory;
+    simulationResult.evaluator = evaluator;
 end

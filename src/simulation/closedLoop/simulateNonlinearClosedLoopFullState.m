@@ -59,6 +59,7 @@ function simulationResult = simulateNonlinearClosedLoopFullState(closedLoopAnaly
     simulationResult.state.xDot = xDotHistory;
     simulationResult.u = uHistory;
     simulationResult.d = dHistory;
+    simulationResult.evaluator = evaluator;
 
     % Output validation - please do not remove
     validateNonlinearClosedLoopFullStateResult(simulationResult, closedLoopAnalysisPlan);

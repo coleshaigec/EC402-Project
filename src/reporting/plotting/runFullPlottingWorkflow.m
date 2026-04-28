@@ -80,6 +80,7 @@ function runFullPlottingWorkflow(simulationResults, allRunsMetrics, plottingPlan
     %              .xDot (numTimestamps x 2 double) - simulated state derivative trajectory
     %          .u (numTimestamps x 2 double) - simulated input trajectory
     %          .d (numTimestamps x 3 double) - simulated disturbance trajectory
+    %          .evaluators struct with fields
     %      
     %      .linearClosedLoopResult struct with fields
     %          .timestamps (numTimestamps x 1 double)
@@ -89,6 +90,7 @@ function runFullPlottingWorkflow(simulationResults, allRunsMetrics, plottingPlan
     %              .xDot (numTimestamps x 2 double) - simulated state derivative trajectory
     %          .u (numTimestamps x 2 double) - simulated input trajectory
     %          .d (numTimestamps x 3 double) - simulated disturbance trajectory
+    %          .evaluators struct with fields
     %
     %      .observabilityCase (string) - 'full' or 'moldOnly'
     %

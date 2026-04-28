@@ -47,4 +47,5 @@ function simulationResult = simulateLinearClosedLoopObserver(closedLoopAnalysisP
 
     simulationResult.u = uHistory;
     simulationResult.d = dHistory;
+    simulationResult.evaluator = evaluator;
 end
