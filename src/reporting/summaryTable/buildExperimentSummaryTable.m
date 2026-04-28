@@ -1,4 +1,4 @@
-function summaryTable = buildExperimentSummaryTable(simulationResults)
+function summaryTable = buildExperimentSummaryTable(simulationResults, allRunsMetrics)
     % BUILDEXPERIMENTSUMMARYTABLE Aggregates results from all runs of a single experiment into a summary table.
     %
     % AUTHOR: Cole H. Shaigec
@@ -157,7 +157,7 @@ function summaryTable = buildExperimentSummaryTable(simulationResults)
 
     % -- Build one table row per run report --
     for iRun = 1:numRuns
-        tableRows(iRun) = buildTableRowFromRunReport(simulationResults(iRun), templateRow);
+        tableRows(iRun) = buildTableRowFromRunResults(simulationResults(iRun), allRunsMetrics(iRun), templateRow, iRun);
     end
 
     % -- Convert homogeneous struct array to MATLAB table --
