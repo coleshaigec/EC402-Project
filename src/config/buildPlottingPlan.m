@@ -56,7 +56,7 @@ function plottingPlan = buildPlottingPlan()
     % -- Configure comparison plots between controllers --
     plottingPlan.comparisons = struct();
     plottingPlan.comparisons.enabled = true;
-    plottingPlan.comparisons.stateFeedbackVsLQR = false;
+    plottingPlan.comparisons.stateFeedbackVsLQR = true;
     plottingPlan.comparisons.linearVsNonlinear = true;
 
     % -- Configure observer plots --
@@ -67,13 +67,13 @@ function plottingPlan = buildPlottingPlan()
     
     % -- Configure phase portrait plots --
     plottingPlan.phasePortraits = struct();
-    plottingPlan.phasePortraits.enabled = true;
+    plottingPlan.phasePortraits.enabled = false;
     plottingPlan.phasePortraits.linear = true;
     plottingPlan.phasePortraits.nonlinear = true;
 
     % -- Configure summary plots --
     plottingPlan.summary = struct();
-    plottingPlan.summary.enabled = true; % toggle these off for now
+    plottingPlan.summary.enabled = true; 
     plottingPlan.summary.fractionOutsidePrimaryBand = true;
     plottingPlan.summary.fractionOutsideSevereBand = true;
     plottingPlan.summary.peakMoldDeviation = true;
