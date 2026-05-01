@@ -33,16 +33,54 @@ function simulationConfig = buildSimulationConfig()
     % -- Set k-values for simulation --
     % simulationConfig.kValues = [0.0290; 0.0300; 0.0310]; % this is the real one - toggled off for convenience in testing
     simulationConfig.kValues = 0.0300;
+
     % -- Configure controller(s) --
     % Chosen controllers can be "stateFeedback" and/or "lqr"
-    simulationConfig.controllers = {"stateFeedback", "lqr"}; 
+    % simulationConfig.controllers = {"stateFeedback", "lqr"}; 
+    
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    % POLE PLACEMENT TUNING RUN %
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    % -- Configure controller(s) --
+    simulationConfig.controllers = {"stateFeedback"};
+    
+    % -- State feedback pole sweep --
+    alphaGrid = [0.05, 0.10, 0.15, 0.20, 0.30, 0.50];
+    rhoGrid   = [1.10, 1.50, 2.00, 2.50, 3.00, 4.00];
+    
+    numPolePairs = numel(alphaGrid) * numel(rhoGrid);
+    
+    simulationConfig.controllerParameters.stateFeedback = repmat( ...
+        struct('desiredPoles', []), numPolePairs, 1);
+    
+    counter = 1;
+    
+    for i = 1:numel(alphaGrid)
+        for j = 1:numel(rhoGrid)
+            alpha = alphaGrid(i);
+            rho = rhoGrid(j);
+    
+            simulationConfig.controllerParameters.stateFeedback(counter).desiredPoles = ...
+                [-alpha; -rho * alpha];
+    
+            counter = counter + 1;
+        end
 
-    simulationConfig.controllerParameters = struct();
 
-    % -- State feedback controller --
-    simulationConfig.controllerParameters.stateFeedback = struct( ...
-        'desiredPoles', {[-0.1; -0.2]} ...
-    );
+    end
+    simulationConfig.kValues = 0.0300;
+    simulationConfig.controllers = {"stateFeedback"};
+    simulationConfig.observabilityCases = {"full"};
+    simulationConfig.chosenDisturbanceScenarios = { ...
+        "baseline", ...
+        "nozzleConstant", ...
+        "withdrawalPulse" ...
+    };
+    % -- Keep sweep focused --
+    simulationConfig.kValues = 0.0300;
+    simulationConfig.observabilityCases = {"full"};
+    simulationConfig.chosenDisturbanceScenarios = {"baseline", "nozzleConstant", "withdrawalPulse"};
+   
 
     % -- LQR --
     simulationConfig.controllerParameters.lqr = struct();
